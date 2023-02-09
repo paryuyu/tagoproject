@@ -1,9 +1,12 @@
 export default function AirlineSelecItems({item}) {
 
     return ( <>
-    {item && 
+    
+    {
+     item && 
         <option value={item.airlineId}>{item.airlineNm}</option>
     }
+
     </> );
 }
 

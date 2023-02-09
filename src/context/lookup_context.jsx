@@ -36,7 +36,7 @@ export function LookupContextProvider({ children }) {
             if (result.status === 200) {
                 let json = await result.json();
                 setSearchingData(json)
-                // console.log(json)
+                console.log(json)
             }
         }
 

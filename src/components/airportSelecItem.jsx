@@ -1,9 +1,15 @@
 
-export default function AirportSelecItem({item}) {
-    // console.log(item)
+export default function AirportSelecItem({ item }) {
 
-    return ( 
-<>  {item && 
-        <option value={item.airportId}>{item.airportNm}</option>
-    }</>     );
+    return (
+        <>  
+        
+        {item &&
+            <option value={item.airportId}>{item.airportNm}</option>
+        }
+        
+
+
+        
+        </>);
 }
