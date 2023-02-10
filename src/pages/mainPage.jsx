@@ -4,7 +4,7 @@ import { LookupContext } from "../context/lookup_context";
 import Header from "../components/header";
 import SearchingBar from "../components/searchingBar";
 import ResultTable from "../components/rst_table/resultTable";
-
+import DataGridTable from "../components/rst_table/agGridTest";
 
 // import "./mainpage.css"
 export default function MainPage() {
@@ -27,6 +27,7 @@ export default function MainPage() {
             </section>
             <section>
                 <ResultTable searchingState={searchingState}/>
+                <DataGridTable />
             </section>
         </main>
 

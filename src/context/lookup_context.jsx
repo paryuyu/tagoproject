@@ -8,6 +8,9 @@ export function LookupContextProvider({ children }) {
     const [airportListData, setPortlineListData] = useState();
     const [searchingData, setSearchingData] = useState();
 
+
+
+    
     async function airportlistReq() {
         let result = await AirportReq();
         if (result.status === 200) {
@@ -32,17 +35,34 @@ export function LookupContextProvider({ children }) {
 
         if (data) {
             let result = await TagoServerReq(data);
-            console.log(result)
+
             if (result.status === 200) {
                 let json = await result.json();
-                setSearchingData(json)
-                console.log(json)
+                let data = json.response.body.items;
+                let arr = [];
+
+                if (data) {
+                    let item = data.item;
+                    for (let i = 0; i < item.length; i++) {
+                        arr.push({
+                            "항공사": item[i].airlineNm,
+                            "항공편": item[i].vihicleId,
+                            "출발시간": item[i].depPlandTime,
+                            "도착시간": item[i].arrPlandTime,
+                            "일반석운임": item[i].economyCharge,
+                            "비즈니스석운임": item[i].prestigeCharge,
+                            "출발공항": item[i].depAirportNm,
+                            "도착공항": item[i].arrAirportNm
+                        })
+                    }
+
+                }
+
+                setSearchingData(arr)
+                
             }
         }
-
-
     }
-
 
 
     useEffect(() => {
@@ -51,7 +71,8 @@ export function LookupContextProvider({ children }) {
     }, [])
 
 
-    return (<LookupContext.Provider value={{ airlineListData, airportListData, handleSearch ,searchingData}}>
+    return (
+    <LookupContext.Provider value={{ airlineListData, airportListData, handleSearch ,searchingData}}>
         {children}
     </LookupContext.Provider>)
 }
