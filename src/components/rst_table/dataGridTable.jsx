@@ -3,16 +3,15 @@ import { AgGridReact } from "ag-grid-react";
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { LookupContext } from "../../context/lookup_context";
-import { LookupClassContext } from "../../context/lookup_class_context";
 
 
-export default function DataGridTable() {
+export default function DataGridTable({onChartOpen}) {
     const [editStart, setEditStart] = useState(false);
     const [rowData, setRowData] = useState([]);
     const [oldCellVal, setOldCellVal] = useState("");
     const [newCellVal, setNewCellVal] = useState("");
     const [selectDataId, setSelectDataId] = useState();
-    const { searchingData , handleRemove,handleAdd  } = useContext(LookupContext);
+    const { searchingData, handleRemove, handleAdd } = useContext(LookupContext);
 
 
     useEffect(() => {
@@ -23,11 +22,11 @@ export default function DataGridTable() {
     const columnDefs = [
         {
 
-            minWidth: 50,
+            maxWidth: 50,
+            width: 20,
             headerCheckboxSelection: true,
             checkboxSelection: true,
             editable: false,
-
         },
         { field: '항공사', },
         { field: '항공편', },
@@ -49,13 +48,13 @@ export default function DataGridTable() {
     }), [])
 
     const handleCellClicked = (evt) => {
-        
+
     }
 
     const handleDataAdd = () => {
         handleAdd()
     }
- 
+
     const handleDataDelete = () => {
         handleRemove(selectDataId)
     }
@@ -69,12 +68,20 @@ export default function DataGridTable() {
         setSelectDataId(e.data.id)
     }
 
+    const handleChartView = ()=>{
+        onChartOpen();
+    }
 
     return (
-        <div className="ag-theme-alpine" style={{ height: 800, width: "90%" }}>
-            <button onClick={handleDataAdd}>Add</button>
-            <button onClick={handleDataDelete}>Delete</button>
-
+        <div className="ag-theme-alpine-dark" style={{ height: 600, width: "90%" }}>
+            <div className="btnBox">
+                <div className="btnAddDelBox">
+                    <button onClick={handleDataAdd}>Add</button>
+                    <button onClick={handleDataDelete}>Delete</button>
+                </div>
+                <button onClick={handleChartView} className={"chartBtn"}>
+                    Price Chart View</button>
+            </div>
             <AgGridReact
                 onRowSelected={handleRowSelected}
                 onCellClicked={handleCellClicked}

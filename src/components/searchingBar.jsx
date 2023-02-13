@@ -68,7 +68,7 @@ export default function SearchingBar({ onSchState }) {
 
                     {ctx.airportListData &&
                         <select onChange={handleArrSelect}>
-                            {ctx.airportListData.map((item, index) => {
+                            {ctx.airportListData.reverse().map((item, index) => {
                                 return <AirportSelecItem item={item} key={index} />
                             })
                             }

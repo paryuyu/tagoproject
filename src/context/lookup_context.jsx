@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from "react";
-import { typeOf } from "react-is";
 import { AirlineReq, AirportReq, TagoServerReq } from "../util/tagoAPI";
 
 export const LookupContext = createContext();
@@ -8,7 +7,7 @@ export function LookupContextProvider({ children }) {
     const [airlineListData, setAirlineListData] = useState(null);
     const [airportListData, setPortlineListData] = useState();
     const [searchingData, setSearchingData] = useState();
-
+    const [searchisLoading, setSearchingLoading] = useState(true);
 
     const [addDataId, setAddDataId] = useState([]);
     const [removeDataId, setRemoveDataId] = useState([]);
@@ -20,8 +19,13 @@ export function LookupContextProvider({ children }) {
     async function airportlistReq() {
         let result = await AirportReq();
         if (result.status === 200) {
-            let data = await result.data.response.body.items.item;
-            setPortlineListData(data);
+            let data = await result.data
+            
+            if(data){
+                let item = data?.response?.body?.items?.item;
+                setPortlineListData(item);
+            }
+
         } else {
             return;
         }
@@ -31,8 +35,12 @@ export function LookupContextProvider({ children }) {
     async function airlinelistReq() {
         let result = await AirlineReq();
         if (result.status === 200) {
-            let data = await result.data.response.body.items.item;
-            setAirlineListData(data);
+            let data = await result.data
+            
+            if(data){
+                let item =  data?.response?.body?.items?.item;
+                setAirlineListData(item);
+            }
         }
     }
 
@@ -59,7 +67,8 @@ export function LookupContextProvider({ children }) {
             let result = await TagoServerReq(data);
 
             if (result.status === 200) {
-                let data = result.data.response.body.items
+                let data = result.data.response.body.items;
+                setRaw(data) //원본데이터
                 let arr = [];
 
                 if (data) {
@@ -79,8 +88,12 @@ export function LookupContextProvider({ children }) {
                         })
                     }
                 }
-                setRaw(arr) //원본데이터
+             
                 setSearchingData(arr) //수정데이터
+
+                if(arr.length>0){
+                    setSearchingLoading(false);
+                }
             }
         }
     }
@@ -119,6 +132,8 @@ export function LookupContextProvider({ children }) {
         
     return (
     <LookupContext.Provider value={{ 
+        searchisLoading,
+        raw,
         airlineListData, 
         airportListData, 
         searchingData, 
