@@ -1,3 +1,5 @@
+import axios from "axios";
+
 let key = process.env.REACT_APP_KEY;
 let endpoint = process.env.REACT_APP_END_POINT;
 let baseUrl = process.env.REACT_APP_BASEURL;
@@ -7,8 +9,8 @@ let baseUrl = process.env.REACT_APP_BASEURL;
 export async function AirportReq() {
     try {
         let reqUrl = `${endpoint}/getArprtList?serviceKey=${key}&_type=json`;
-        let response = await fetch(reqUrl);
-
+        let response = await axios(reqUrl);
+        console.log(response)
         return response;
     } catch (e) {
         return e
@@ -19,7 +21,7 @@ export async function AirportReq() {
 export async function AirlineReq() {
     try {
         let reqUrl = `${endpoint}/getAirmanList?serviceKey=${key}&_type=json`;
-        let response = await fetch(reqUrl);
+        let response = await axios(reqUrl);
 
         return response;
     } catch (e) {
@@ -31,12 +33,9 @@ export async function AirlineReq() {
 export async function TagoServerReq(data) {
 
     try {
+        let reqUrl = `${endpoint}/getFlightOpratInfoList?serviceKey=${key}&depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}&numOfRows=50&_type=json`;
 
-        let reqUrl = `${endpoint}/getFlightOpratInfoList?serviceKey=${key}&depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}&_type=json`;
-        // let reqUrl =`${baseUrl}/find?depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}`;
-
-        let response = await fetch(reqUrl);
-        // console.log(await response.json());
+        let response = await axios(reqUrl);
         return response;
 
     } catch (err) {

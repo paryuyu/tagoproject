@@ -31,18 +31,18 @@ export function LookupClassContextProvider({ children }) {
    
     const handleSearch = async (data) => {
 
-        if (data) {
-            let result = await TagoServerReq(data);
+        // if (data) {
+        //     let result = await TagoServerReq(data);
 
-            if (result.status === 200) {
-                let json = await result.json();
-                let data = json.response.body.items;
-                let tago;
-                if (data) {
-                   tago = new TagoData(data.item);}
-                   console.log(tago.rawdata,'<===classFn')
-            }
-        }
+        //     if (result.status === 200) {
+        //         let json = await result.json();
+        //         let data = json.response.body.items;
+        //         let tago;
+        //         if (data) {
+        //            tago = new TagoData(data.item);}
+        //         //    console.log(tago.rawdata,'<===classFn')
+        //     }
+        // }
     }
 
 

@@ -1,26 +1,21 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { LookupContext } from "../../context/lookup_context";
-import ResultListItem from "./resultListitem"
+import DataGridTable from "./dataGridTable";
+import "./resultTable.css"
 export default function ResultTable({ searchingState }) {
     let ctx = useContext(LookupContext);
 
 
-    return (<>
+    return (<div className="tableBox">
 
-        {searchingState ? <>
+        {searchingState ?
+         
+                <DataGridTable />
+              
+            : <p className="ment">항공편을 조회해보세요.</p>}
 
-
-
-       
-        </>
-
-            : <p>항공편을 조회해보세요.</p>}
-
-    </>);
+    </div>);
 }
 
 
 
-
-     {/* {ctx.searchingData && ctx.searchingData.response.body.items ?
-                ctx.searchingData.response.body.items.item.map((item, index) => { return <ResultListItem item={item} key={index} /> }) : <p>검색값이 없습니다.</p>} */}
