@@ -11,8 +11,8 @@ export default function DataGridTable() {
     const [rowData, setRowData] = useState([]);
     const [oldCellVal, setOldCellVal] = useState("");
     const [newCellVal, setNewCellVal] = useState("");
-    
-    const { searchingData } = useContext(LookupContext);
+    const [selectDataId, setSelectDataId] = useState();
+    const { searchingData , handleRemove,handleAdd  } = useContext(LookupContext);
 
 
     useEffect(() => {
@@ -22,7 +22,7 @@ export default function DataGridTable() {
 
     const columnDefs = [
         {
-            
+
             minWidth: 50,
             headerCheckboxSelection: true,
             checkboxSelection: true,
@@ -49,28 +49,25 @@ export default function DataGridTable() {
     }), [])
 
     const handleCellClicked = (evt) => {
-        // console.log(evt, "handleCellClicked");
-        // 클릭하면 밸류 나오기
+        
     }
+
     const handleDataAdd = () => {
-        //버튼 클릭 시 ===> 빈 객체 하나 추가해주자. push로.
+        handleAdd()
     }
-
+ 
     const handleDataDelete = () => {
-    }
-
-    //todo : cell editor 추가 : rowData에서 oldValue를 찾아서 newValue로 변경해주기:onCellEditingStopped
-    //체크박스 기능 추가 : 체크박스 클릭하면 true onRowSelected
-    //행 추가 :handleDataAdd 
-
-    const handleCellEdit = (e)=>{
-        console.log(e,'evt')
-            setNewCellVal(e.newValue);
-            setOldCellVal(e.oldValue);
-            console.log(rowData[e.rowIndex],"eeeee")
+        handleRemove(selectDataId)
     }
 
 
+    const handleCellEdit = (e) => {
+        //수정된 데이터만 감별할 수 있음.
+    }
+
+    const handleRowSelected = (e) => {
+        setSelectDataId(e.data.id)
+    }
 
 
     return (
@@ -79,16 +76,10 @@ export default function DataGridTable() {
             <button onClick={handleDataDelete}>Delete</button>
 
             <AgGridReact
-
-                onRowSelected={(evt) => {
-                    // console.log(evt.node.selected);
-                    // console.log(evt);
-                }}
-
+                onRowSelected={handleRowSelected}
                 onCellClicked={handleCellClicked}
                 onCellDoubleClicked={() => { setEditStart(true) }}
                 onCellEditingStopped={handleCellEdit}
-
                 rowData={rowData}
                 rowSelection='single'
                 columnDefs={columnDefs}
