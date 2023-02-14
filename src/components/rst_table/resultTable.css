@@ -100,3 +100,20 @@ button:hover {
 .closeIcon:hover{
     color:#afafaf
 }
+
+.modifyBtn{
+    
+}
+
+.modifyBtnBox{
+    display: flex;
+    justify-content: center;
+    margin-top:10px
+}
+
+
+.sick-days-warning {
+    background-color: rgb(168, 168, 168) !important;
+    
+  }
+  

@@ -15,7 +15,7 @@ export function LookupContextProvider({ children }) {
     const [raw, setRaw] = useState([]); 
 
 
-    
+    //서치바 - airport
     async function airportlistReq() {
         let result = await AirportReq();
         if (result.status === 200) {
@@ -31,7 +31,7 @@ export function LookupContextProvider({ children }) {
         }
     }
 
-
+    //서치바 - airline
     async function airlinelistReq() {
         let result = await AirlineReq();
         if (result.status === 200) {
@@ -67,31 +67,34 @@ export function LookupContextProvider({ children }) {
             let result = await TagoServerReq(data);
 
             if (result.status === 200) {
-                let data = result.data.response.body.items;
-                setRaw(data) //원본데이터
-                let arr = [];
 
+
+                let data = result.data.response.body.items;
+
+                setRaw(data) //원본데이터
+                
                 if (data) {
+                    let arr = [];
                     let item = data.item;
+
                     for (let i = 0; i < item.length; i++) {
                       
                         arr.push({
                             id:i+1,
                             "항공사": item[i].airlineNm,
                             "항공편": item[i].vihicleId,
-                            "출발시간": dateFormatter(item[i].depPlandTime),
-                            "도착시간":  dateFormatter(item[i].arrPlandTime),
+                            "출발시간": item[i].depPlandTime,
+                            "도착시간": item[i].arrPlandTime,
                             "일반석운임": item[i].economyCharge ? priceFormmater.format(item[i].economyCharge):"정보없음",
                             "비즈니스석운임": item[i].economyCharge ? priceFormmater.format(item[i].prestigeCharge):"정보없음",
                             "출발공항": item[i].depAirportNm,
                             "도착공항": item[i].arrAirportNm
                         })
                     }
-                }
-             
-                setSearchingData(arr) //수정데이터
 
-                if(arr.length>0){
+                    setSearchingData(arr); //수정데이터
+                    setSearchingLoading(false);
+                } else {
                     setSearchingLoading(false);
                 }
             }
@@ -100,6 +103,7 @@ export function LookupContextProvider({ children }) {
 
 
     const handleRemove = (selecId)=>{
+        
         let newArr = searchingData.filter(elm => {
             return elm.id !== selecId
         });
@@ -117,7 +121,7 @@ export function LookupContextProvider({ children }) {
     }, [])
 
     const handleAdd = ()=>{
-        setSearchingData([...searchingData, {
+        setSearchingData([{
             id:parseInt(searchingData[searchingData.length-1].id)+1,
             "항공사": "",
             "항공편":"",
@@ -126,7 +130,8 @@ export function LookupContextProvider({ children }) {
             "일반석운임": "",
             "비즈니스석운임": "",
             "출발공항": "",
-            "도착공항": ""}])
+            "도착공항": ""} 
+            , ...searchingData])
     }
 
         
