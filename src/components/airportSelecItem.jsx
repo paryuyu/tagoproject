@@ -1,6 +1,6 @@
 
 export default function AirportSelecItem({ item }) {
-
+    // console.log(item)
     return (
         <>  
         
