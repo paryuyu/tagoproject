@@ -1,6 +1,7 @@
 import axios from "axios";
 
-let key=process.env.REACT_APP_KEY;
+
+let key =process.env.REACT_APP_KEY;
 let endpoint = process.env.REACT_APP_END_POINT;
 let baseUrl = process.env.REACT_APP_BASEURL;
 
@@ -43,7 +44,6 @@ export async function TagoServerReq(data) {
     }
 
 }
-
 
 export async function DataUpdateReq(data){
     console.log(data)
