@@ -112,8 +112,8 @@ button:hover {
 }
 
 
-.sick-days-warning {
-    background-color: rgb(168, 168, 168) !important;
+.delete-warning {
+    background-color: #ddd !important;
     
   }
   

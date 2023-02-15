@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { LookupContext } from "../../context/lookup_context";
 import ChartModal from "./ChartModal";
 import DataGridTable from "./dataGridTable";
+import "./style/resultTable.css"
 
-import "./resultTable.css"
 export default function ResultTable({ searchingState }) {
 
     const [chartOpen, setChartOpen] = useState(false);
@@ -15,6 +15,7 @@ export default function ResultTable({ searchingState }) {
     const handleChartOpen = () => {
         setChartOpen(c => !c)
     }
+    
     const handleChartClose = () => {
         setChartOpen(false)
     }
@@ -28,7 +29,6 @@ export default function ResultTable({ searchingState }) {
         }
     }, [ctx.raw])
     
-    console.log(ctx.raw, 'raw')
     return (<div className="tableBox">
 
         {searchingState ?
