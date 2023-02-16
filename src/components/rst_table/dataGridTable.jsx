@@ -1,6 +1,7 @@
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { AgGridReact } from "ag-grid-react";
+import _ from 'lodash';
 
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { LookupContext } from "../../context/lookup_context";
@@ -93,6 +94,7 @@ export default function DataGridTable({ onChartOpen }) {
         setCnt(cnt + 1)
         return addItem;
     }
+    
     /** 브라우저 상 0번째 인덱스로 데이터 추가 */
     const handleDataAdd = () => {
         let add = gridRef.current.api.applyTransaction({ add: [addItems()], addIndex: 0 });
@@ -100,26 +102,23 @@ export default function DataGridTable({ onChartOpen }) {
 
     /** 데이터 삭제  */
     const handleDataDelete = () => {
+        //addDeleteData 추가해주기
+
         //현재 선택된 데이터 배열
         let delArr = gridRef.current.api.getSelectedRows();
-        
-        //addData를 뺀 delete된 데이터
+
         let newDelData = delArr.filter(one => !Object.keys(one).includes('name') ).map(one => { return { flag: "delete", ...one } });
-
-        //TODO: 1. 중복제거. ==> delData에 newDelData에 있는 데이터가 중복된다면 중복되지 않은 배열을 새로 만들어서 추가.
-        if(delData?.length>0 && delData){
-
-            //중복되지 않는 항목만 나오게 하고싶음. --> newDelData가 하나씩 들어갈 때는 조건을 잡아주는데 배열이 두개씩 들어가면 잡히질 않음. 
-            let arr = newDelData.filter(one => delData.some(i => i.id !== one.id) ) //<==<=== 문제
-
-            setDelData([...arr, ...delData])
-
+        
+        //delData가 있으면 중복제거 // 데이터가 없으면 그대로 넣어주기
+        if(delData.length>0 && delData){
+            let data = newDelData.concat(delData);
+            let deduplication=_.uniqBy(data, "id");
+            setDelData(deduplication)
         }else{
-            //등록된 delData가 없으면 그대로 delData로 등록
             setDelData(newDelData)
         }
         
-        
+
 
         //TODO: 2.updateData가 있으면 updateData에서 delData에 포함된 데이터 제거. 
         let updateAndDelData = delArr.filter((item) => !item.name && updateData.filter((i) => i.id === item.id));
@@ -129,11 +128,9 @@ export default function DataGridTable({ onChartOpen }) {
             })
             setUpdateData(elm)
         });
-        
     }
 
-
-    //TODO: add된 데이터에는 id가 없어서 조건에 안걸림. // add되지 않은 데이터들은 작동O
+    //TODO: delData에 add된 data는 없어서 조건에 걸리지 않음. --> ? 어떻게 해결할건지?
     const handleGetRowClass = (params) => {
         if (delData.some(one=> one.id === params.node.data.id)) { 
             return 'delete-warning';
@@ -142,10 +139,9 @@ export default function DataGridTable({ onChartOpen }) {
 
     useEffect(()=>{
     if(delData.length>0){
-        gridRef?.current?.api?.redrawRows(); 
+        gridRef?.current?.api?.redrawRows();
     }
     },[delData])
-
     
     
     const handleCellUpdate = (e) => {
@@ -180,15 +176,12 @@ export default function DataGridTable({ onChartOpen }) {
        return addArr;
     }
    
-    //TODO: 마지막 데이터 중복데이터는 없는지 최종데이터가 맞는지 확인해서 서버로 잘 보내주는지 확인해야함.
+    //TODO: 마지막 데이터 중복데이터는 없는지 최종데이터가 맞는지 확인해야함.
     const handleFinalUpdate = () => {
         let add = AddFlag()
-        let finalArr = add.concat(delData).concat(updateData);
-        console.log(finalArr)
+        let finalData = add.concat(delData).concat(updateData);
 
-        //fetch함수로 finalArr 보내기.
-        //선택된 데이터들과 flag 데이터들을 비교해서 중복된 데이터만 서버로 보내기.
-
+        //TODO: fetch함수로 finalData 보내기. ===> 선택된 데이터들과 flag 데이터들을 비교해서 중복된 데이터만 서버로 보내기.
         console.log(gridRef.current.api.getSelectedRows())
     }
 
