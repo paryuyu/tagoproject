@@ -106,6 +106,7 @@ export default function DataGridTable({ onChartOpen }) {
 
         //현재 선택된 데이터 배열
         let delArr = gridRef.current.api.getSelectedRows();
+
         let newDelData = delArr.filter(one => !Object.keys(one).includes('name') ).map(one => { return { flag: "delete", ...one } });
         
         //delData가 있으면 중복제거 // 데이터가 없으면 그대로 넣어주기
@@ -169,10 +170,8 @@ export default function DataGridTable({ onChartOpen }) {
         
         if(one.name && one.name.startsWith("add")){
             addArr.push({flag:'add', ...one})
-        }
-
-       })
-       
+}
+})
        setAddData(addArr)
        return addArr;
     }
