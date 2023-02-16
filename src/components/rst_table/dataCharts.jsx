@@ -31,7 +31,8 @@ export default function DataCharts() {
         data: data,
         
         legend:{
-            position:"bottom"},
+            position:"bottom"
+        },
         series: [{
             xKey: 'quarter',
             yKey: 'economy',

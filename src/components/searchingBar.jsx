@@ -45,7 +45,6 @@ export default function SearchingBar({ onSchState }) {
         setDepDate(evt.target.value)
     }
 
-    console.log(ctx)
     return (
         <>
             <section className="schBarOutline">

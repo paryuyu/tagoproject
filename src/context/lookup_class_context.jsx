@@ -40,7 +40,6 @@ export function LookupClassContextProvider({ children }) {
         //         let tago;
         //         if (data) {
         //            tago = new TagoData(data.item);}
-        //         //    console.log(tago.rawdata,'<===classFn')
         //     }
         // }
     }

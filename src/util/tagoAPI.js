@@ -48,7 +48,6 @@ export async function TagoServerReq(data) {
 }
 
 export async function DataUpdateReq(data){
-    console.log(data)
     
     try{ 
         let response = await axios.put(baseUrl+"/update", data);
