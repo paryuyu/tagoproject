@@ -5,7 +5,7 @@ import { AgGridReact } from "ag-grid-react";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { LookupContext } from "../../context/lookup_context";
 
-
+/** grid column 설정 */
 const columnDefs = [
     {
         maxWidth: 50,
@@ -25,6 +25,7 @@ const columnDefs = [
     { headerName: '도착공항', field: "arrAirportNm", },
 ];
 
+/**데이터그리드의 내 가격 포맷터 */
 function priceFormmater(params) {
     let formatter = new Intl.NumberFormat("ko", {
         style: 'currency',
@@ -38,6 +39,7 @@ function priceFormmater(params) {
     }
 }
 
+/**날짜 및 시간 포맷터 */
 function dateFormatter(params) {
     let year = String(params.value).slice(2, 4);
     let mon = String(params.value).slice(4, 6);
@@ -49,10 +51,8 @@ function dateFormatter(params) {
 }
 
 
-
-
 export default function DataGridTable({ onChartOpen }) {
-    const { searchingData, handleCtxUpdate } = useContext(LookupContext);
+    const { searchingData } = useContext(LookupContext);
 
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
     const gridRef = useRef();
@@ -64,9 +64,6 @@ export default function DataGridTable({ onChartOpen }) {
 
     const [selectArr, setSelectArr] = useState([]);
     const [rowData, setRowData] = useState([]);
-
-    const [editStart, setEditStart] = useState(false);
-    const [selectDataId, setSelectDataId] = useState();
 
 
     useEffect(() => {
@@ -96,26 +93,36 @@ export default function DataGridTable({ onChartOpen }) {
         setCnt(cnt + 1)
         return addItem;
     }
-
+    /** 브라우저 상 0번째 인덱스로 데이터 추가 */
     const handleDataAdd = () => {
         let add = gridRef.current.api.applyTransaction({ add: [addItems()], addIndex: 0 });
-        setAddData([{ flag: 'add', ...add.add[0].data }, ...addData])
     }
 
-
+    /** 데이터 삭제  */
     const handleDataDelete = () => {
-
+        //현재 선택된 데이터 배열
         let delArr = gridRef.current.api.getSelectedRows();
-        let addAndDelData = delArr.filter((item) => item.name && addData.filter((i) => i.name === item.name))
-        addAndDelData.map(one => {
-            let elm = addData.filter(elm => {
-                return elm.name !== one.name
-            })
-            setAddData(elm)
-        });
+        //updatedata 배열만 빼주면 됨. 포함되어있는지 확인
+        
+        //addData 빼고 그냥 delete된 data와 update되고 delete된 data만 존재하는 배열
+        let newDelData = delArr.filter(one => !Object.keys(one).includes('name') ).map(one => { return { flag: "delete", ...one } });
 
+        //TODO: 1. 중복제거. ==> delData에 newDelData에 있는 데이터가 중복된다면 중복되지 않은 배열을 새로 만들어서 추가.
+        if(delData?.length>0 && delData){
 
-        // updateData랑 delData랑 겹치면 updateData에서만 빼주기. (배열과 배열) ==> 결과적으로 서버에서 삭제될 데이터
+            //중복되지 않는 항목만 나오게 하고싶음. --> newDelData가 하나씩 들어갈 때는 조건을 잡아주는데 배열이 두개씩 들어가면 잡히질 않음. 
+            let arr = newDelData.filter(one => delData.some(i => i.id !== one.id) ) //<==<=== 문제
+
+            setDelData([...arr, ...delData])
+
+        }else{
+            //등록된 delData가 없으면 그대로 delData로 등록
+            setDelData(newDelData)
+        }
+        
+        
+
+        //TODO: 2.updateData가 있으면 updateData에서 delData에 포함된 데이터 제거. 
         let updateAndDelData = delArr.filter((item) => !item.name && updateData.filter((i) => i.id === item.id));
         updateAndDelData.map(one => {
             let elm = updateData.filter(elm => {
@@ -123,61 +130,74 @@ export default function DataGridTable({ onChartOpen }) {
             })
             setUpdateData(elm)
         });
-
-
-        // 체크를 새로하면 이전 데이터가 사라짐.
-        // setDelData에 데이터가 들어갈 때 문제가 있는 듯.
-        let newArr = delArr.filter(one => !one.name).map(one => { return { flag: "delete", ...one } });
-        setDelData([{flag:'delete',...newArr} , ...delData]); //<=========여기 문제
-    }
-
-    //스크롤 이벤트가 발생해야 class가 바뀌는데 이벤트 발생하면 바로 바뀌게 해야함.
-    const handleGetRowClass = (params) => {
-       
-        if ( delData.some(one=> one.id === params.node.data.id )) {
-            return 'delete-warning'
-        }
         
     }
 
 
-
-
-
-
-    const handleCellEdit = (e) => {
-        /** TODO :  addData -> updata data에서 빼고, addData -> 정보값이 비어있으면 그냥 delete 해주기 */
-        //수정된 데이터만 감별할 수 있음.
-        console.log(addData, 'add')
-        console.log(updateData, 'update')
-        console.log(e.data,'dataa')
-        // let newArr = e.data.filter(one => !one.name).map(one=> console.log(one))
-        if(e.data.name && e.data.name.startsWith('add') ){
-            console.log('evt...!')
-            
-            setUpdateData([{ flag: 'add', ...e.data }, ...updateData])
-        }else if(e.data.id && !e.data.name){
-            setUpdateData([{ flag: 'update', ...e.data }, ...updateData])
-            //e.data.name 이 같은 애들은 add data data업데이트 해줘야하는데... 오.... 그거 어케하지...
-
+    //TODO: add된 데이터에는 id가 없어서 조건에 안걸림. // add되지 않은 데이터들은 작동O
+    const handleGetRowClass = (params) => {
+        if (delData.some(one=> one.id === params.node.data.id)) { 
+            return 'delete-warning';
         }
     }
+
+    useEffect(()=>{
+    if(delData.length>0){
+        gridRef?.current?.api?.redrawRows(); 
+    }
+    },[delData])
+
+    
+    
+    const handleCellUpdate = (e) => {
+        //add데이터엔 id값이 없어서 key값으로 비교
+        if(Object.keys(e.data).includes('id')){ 
+            //updateData에 기존 데이터가 없으면 그대로 update, 있으면 비교 후 이후 데이터로 등록.
+            if(updateData.length>0){
+                 let exeptUpdateData = updateData.filter(one => one.id !== e.data.id) 
+                 setUpdateData([{ flag: 'update', ...e.data }, ...exeptUpdateData])
+            }else{
+                setUpdateData([{ flag: 'update', ...e.data }, ...updateData])
+            }
+        }
+    }
+
 
     const handleRowSelected = (e) => {
         setSelectArr(e.api.getSelectedRows());
     }
 
+    //add데이터는 수정하기 버튼 클릭 시 내용이 입력된 상태에서 데이터를 생성해줌. 
+    function AddFlag(){
+
+        let addArr = [];
+        gridRef.current.api.getSelectedRows().forEach(one => {
+        
+        if(one.name && one.name.startsWith("add")){
+            addArr.push({flag:'add', ...one})
+        }
+
+       })
+       
+       setAddData(addArr)
+       return addArr;
+    }
+   
+    //TODO: 마지막 데이터 중복데이터는 없는지 최종데이터가 맞는지 확인해서 서버로 잘 보내주는지 확인해야함.
+    const handleFinalUpdate = () => {
+        let add = AddFlag()
+        let finalArr = add.concat(delData).concat(updateData);
+        console.log(finalArr)
+
+        //fetch함수로 finalArr 보내기.
+        //선택된 데이터들과 flag 데이터들을 비교해서 중복된 데이터만 서버로 보내기.
+
+        console.log(gridRef.current.api.getSelectedRows())
+    }
+
     const handleChartView = () => {
         onChartOpen();
     }
-
-    const handleFinalUpdate = () => {
-        let newArr = addData.concat(delData).concat(updateData);
-        //pk --> 중복 잡기 --> 체크된 애들만 수정
-        handleCtxUpdate(newArr);
-        console.log(newArr)
-    }
-
 
     return (
         <div className="ag-theme-alpine" style={{ height: 600, width: "90%" }}>
@@ -198,10 +218,8 @@ export default function DataGridTable({ onChartOpen }) {
                     columnDefs={columnDefs}
                     ref={gridRef}
                     rowSelection='multiple'
-                    onRowSelected={(e) => { setSelectDataId(e.data.id) }}
                     onSelectionChanged={handleRowSelected}
-                    onCellDoubleClicked={() => { setEditStart(true) }}
-                    onCellEditingStopped={handleCellEdit}
+                    onCellEditingStopped={handleCellUpdate}
                     defaultColDef={defaultColDef}
                     getRowClass={handleGetRowClass}
                 />

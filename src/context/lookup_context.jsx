@@ -18,7 +18,6 @@ export function LookupContextProvider({ children }) {
     //searchingBar - airport
     async function airportlistReq() {
         let result = await AirportReq();
-        console.log(result.data.response.body.items)
         if (result.status === 200) {
             let data = await result.data.response.body.items;
 
@@ -37,7 +36,6 @@ export function LookupContextProvider({ children }) {
         let result = await AirlineReq();
         if (result.status === 200) {
             let data = await result.data.response.body.items;
-            // console.log(data)
 
             if (data) {
                 let item = data.item;
@@ -74,7 +72,7 @@ export function LookupContextProvider({ children }) {
         }
     }
 
-
+    console.log(searchingData)
     useEffect(() => {
         airportlistReq();
         airlinelistReq();
@@ -88,7 +86,6 @@ export function LookupContextProvider({ children }) {
         if (data) {
             //데이터가 있으면 서버로 보내주기.
             let result = await DataUpdateReq();
-            console.log(result);
             
             if(result.status === 200){
                 console.log("update success...!")
