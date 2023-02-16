@@ -175,10 +175,8 @@ export default function DataGridTable({ onChartOpen }) {
         
         if(one.name && one.name.startsWith("add")){
             addArr.push({flag:'add', ...one})
-        }
-
-       })
-       
+}
+})
        setAddData(addArr)
        return addArr;
     }
