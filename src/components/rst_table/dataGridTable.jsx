@@ -158,8 +158,6 @@ export default function DataGridTable({ onChartOpen }) {
             setUpdateData([{ flag: 'add', ...e.data }, ...updateData])
         }else if(e.data.id && !e.data.name){
             setUpdateData([{ flag: 'update', ...e.data }, ...updateData])
-            //e.data.name 이 같은 애들은 add data data업데이트 해줘야하는데... 오.... 그거 어케하지...
-
         }
     }
 
