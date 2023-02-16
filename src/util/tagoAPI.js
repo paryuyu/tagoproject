@@ -20,7 +20,7 @@ export async function AirportReq() {
 export async function AirlineReq() {
     try {
 
-        let reqUrl = baseUrl+"/find"
+        let reqUrl = `${baseUrl}/find`
         let response = await axios.get(reqUrl);
 
         return response;

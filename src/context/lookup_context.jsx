@@ -8,9 +8,7 @@ export function LookupContextProvider({ children }) {
     const [airportListData, setPortlineListData] = useState();
     const [searchingData, setSearchingData] = useState();
     const [searchisLoading, setSearchingLoading] = useState(true);
-
-    const [addDataId, setAddDataId] = useState([]);
-    const [removeDataId, setRemoveDataId] = useState([]);
+    const [refresh, setRefresh] = useState(false);
 
     const [raw, setRaw] = useState([]);
 
@@ -98,6 +96,12 @@ export function LookupContextProvider({ children }) {
         }
     }
 
+
+    //검색 버튼 클릭 시 refresh => addData, updateData, deleteData 모두 삭제
+    const handleRefresh = () => {
+        setRefresh(c=>!c)
+    }
+
     return (
         <LookupContext.Provider value={{
             searchisLoading,
@@ -106,7 +110,8 @@ export function LookupContextProvider({ children }) {
             airportListData,
             searchingData,
             handleCtxUpdate,
-            handleSearch
+            handleSearch,
+            handleRefresh,
         }}>
 
             {children}
