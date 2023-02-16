@@ -155,7 +155,7 @@ export default function DataGridTable({ onChartOpen }) {
         if(e.data.name && e.data.name.startsWith('add') ){
             console.log('evt...!')
             
-            setUpdateData([{ flag: 'add', ...e.data }, ...updateData])
+            setUpdateData([{ flag: 'add', ...e.data }, ...addData])
         }else if(e.data.id && !e.data.name){
             setUpdateData([{ flag: 'update', ...e.data }, ...updateData])
         }
