@@ -102,9 +102,8 @@ export default function DataGridTable({ onChartOpen }) {
     const handleDataDelete = () => {
         //현재 선택된 데이터 배열
         let delArr = gridRef.current.api.getSelectedRows();
-        //updatedata 배열만 빼주면 됨. 포함되어있는지 확인
         
-        //addData 빼고 그냥 delete된 data와 update되고 delete된 data만 존재하는 배열
+        //addData를 뺀 delete된 데이터
         let newDelData = delArr.filter(one => !Object.keys(one).includes('name') ).map(one => { return { flag: "delete", ...one } });
 
         //TODO: 1. 중복제거. ==> delData에 newDelData에 있는 데이터가 중복된다면 중복되지 않은 배열을 새로 만들어서 추가.
