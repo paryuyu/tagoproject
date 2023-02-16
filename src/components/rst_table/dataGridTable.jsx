@@ -13,6 +13,7 @@ const columnDefs = [
         headerCheckboxSelection: true,
         checkboxSelection: true,
         editable: false,
+
     },
     { headerName: '항공사', field: "airlineNm", },
     { headerName: '항공편', field: "vihicleId", },
@@ -100,16 +101,12 @@ export default function DataGridTable({ onChartOpen }) {
         let add = gridRef.current.api.applyTransaction({ add: [addItems()], addIndex: 0 });
         setAddData([{ flag: 'add', ...add.add[0].data }, ...addData])
     }
-    //======================================================================
-    //delete => btn onclick
+
+
     const handleDataDelete = () => {
 
         let delArr = gridRef.current.api.getSelectedRows();
-        // addData랑 delData 랑 겹치면 addData에서도 빼주고 delData에는 저장 X. (배열과 배열)
-
-        // add 된 후 delete된 데이터 찾아주기
         let addAndDelData = delArr.filter((item) => item.name && addData.filter((i) => i.name === item.name))
-        // addData 데이터에서 add 됐지만 바로 delete된 값은 지워서 새 배열로 들어감.
         addAndDelData.map(one => {
             let elm = addData.filter(elm => {
                 return elm.name !== one.name
@@ -119,7 +116,7 @@ export default function DataGridTable({ onChartOpen }) {
 
 
         // updateData랑 delData랑 겹치면 updateData에서만 빼주기. (배열과 배열) ==> 결과적으로 서버에서 삭제될 데이터
-        let updateAndDelData = delArr.filter((item) => !item.name && updateData.filter((i) => i.id === item.id))
+        let updateAndDelData = delArr.filter((item) => !item.name && updateData.filter((i) => i.id === item.id));
         updateAndDelData.map(one => {
             let elm = updateData.filter(elm => {
                 return elm.id !== one.id
@@ -127,30 +124,43 @@ export default function DataGridTable({ onChartOpen }) {
             setUpdateData(elm)
         });
 
-        // 최종적으로 클라이언트에서 새롭게 add 된 데이터는 deleteData에 들어가면 안됨. => delArr에서 item에 name이 있는 애들만 다 빼주기.
-        let newArr = delArr.filter(one => !one.name).map(one => { return { flag: "delete", ...one } })
-        setDelData(newArr)
+
+        // 체크를 새로하면 이전 데이터가 사라짐.
+        // setDelData에 데이터가 들어갈 때 문제가 있는 듯.
+        let newArr = delArr.filter(one => !one.name).map(one => { return { flag: "delete", ...one } });
+        setDelData([{flag:'delete',...newArr} , ...delData]); //<=========여기 문제
     }
 
-    /** TODO :  addData -> updata data에서 빼고, addData -> 정보값이 비어있으면 그냥 delete 해주기 */
-    /** TODO :  화면상에서 진짜 빼지말고 색만 바꾸기  => row 객체별로 나와서 row 별 클래스를 넣어줄 수 있음. */
-    
+    //스크롤 이벤트가 발생해야 class가 바뀌는데 이벤트 발생하면 바로 바뀌게 해야함.
     const handleGetRowClass = (params) => {
-
-        // if (params.node.rowIndex % 2 === 0) {
-        //     // 조건값 -> delData에 있는 데이터값이랑 비교해야함.
-
-
-        //     return 'delete-warning'
-        // }
-
+       
+        if ( delData.some(one=> one.id === params.node.data.id )) {
+            return 'delete-warning'
+        }
+        
     }
-    console.log(updateData)
-    console.log(addData,'ddd')
-    //======================================================================
+
+
+
+
+
+
     const handleCellEdit = (e) => {
+        /** TODO :  addData -> updata data에서 빼고, addData -> 정보값이 비어있으면 그냥 delete 해주기 */
         //수정된 데이터만 감별할 수 있음.
-        setUpdateData([{ flag: 'update', ...e.data }, ...updateData])
+        console.log(addData, 'add')
+        console.log(updateData, 'update')
+        console.log(e.data,'dataa')
+        // let newArr = e.data.filter(one => !one.name).map(one=> console.log(one))
+        if(e.data.name && e.data.name.startsWith('add') ){
+            console.log('evt...!')
+            
+            setUpdateData([{ flag: 'add', ...e.data }, ...updateData])
+        }else if(e.data.id && !e.data.name){
+            setUpdateData([{ flag: 'update', ...e.data }, ...updateData])
+            //e.data.name 이 같은 애들은 add data data업데이트 해줘야하는데... 오.... 그거 어케하지...
+
+        }
     }
 
     const handleRowSelected = (e) => {
@@ -163,6 +173,7 @@ export default function DataGridTable({ onChartOpen }) {
 
     const handleFinalUpdate = () => {
         let newArr = addData.concat(delData).concat(updateData);
+        //pk --> 중복 잡기 --> 체크된 애들만 수정
         handleCtxUpdate(newArr);
         console.log(newArr)
     }
