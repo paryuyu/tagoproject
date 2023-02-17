@@ -1,0 +1,28 @@
+/*그리드 컨테이너*/
+.authOutlineContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    border-top:1px solid #333;
+}
+
+/*그리드아이템*/
+.authBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    border: 2px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 50px;
+}
+
+.LoginBtn{
+    width:200px
+}
+
+

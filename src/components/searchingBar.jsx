@@ -2,10 +2,8 @@ import AirlineSelecItems from "./airlineSelectItem";
 import AirportSelecItem from "./airportSelecItem";
 import { useContext, useState } from "react";
 import { LookupContext } from "../context/lookup_context";
-import { LookupClassContext } from "../context/lookup_class_context";
 export default function SearchingBar({ onSchState }) {
     const ctx = useContext(LookupContext);
-    const classCtx = useContext(LookupClassContext);
 
     const [airline, setAirline] = useState("");
     const [arrPort, setArrPort] = useState("NAARKJB");
@@ -25,7 +23,6 @@ export default function SearchingBar({ onSchState }) {
         }
 
         ctx.handleSearch(data)
-        classCtx.handleSearch(data)
         onSchState(true)
     }
 

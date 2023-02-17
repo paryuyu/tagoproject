@@ -90,30 +90,52 @@ button:hover {
     border-bottom: 1px #ddd solid;
 }
 
-.closeIcon{
+.closeIcon {
     position: absolute;
-    top:20px;
-    left:590px;
+    top: 20px;
+    left: 590px;
     font-size: 25px;
     cursor: pointer;
 }
-.closeIcon:hover{
-    color:#afafaf
+
+.closeIcon:hover {
+    color: #afafaf
 }
 
-.modifyBtn{
-    
-}
+.modifyBtn {}
 
-.modifyBtnBox{
+.modifyBtnBox {
     display: flex;
     justify-content: center;
-    margin-top:10px
+    margin-top: 10px
 }
 
 
 .delete-warning {
     background-color: #ddd !important;
-    
-  }
-  
+
+}
+
+
+.update-warning {
+    background-color: rgb(255, 153, 0) !important;
+
+}
+
+.final-update-chkbox {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 400px;
+    border: 2px solid #000;
+    box-shadow: 50;
+    padding: 1rem;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-btn{
+    margin-top: 10px;
+}

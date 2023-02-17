@@ -1,14 +1,15 @@
 import axios from "axios";
-let key = "Lg3xW55zPXZOKKGy%2F9yuUYPbKZnBYzrDHtABcdAECRZiwNt0igZqOXoADrNI7%2BoSNrgN6raYgbrkNG2%2FUWerGA%3D%3D"
-//let key=process.env.REACT_APP_KEY;
+
+let key=process.env.REACT_APP_KEY;
 let endpoint = process.env.REACT_APP_END_POINT;
 let baseUrl = process.env.REACT_APP_BASEURL;
 
 //국내공항목록 조회
 export async function AirportReq() {
     try {
-
-        let reqUrl = `${endpoint}/getArprtList?serviceKey=${key}&_type=json`;
+        
+        let reqUrl = `${baseUrl}/find`
+        // let reqUrl = `${endpoint}/getArprtList?serviceKey=${key}&_type=json`;
         let response = await axios.get(reqUrl);
         return response;
     } catch (e) {
@@ -46,6 +47,7 @@ export async function TagoServerReq(data) {
 }
 
 
+//update request
 export async function DataUpdateReq(data){
     
     try{ 

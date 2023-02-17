@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import Header from "../components/header";
 import SearchingBar from "../components/searchingBar";
 import ResultTable from "../components/rst_table/resultTable";
 import "./style/mainpage.css"
@@ -14,10 +13,6 @@ export default function MainPage() {
 
 
     return (<>
-        <header>
-            <Header />
-        </header>
-
         <main>
             <section>
                 <SearchingBar onSchState={HandleSearchingState} />
@@ -26,7 +21,5 @@ export default function MainPage() {
                 <ResultTable searchingState={searchingState} />
             </section>
         </main>
-      
-
     </>);
 }
