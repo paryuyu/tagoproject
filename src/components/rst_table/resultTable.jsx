@@ -1,4 +1,4 @@
-import { CircularProgress, Typography } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { LookupContext } from "../../context/lookup_context";
 import ChartModal from "./ChartModal";
