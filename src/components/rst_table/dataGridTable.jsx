@@ -157,7 +157,6 @@ export default function DataGridTable({ onChartOpen }) {
     }
 
 
-    //서버로 보내줄 update data
     const handleFinalUpdate = () => {
         //선택된 데이터들
         let chkArr = gridRef.current.api.getSelectedRows();
