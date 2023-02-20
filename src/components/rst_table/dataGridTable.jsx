@@ -136,7 +136,7 @@ export default function DataGridTable({ onChartOpen }) {
             return 'delete-warning';
         }
 
-        if (params.node.data.flag === "update") {
+        if ("update" === params.node.data.flag) {
             return 'update-warning';
         }
     }
