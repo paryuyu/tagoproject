@@ -39,7 +39,7 @@ export default function ResultTable({ searchingState }) {
                         <DataGridTable onChartOpen={handleChartOpen} />
                     </>
                   
-                : <CircularProgress color="inherit" />
+                : <CircularProgress color="inherit" className="loadingProgress" />
             : <p className="ment">항공편을 조회해보세요.</p>}
     </div>);
 }

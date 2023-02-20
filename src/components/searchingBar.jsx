@@ -7,7 +7,7 @@ export default function SearchingBar({ onSchState }) {
 
     const [airline, setAirline] = useState("");
     const [arrPort, setArrPort] = useState("NAARKJB");
-    const [depPort, setDepPort] = useState("NAARKJB");
+    const [depPort, setDepPort] = useState("NAARKT");
     const [depDate, setDepDate] = useState(new Date().toISOString().slice(0, 10));
 
     const handleSearch = (evt) => {

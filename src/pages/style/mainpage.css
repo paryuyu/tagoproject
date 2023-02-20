@@ -1,6 +1,11 @@
 section {
  
 }
+
 main{
    height: 90vh;
+}
+
+.footer-ment{
+   font-size: 12px;
 }

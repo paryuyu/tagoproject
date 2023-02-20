@@ -5,7 +5,7 @@
 .headerTypo{
     font-weight: 100;
     text-align: center;
-    cursor: default;
+    cursor: pointer;
 }
 
 
@@ -52,4 +52,21 @@
 .schMiniTitle{
   font-size: 15px;
   font-weight: 100;
+}
+
+footer{
+    border-top: #ddd 1px solid;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 20px 0px 20px
+}
+
+.list{
+    position: absolute;
+    top:200px;
+    
 }
