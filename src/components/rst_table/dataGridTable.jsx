@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { LookupContext } from "../../context/lookup_context";
-import FinalChkList from './item/finalChklist';
+import ResultModal from './resultModal';
 
 
 
@@ -179,6 +179,9 @@ export default function DataGridTable({ onChartOpen }) {
         setAlretOpen(c => !c);
     }
 
+    const handleUpdateFinish = () =>{
+        //서버로 수정된 데이터 보내주기 : 마지막
+    }
 
     return (
         <div className="ag-theme-alpine" style={{ height: 600, width: "90%" }}>
@@ -203,22 +206,14 @@ export default function DataGridTable({ onChartOpen }) {
                     onCellEditingStopped={handleCellUpdate}
                     defaultColDef={defaultColDef}
                     getRowClass={handleGetRowClass}
+
+                    pagination={true}
                 />
             </div>
             <div className="modifyBtnBox">
                 <button className="modifyBtn" onClick={handleFinalUpdate}>수정하기</button>
             </div>
-            <Modal
-                open={alretOpen}
-                onClose={handleAlretOpen}>
-
-                <div className='final-update-chkbox'>
-
-                    {finalChk.map((one, index) =>
-                        <FinalChkList item={one} key={index} />)}
-                </div>
-                <button></button>
-            </Modal>
+         <ResultModal open={alretOpen} onOpen={handleAlretOpen} updateData={finalChk} onUpdate={handleUpdateFinish}/>
         </div>)
 }
 

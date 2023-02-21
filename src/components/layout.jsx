@@ -15,6 +15,9 @@ export default function Layout() {
         navigate("/auth")
     }
 
+   const handleNavigation = ()=>{
+    navigate("/searching")
+   }
     
 
     useEffect(()=>{
@@ -23,15 +26,14 @@ export default function Layout() {
             navigate("/searching")
         }
 
-
         let getItem = localStorage.getItem("access_token");
-        // console.log(getItem)
         setAuth(getItem)
     },[])
 
+
     return (<div className="headerBox">
         <header>
-            <h1 className="headerTypo">국내 항공 조회 서비스</h1>
+            <h1 className="headerTypo" onClick={handleNavigation}>국내 항공 조회 서비스</h1>
             <button onClick={handleLogin} className="headerloginBtn">{"로그인"}</button>
         </header>
 

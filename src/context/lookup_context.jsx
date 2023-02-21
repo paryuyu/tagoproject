@@ -53,7 +53,7 @@ export function LookupContextProvider({ children }) {
 
                 let data = result.data.response.body.items;
                 setRaw(data) //원본데이터
-
+                console.log(data,"<====data")
                 if (data) {
                     let arr = [];
                     let item = data.item;
@@ -70,7 +70,7 @@ export function LookupContextProvider({ children }) {
         }
     }
 
-    console.log(searchingData)
+    console.log(searchingData,"<==searchingData")
     useEffect(() => {
         airportlistReq();
         airlinelistReq();

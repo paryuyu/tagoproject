@@ -102,7 +102,6 @@ button:hover {
     color: #afafaf
 }
 
-.modifyBtn {}
 
 .modifyBtnBox {
     display: flex;
@@ -124,23 +123,63 @@ button:hover {
 
 .final-update-chkbox {
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     width: 400px;
-    border: 2px solid #000;
+    border: 1px solid #ddd;
+    border-radius: 20px;
     box-shadow: 50;
     padding: 1rem;
     background-color: #fff;
     display: flex;
     flex-direction: column;
+
 }
 
-.modal-btn{
+.modal-btn {
     margin-top: 10px;
 }
 
-.loadingProgress{
+.loadingProgress {
     position: absolute;
-    top:50%;
+    top: 50%;
+}
+
+.no-data-ment {
+    border: 1px solid #f1f1f1;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    text-align: center;
+    font-weight: 600;
+    color: #575757
+}
+
+.finish-modal-typo {
+    margin: 0px;
+    font-size: 14px;
+}
+
+.modal-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    flex: 1;
+}
+
+.modal-itembox {
+    display: flex;
+    align-items: center;
+
+}
+
+.finish-modal-item-box {
+    width: 100%;
+    flex: 2;
+    border: 1px #ddd solid;
+    margin-bottom: 5px;
+    border-radius: 3px;
+    padding: 5px;
 }

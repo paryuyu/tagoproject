@@ -1,15 +1,12 @@
 import { createContext, useEffect } from "react";
 import { Cookies } from "react-cookie";
-import { useLocation } from "react-router-dom";
+import { isExpired, decodeToken } from "react-jwt";
 import { AuthLoginReq, AccessTokenValidReq, RefreshTokenValidReq } from "../util/authAPI";
 
 export const AuthContext = createContext();
 
 
 export function AuthContextProvider({ children }) {
-
-
-
 
     const cookies = new Cookies();
 
@@ -23,19 +20,39 @@ export function AuthContextProvider({ children }) {
                 password: password
             }
 
-            let result = await AuthLoginReq(auth);
-            //token을 response body -> data로 받는다고 가정
+            let result = await AuthLoginReq(auth); //서버 요청
 
+            //token을 response body -> data로 받는다고 가정
             if (result.status === 200) {
                 //서버 로그인 성공 시
 
-                if (result.data.access_token && result.data.refresh_token) {
-
+                // if (result.data.access_token && result.data.refresh_token) {
+                if (result.token) {
                     //localStorage에 Access Token 저장
-                    localStorage.setItem('access_token', result.data.access_token);
 
-                    //headers cookies에 Refresh Token 저장 => Samesite속성은 CSRF(Cross Site Request Forgery) 공격을 막기 위한 속성
-                    cookies.set("refresh_token", result.data.refresh_token, { sameSite: 'strict', httpOnly: true, secure: true })
+                    localStorage.setItem('access_token', result.token); //저장하고
+                    let token = localStorage.getItem('access_token'); //꺼내오기
+                    console.log(token, '<===token') // 꺼내온 토큰을 decoding
+
+                    const mydecodedToken = decodeToken(token) //decoding
+                    const TokenExp = isExpired(token) //token expired 체크
+
+                    console.log(TokenExp, '<=TokenExp')
+                    console.log(mydecodedToken, '<=mydecodedToken')
+
+
+                    //쿠키에 저장 
+                    //options : expires는 Date로 지정(상대값이 아니라 절대값)
+                     cookies.set("refresh_token", result.token, {
+                        secure: true,
+                        httpOnly: true, //http Only 는 리프레쉬 토큰 어떻게 받아오는지?
+                        maxAge: 60*60*24*7 //일주일 //maxAge 단위는 ms가 아닌 s.
+                    });
+
+                    //쿠키에서 꺼내오기 : httpOnly일 때는 보여지는게 없어서 못 꺼냄. 
+                    let refreshToken = cookies.get("refresh_token"); 
+                    console.log(refreshToken, '<==refreshToken');
+
                     return true;
 
                 } else {
@@ -59,10 +76,10 @@ export function AuthContextProvider({ children }) {
 
         let accessToken = localStorage.getItem("access_token");
         let refreshToken = cookies.get("refresh_token");
-        if (accessToken !== null) { 
+
+        if (accessToken !== null) {
             // access token 이 로컬스토리지에 있으면 서버에 access token 유효성 검사
             let result = await AccessTokenValidReq(accessToken);
-
 
             if (result.status === 200) {
 
@@ -100,8 +117,9 @@ export function AuthContextProvider({ children }) {
 
 
     useEffect(() => {
-        handleCtxTokenValidReq();
+        // handleCtxTokenValidReq();
     }, [])
+
 
     return (
         <AuthContext.Provider value={{ handleCtxLoginReq, handleCtxTokenValidReq }}>

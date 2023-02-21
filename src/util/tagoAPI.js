@@ -1,6 +1,7 @@
 import axios from "axios";
 
-let key=process.env.REACT_APP_KEY;
+// let key=process.env.REACT_APP_KEY;
+let key ="Lg3xW55zPXZOKKGy%2F9yuUYPbKZnBYzrDHtABcdAECRZiwNt0igZqOXoADrNI7%2BoSNrgN6raYgbrkNG2%2FUWerGA%3D%3D"
 let endpoint = process.env.REACT_APP_END_POINT;
 let baseUrl = process.env.REACT_APP_BASEURL;
 
@@ -9,8 +10,8 @@ export async function AirportReq() {
     try {
 
         //path값은 명사 -> 동사X
-        let reqUrl = `${baseUrl}/airport`
-        // let reqUrl = `${endpoint}/getArprtList?serviceKey=${key}&_type=json`;
+        // let reqUrl = `${baseUrl}/airport`
+        let reqUrl = `${endpoint}/getArprtList?serviceKey=${key}&_type=json`;
         let response = await axios.get(reqUrl);
         console.log(response,'airport - response')
         return response;
@@ -23,7 +24,8 @@ export async function AirportReq() {
 export async function AirlineReq() {
     try {
 
-        let reqUrl = `${baseUrl}/airline`
+        // let reqUrl = `${baseUrl}/airline`
+        let reqUrl = `${endpoint}/getAirmanList?serviceKey=${key}&_type=json`;
         let response = await axios.get(reqUrl);
         console.log(response)
         return response;
@@ -37,10 +39,11 @@ export async function TagoServerReq(data) {
 
     try {
         
-        let reqUrl = `${baseUrl}/flight?depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}`
-        // let reqUrl = `${endpoint}/getFlightOpratInfoList?serviceKey=${key}&depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}&numOfRows=50&_type=json`;
+        // let reqUrl = `${baseUrl}/flight?depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}`
+        let reqUrl = `${endpoint}/getFlightOpratInfoList?serviceKey=${key}&depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}&numOfRows=50&_type=json`;
 
         let response = await axios.get(reqUrl);
+        // console.log(response)
         return response;
 
     } catch (err) {
