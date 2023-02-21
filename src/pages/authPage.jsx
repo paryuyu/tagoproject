@@ -30,7 +30,7 @@ export default function AuthPage() {
     console.log('login-start--!')
     if (email.length > 6 && password.length > 8 && !pswdErr && !emailErr) {
       let login_result = await ctx.handleCtxLoginReq(email, password);
-      console.log('login-ing--!')
+      
       if (login_result) { //로그인 성공하면 /searching으로 가기.
         navigate('/searching');
 
