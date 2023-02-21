@@ -5,9 +5,9 @@ import { AuthLoginReq, AccessTokenValidReq, RefreshTokenValidReq } from "../util
 
 export const AuthContext = createContext();
 
-// useReducer 써보기 => 로그인 및 로그아웃 구현
+//TODO: useReducer 써보기 => 로그인 및 로그아웃 구현
 
-// 유효성 검사 시기
+//TODO: 유효성 검사 시기
 
 
 export function AuthContextProvider({ children }) {
