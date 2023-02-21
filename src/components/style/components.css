@@ -1,72 +1,92 @@
-.headerBox{
+.headerBox {
     background-color: #fff;
 }
 
-.headerTypo{
+.headerTypo {
     font-weight: 100;
     text-align: center;
     cursor: pointer;
 }
 
-
-.schBarOutline{
+.schSection {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    border: #ddd 2px solid;
-    border-radius: 20px;
-    margin: 10px 10px;
+    width: 700px;
+    justify-content: space-between;
+    padding: 20px;
 }
 
-.schBarItemBox{
+.schBarOutline {
     display: flex;
     flex-direction: column;
-    margin-right: 10px;
-   align-items: center;
+    justify-content: center;
+    align-items: center;
+    border:1px solid #ddd;
+    margin-bottom: 20px;
+ 
+
 }
 
-.btnBox{
+.schBarItemBox {
+    display: flex;
+    flex-direction: row;
+    margin-right: 10px;
+    align-items: center;
+}
+
+.btnBox {
     display: flex;
     justify-content: center;
-    margin:20px 0 20px 0;
+    margin: 20px 0 20px 0;
 }
 
-.btn{
-    width: 80px;
-    height: 50px;
-    border-radius: 20px;
-    border: 0;
-    cursor: pointer;
-    background-color: #333;
-    color:#fff;
-
+.schMiniTitle {
+    font-size: 15px;
+    font-weight: 100;
 }
 
-.btn:hover{
-    background-color: #ddd;
-    color:#333;
-    border: 2px #333 solid;
-    box-sizing:border-box;
-}
-
-.schMiniTitle{
-  font-size: 15px;
-  font-weight: 100;
-}
-
-footer{
+footer {
     border-top: #ddd 1px solid;
 }
 
-header{
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0px 20px 0px 20px
 }
 
-.list{
+.list {
     position: absolute;
-    top:200px;
-    
+    top: 200px;
+
+}
+
+.select-box {
+    width: 250px;
+
+}
+
+.airline {
+    width: 250px;
+}
+
+.date-title {
+    margin-right: 10px;
+    font-size: medium;
+    color: #333;
+    font-weight: 600;
+    cursor:default;
+}
+
+.date-select {
+    border: 0.5px solid #a8a8a8;
+    padding: 18px;
+    border-radius: 5px;
+    color: #333;
+    font-size: 15px;
+    width: 170px;
+}
+
+.schBtn{
+width: 100%;
 }
