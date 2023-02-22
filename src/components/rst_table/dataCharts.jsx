@@ -11,17 +11,30 @@ export default function DataCharts({ onChartOpen, airline, arr, dep }) {
     useEffect(() => {
         let newData = [];
         if (!ctx.searchisLoading) {
+            let item = ctx.raw.item;
+          
+            if(Array.isArray(item)){ //정보가 1개면 객체로 들어옴
 
-            ctx.raw?.item.forEach((elm, index) => {
-                if (elm.economyCharge > 0 || elm.prestigeCharge > 0) {
+                item.forEach((elm, index) => {
+                    if (elm.economyCharge > 0 || elm.prestigeCharge > 0) {
+    
+                        newData.push({
+                            quarter: `P${index}`,
+                            economy: elm.economyCharge ? elm.economyCharge : 0,
+                            business: elm.prestigeCharge ? elm.prestigeCharge : 0
+                        })
+                    }
+                })
 
-                    newData.push({
-                        quarter: `P${index}`,
-                        economy: elm.economyCharge ? elm.economyCharge : 0,
-                        business: elm.prestigeCharge ? elm.prestigeCharge : 0
-                    })
-                }
-            })
+            }else{
+                
+                newData.push({
+                    quarter: `P${0}`,
+                    economy: item?.economyCharge ? item.economyCharge : 0,
+                    business: item?.prestigeCharge ? item.prestigeCharge : 0
+                })
+            }
+         
         }
 
         setData(newData)

@@ -209,7 +209,7 @@ export default function DataGridTable({ onChartOpen }) {
                     onCellEditingStopped={handleCellUpdate}
                     defaultColDef={defaultColDef}
                     getRowClass={handleGetRowClass}
-
+                    paginationPageSize={10}
                     pagination={true}
                 />
             </div>

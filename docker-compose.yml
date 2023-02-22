@@ -1,28 +1,19 @@
 version: "3.7"
 
 services:
-  nginx:
+  tago-front:
     restart: always
-    container_name: nginx
+    container_name: tago-front
+    image: tago-front:1.0.0
     build:
-      context: ./nginx
+      context: . 
       dockerfile: Dockerfile
     ports:
-      - "3000:80"
+      - "29102:80"
     networks:
-      - frontend
-    
-  client:
-    container_name: client
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    volumes:
-      - "./client/:/app"
-      - "/app/node_modules"
-    networks:
-      - frontend
-
+      - tago-network
+      
+    #networks 설정
 networks: 
-  frontend:
-    driver: bridge
+  tago-network:
+    external: true
