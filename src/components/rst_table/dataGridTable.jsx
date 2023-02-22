@@ -5,6 +5,7 @@ import { AgGridReact } from "ag-grid-react";
 import _ from 'lodash';
 
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { AuthContext } from '../../context/auth_context';
 import { LookupContext } from "../../context/lookup_context";
 import ResultModal from './resultModal';
 
@@ -58,7 +59,7 @@ function dateFormatter(params) {
 
 
 export default function DataGridTable({ onChartOpen }) {
-    const { searchingData } = useContext(LookupContext);
+    const { searchingData,searchisLoading } = useContext(LookupContext);
 
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
     const gridRef = useRef();
@@ -72,9 +73,10 @@ export default function DataGridTable({ onChartOpen }) {
 
 
     useEffect(() => {
-        console.log('useEffect1--!')
-        setRowData(searchingData.sort((a, b) => b.id - a.id))
-    }, [searchingData])
+        if (searchingData.length > 0) {
+            setRowData(searchingData.sort((a, b) => b.id - a.id))
+        }
+    }, [searchisLoading])
 
     /**column 설정 */
     const defaultColDef = useMemo(() => ({
@@ -97,6 +99,7 @@ export default function DataGridTable({ onChartOpen }) {
             depAirportNm: '',
             arrAirportNm: '',
         }
+
         setCnt(cnt + 1)
         return addItem;
     }
@@ -178,7 +181,7 @@ export default function DataGridTable({ onChartOpen }) {
         setAlretOpen(c => !c);
     }
 
-    const handleUpdateFinish = () =>{
+    const handleUpdateFinish = () => {
         //서버로 수정된 데이터 보내주기 : 마지막
     }
 
@@ -212,7 +215,7 @@ export default function DataGridTable({ onChartOpen }) {
             <div className="modifyBtnBox">
                 <button className="modifyBtn" onClick={handleFinalUpdate}>수정하기</button>
             </div>
-         <ResultModal open={alretOpen} onOpen={handleAlretOpen} updateData={finalChk} onUpdate={handleUpdateFinish}/>
+            <ResultModal open={alretOpen} onOpen={handleAlretOpen} updateData={finalChk} onUpdate={handleUpdateFinish} />
         </div>)
 }
 

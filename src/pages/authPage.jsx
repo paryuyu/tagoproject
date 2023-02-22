@@ -27,10 +27,12 @@ export default function AuthPage() {
 
   //로그인은 AuthContext에서 처리
   const handleLoginClick = async () => {
-    console.log('login-start--!')
+
+
+
     if (email.length > 6 && password.length > 8 && !pswdErr && !emailErr) {
       let login_result = await ctx.handleCtxLoginReq(email, password);
-      
+      console.log(login_result,'login_result') 
       if (login_result) { //로그인 성공하면 /searching으로 가기.
         navigate('/searching');
 
@@ -90,7 +92,7 @@ export default function AuthPage() {
       }
 
       <button className="LoginBtn" type="submit" onClick={handleLoginClick}>로그인</button>
-      <a href="/register">회원가입으로 바로가기</a>
+      {/* <a href="/register">회원가입으로 바로가기</a> */}
 
     </div>
 

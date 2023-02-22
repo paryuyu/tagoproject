@@ -10,7 +10,6 @@ export async function AuthLoginReq(auth) {
         //     auth_data: auth
         // });
 
-        // console.log(response, 'login-response')
 
         return  { status: 200, 
             access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpdGVtcyI6WyIxLjEiLCIyLjIiLCIzLjMiXSwiZm9vLmJhciI6IjQyIiwiaWF0IjoxMDAwLCJzdWIiOiJtZSIsImV4cCI6ODc0MDAsImlzcyI6InRlc3Quand0LnNlcnZlciJ9.Jl0cz325ePBYRh5vEAsGPnOsjdH3GV4xGlwjIKV-FgM", 
