@@ -88,7 +88,6 @@ button:hover {
     align-items: center;
     gap: 20px;
     cursor: default;
-    border-bottom: 1px #ddd solid;
 }
 
 .closeIcon {
@@ -183,4 +182,9 @@ button:hover {
     margin-bottom: 5px;
     border-radius: 3px;
     padding: 5px;
+}
+
+.close-btn{
+    width: 100%;
+    margin-top: 10px;
 }
