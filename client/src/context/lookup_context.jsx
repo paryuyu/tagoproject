@@ -7,7 +7,7 @@ export function LookupContextProvider({ children }) {
     const [airlineListData, setAirlineListData] = useState(null);
     const [airportListData, setPortlineListData] = useState();
     const [searchingData, setSearchingData] = useState();
-    const [searchisLoading, setSearchingLoading] = useState(true);
+    const [searchisLoading, setSearchingLoading] = useState(false);
     const [refresh, setRefresh] = useState(false);
 
     const [raw, setRaw] = useState([]);
@@ -43,34 +43,39 @@ export function LookupContextProvider({ children }) {
     }
 
 
-    const handleSearch = async (data) => {
 
+
+    const handleSearch = async (data) => {
+        setSearchingLoading(true)
         if (data) {
             let result = await TagoServerReq(data);
 
             if (result.status === 200) {
-
-
-                let data = result.data.response.body.items;
+                let data = result?.data?.response?.body?.items;
                 setRaw(data) //원본데이터
-                console.log(data,"<====data")
+
                 if (data) {
                     let arr = [];
                     let item = data.item;
-                    item.forEach((elm, index) => {
-                        arr.push({ id: index, ...elm })
-                    })
+                    if(item.length>0){
+                        item.forEach((elm, index) => {
+                            arr.push({ id: index, ...elm })
+                        })
+    
+                        setSearchingData(arr); //수정데이터
+                        setSearchingLoading(false);
 
-                    setSearchingData(arr); //수정데이터
-                    setSearchingLoading(false);
+                    }else if(item instanceof Object){ //결과값이 1개일 땐 배열이 아닌 객체로 들어와서 배열로 변경.
+                        setSearchingData([item]);
+                        setSearchingLoading(false);
+                    }
+                  
                 } else {
                     setSearchingLoading(false);
                 }
             }
         }
-    }
-
-    console.log(searchingData,"<==searchingData")
+    }   
     useEffect(() => {
         airportlistReq();
         airlinelistReq();
@@ -78,7 +83,7 @@ export function LookupContextProvider({ children }) {
 
 
 
-    //데이터를 한번에 가져오기.
+    /** 데이터 업데이트 */
     const handleCtxUpdate = async (data) => {
 
         if (data) {
