@@ -14,16 +14,16 @@ export default function Layout() {
     const { pathname } = useLocation();
 
     const handleAuth = () => {
-        if(authCtx.auth){
-            
-            authCtx.dispatch({type:"logout"});
+        if (authCtx.auth) {
+
+            authCtx.dispatch({ type: "logout" });
             localStorage.removeItem("access_token");
 
-        }else{
+        } else {
             navigate("/auth")
         }
-        
-            
+
+
     }
 
     const handleNavigation = () => {
@@ -32,15 +32,23 @@ export default function Layout() {
 
 
     useEffect(() => {
-        console.log(authCtx.auth, 'authCtx/layout')
-        // "/" 경로에서는 /searching으로 바로 이동
         if (pathname === "/") {
             navigate("/searching")
         }
 
-        let getItem = localStorage.getItem("access_token");
-        setAuth(getItem)
-    }, [])
+        if (pathname === "/searching") {
+            document.title = "TAGO: 항공정보검색"
+        }
+
+        if (pathname === "/auth") {
+            document.title = "TAGO: 로그인"
+        }
+
+        if (pathname === "/register") {
+            document.title = "TAGO: 회원가입"
+        }
+        
+    }, [pathname])
 
 
     return (<div className="headerBox">
