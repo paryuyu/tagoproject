@@ -57,7 +57,7 @@ export function LookupContextProvider({ children }) {
                 if (data) {
                     let arr = [];
                     let item = data.item;
-                    if(item.length>0){
+                    if(Array.isArray(item)){
                         item.forEach((elm, index) => {
                             arr.push({ id: index, ...elm })
                         })
@@ -65,7 +65,7 @@ export function LookupContextProvider({ children }) {
                         setSearchingData(arr); //수정데이터
                         setSearchingLoading(false);
 
-                    }else if(item instanceof Object){ //결과값이 1개일 땐 배열이 아닌 객체로 들어와서 배열로 변경.
+                    }else{ //결과값이 1개일 땐 배열이 아닌 객체로 들어와서 배열로 변경.
                         setSearchingData([item]);
                         setSearchingLoading(false);
                     }
