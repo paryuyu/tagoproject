@@ -5,6 +5,7 @@ import { AgGridReact } from "ag-grid-react";
 import _ from 'lodash';
 
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { AuthContext } from '../../context/auth_context';
 import { LookupContext } from "../../context/lookup_context";
 import ResultModal from './resultModal';
 

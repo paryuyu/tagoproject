@@ -76,6 +76,7 @@ export function LookupContextProvider({ children }) {
             }
         }
     }   
+
     useEffect(() => {
         airportlistReq();
         airlinelistReq();
