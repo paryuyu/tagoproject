@@ -11,9 +11,12 @@ export default function ChartModal({ onClose, onOpen, open }) {
     let ctx = useContext(LookupContext);
     const [arrNm, setArrNm] = useState("")
     const [depNm, setDepNm] = useState("")
-
+    const [airline,setAirline] =useState("")
     useEffect(() => {
         if (ctx.raw?.item?.length > 0) {
+            console.log(ctx,"<==setAirline")
+            
+            setAirline(ctx?.raw?.item[0]?.airlineNm)
             setArrNm(ctx?.raw?.item[0]?.arrAirportNm)
             setDepNm(ctx?.raw?.item[0]?.depAirportNm)
         }
@@ -35,7 +38,7 @@ export default function ChartModal({ onClose, onOpen, open }) {
                         <p>{arrNm}</p>
                     </div>
                 </div>
-                <DataCharts onChartOpen={onOpen} />
+                <DataCharts onChartOpen={onOpen} airline={airline} arr={arrNm} dep={depNm}/>
             </div>
         </Modal>
 

@@ -2,8 +2,8 @@ import { AgChartsReact } from "ag-charts-react";
 import { useEffect } from "react";
 import { useContext, useState } from "react";
 import { LookupContext } from "../../context/lookup_context";
-
-export default function DataCharts() {
+//onChartOpen={onOpen}
+export default function DataCharts({ onChartOpen, airline, arr, dep }) {
     const [data, setData] = useState([]);
 
     let ctx = useContext(LookupContext)
@@ -23,15 +23,16 @@ export default function DataCharts() {
                 }
             })
         }
+
         setData(newData)
     }, [ctx.searchingData])
 
 
     const options = {
         data: data,
-        
-        legend:{
-            position:"bottom"
+
+        legend: {
+            position: "bottom"
         },
         series: [{
             xKey: 'quarter',
@@ -45,8 +46,16 @@ export default function DataCharts() {
 
     return (<div>
 
-        {!ctx.searchisLoading && <AgChartsReact
-            options={options} />}
+        {data.length > 0 ?
+
+            !ctx.searchisLoading && <AgChartsReact options={options} /> :
+            <>
+                <div className="no-data-ment">
+                    <p>{dep}에서 {arr}로 도착하는 해당 노선에 대한 정보가 없습니다.</p>
+                </div>
+                <button onClick={onChartOpen} className="close-btn">돌아가기</button>
+            </>
+        }
 
     </div>);
 }
