@@ -22,8 +22,6 @@ export default function Layout() {
         } else {
             navigate("/auth")
         }
-
-
     }
 
     const handleNavigation = () => {
@@ -33,6 +31,12 @@ export default function Layout() {
 
     useEffect(() => {
         if (pathname === "/") {
+            navigate("/searching")
+        }
+
+        if (pathname === "/auth" && authCtx.auth) {
+            navigate("/searching")
+        }else if(pathname === "/register" && authCtx.auth){
             navigate("/searching")
         }
 
@@ -47,8 +51,8 @@ export default function Layout() {
         if (pathname === "/register") {
             document.title = "TAGO: 회원가입"
         }
-        
-    }, [pathname])
+
+    }, [pathname, authCtx])
 
 
     return (<div className="headerBox">

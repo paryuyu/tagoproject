@@ -10,10 +10,8 @@ export async function AirportReq() {
     try {
 
         //path값은 명사 -> 동사X
-        // let reqUrl = `${baseUrl}/airport`
-        let reqUrl = `${endpoint}/getArprtList?serviceKey=${key}&_type=json`;
+        let reqUrl = `${baseUrl}/airport`
         let response = await axios.get(reqUrl);
-        console.log(response,'airport - response')
         return response;
     } catch (e) {
         return e
@@ -24,10 +22,8 @@ export async function AirportReq() {
 export async function AirlineReq() {
     try {
 
-        // let reqUrl = `${baseUrl}/airline`
-        let reqUrl = `${endpoint}/getAirmanList?serviceKey=${key}&_type=json`;
+        let reqUrl = `${baseUrl}/airline`
         let response = await axios.get(reqUrl);
-        console.log(response)
         return response;
     } catch (e) {
         return e;
@@ -39,11 +35,8 @@ export async function TagoServerReq(data) {
 
     try {
         
-        // let reqUrl = `${baseUrl}/flight?depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}`
-        let reqUrl = `${endpoint}/getFlightOpratInfoList?serviceKey=${key}&depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}&numOfRows=50&_type=json`;
-
+        let reqUrl = `${baseUrl}/flight?depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}`
         let response = await axios.get(reqUrl);
-        // console.log(response)
         return response;
 
     } catch (err) {

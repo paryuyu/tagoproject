@@ -1,4 +1,4 @@
-/*그리드 컨테이너*/
+
 .authOutlineContainer {
     display: flex;
     flex-direction: column;
@@ -8,7 +8,6 @@
     border-top: 1px solid #333;
 }
 
-/*그리드아이템*/
 .authBox {
     display: flex;
     flex-direction: column;
@@ -18,11 +17,14 @@
     border: 2px solid #ddd;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 50px;
+}
+
+.registerBox{
+    gap:12px;
 }
 
 .LoginBtn {
-    width: 200px
+    width: 200px;
 }
 
 a {
@@ -42,4 +44,12 @@ a {
     font-size: 12px;
     color: red;
     margin: 0px;
+}
+
+.pswd{
+    width: 225px;
+}
+
+.authInput{
+    width: 225px;
 }

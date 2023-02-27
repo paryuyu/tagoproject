@@ -168,7 +168,6 @@ export default function DataGridTable({ onChartOpen }) {
         // flag가 존재하는 값들만 서버로 보내주기.
         let flagFilter = chkArr.filter(one => Object.keys(one).includes("flag"))
         setFinalChk(flagFilter)
-        console.log(flagFilter, '<=== final Edit Data')
 
         //모달에서 ok를 누르면 서버로 보내지게 단계를 하나 만들기.
         setAlretOpen(c => !c)

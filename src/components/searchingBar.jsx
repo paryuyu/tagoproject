@@ -27,7 +27,6 @@ export default function SearchingBar({ onSchState }) {
     }
 
     const handleDepSelect = (evt) => {
-        console.log(evt.target.value)
         setDepPort(evt.target.value)
     }
 
