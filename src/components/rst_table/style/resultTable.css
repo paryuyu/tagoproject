@@ -47,18 +47,15 @@ button:hover {
 .modalBox {
     background-color: #fff;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    transform: translate(-50% -50%);
-    position: absolute;
-    border: '2px solid #000';
-    box-shadow: 100;
     padding: 20px;
-    top: 35%;
-    left: 28%;
     border: 2px #333 solid;
     border-radius: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .modalCloseBtn {
@@ -93,7 +90,7 @@ button:hover {
 .closeIcon {
     position: absolute;
     top: 20px;
-    left: 590px;
+    right: 15px;
     font-size: 25px;
     cursor: pointer;
 }

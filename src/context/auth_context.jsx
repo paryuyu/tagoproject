@@ -15,16 +15,14 @@ const authReducer = (state = null, action) => {
     }
 }
 
-//TODO: 토큰 유효성 검사 시기
-
 export function AuthContextProvider({ children }) {
     const [auth, dispatch] = useReducer(authReducer, null);
 
     const cookies = new Cookies();
 
     // useEffect(() => { 
-    //  토큰이 만료돼서 토큰 유효성 검사를 해주는 useEffect 때문에 localStorage 토큰값이 자꾸 초기화됨
-    //     handleCtxTokenValidReq();
+        //     handleCtxTokenValidReq();
+        // 창이 마운트 될때마다 토큰 유효성 검사를 하는데 test하는 token이 이미 만료된 토큰이라 자꾸 초기화 됨.
     // }, [])
 
     useEffect(() => {
@@ -33,7 +31,7 @@ export function AuthContextProvider({ children }) {
 
         if (data) {
             //localStorage에 토큰이 null 이면 false 토큰이 있으면 true 
-            //token값이 존재하면 자동로그인 (reducer)
+            //token값이 존재하면 자동로그인 (authReducer)
             dispatch({ type: "login", payload: { tokenData: data } })
 
         } else {

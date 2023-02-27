@@ -15,5 +15,6 @@ FROM nginx
 COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx/default.conf /etc/nginx/nginx.conf
 
+# # 80포트 오픈하고 nginx 실행
 # EXPOSE 80
 # CMD ["nginx", "-g", "daemon off;"]

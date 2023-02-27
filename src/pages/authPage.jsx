@@ -1,9 +1,14 @@
 
-import { Box, TextField, Typography } from "@mui/material";
+
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth_context";
 import "./style/authpage.css"
+import { FormControl, IconButton, InputLabel, OutlinedInput, TextField, Typography } from "@mui/material";
+
+
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export default function AuthPage() {
   const [email, setEmail] = useState("");
@@ -11,7 +16,7 @@ export default function AuthPage() {
 
   const [emailErr, setEmailErr] = useState(false);
   const [pswdErr, setPswdErr] = useState(false);
-
+  const [pswdView, setPswdView] =useState(false);
   const [loginError, setLoginError] = useState(false);
 
   const ctx = useContext(AuthContext);
@@ -32,15 +37,16 @@ export default function AuthPage() {
 
     if (email.length > 6 && password.length > 8 && !pswdErr && !emailErr) {
       let login_result = await ctx.handleCtxLoginReq(email, password);
-      console.log(login_result,'login_result') 
-      if (login_result) { //로그인 성공하면 /searching으로 가기.
-        navigate('/searching');
+ 
+      if (login_result.result) { //로그인 성공하면
+        navigate('/searching'); //searching으로 가기.
 
         setLoginError(false);
 
         //input value 비워주기
         setPassword("");
-        setEmail("")
+        setEmail("");
+        
       } else {
 
         //로그인 에러 true : 에러멘트 보여주고 패스워드 및 아이디 input value 비워주기
@@ -60,7 +66,9 @@ export default function AuthPage() {
 
   }, [email, password])
 
-
+  const handleVisible = ()=>{ //password 확인할 수 있는 아이콘 생성
+    setPswdView(c=>!c)
+  }
 
 
 
@@ -77,12 +85,24 @@ export default function AuthPage() {
         placeholder="*id"
         error={emailErr}
         label={"*id"} />
-      <TextField
+
+      <FormControl className="authInput">
+      <InputLabel>*Password</InputLabel>
+      <OutlinedInput
         onChange={handlePasswordChange}
         value={password}
         placeholder="*password"
-        type="password"
-        label={"*password"} />
+        type={pswdView ? "text" : "password"}
+        label={"*password"}
+        endAdornment={
+          !pswdView ? <IconButton onClick={handleVisible}><VisibilityIcon/></IconButton> 
+          : <IconButton onClick={handleVisible}><VisibilityOffIcon/></IconButton>
+        }
+        />
+        </FormControl>
+
+
+
 
       {loginError &&
         <div className="err_box">
@@ -92,7 +112,7 @@ export default function AuthPage() {
       }
 
       <button className="LoginBtn" type="submit" onClick={handleLoginClick}>로그인</button>
-      {/* <a href="/register">회원가입으로 바로가기</a> */}
+      <a href="/register">회원가입으로 바로가기</a>
 
     </div>
 

@@ -12,32 +12,25 @@ export default function ChartModal({ onClose, onOpen, open }) {
     const [arrNm, setArrNm] = useState("")
     const [depNm, setDepNm] = useState("")
     const [airline,setAirline] =useState("")
+
     useEffect(() => {
-        if (ctx.raw?.item?.length > 0) {
-            console.log(ctx,"<==setAirline")
-            
-            setAirline(ctx?.raw?.item[0]?.airlineNm)
-            setArrNm(ctx?.raw?.item[0]?.arrAirportNm)
-            setDepNm(ctx?.raw?.item[0]?.depAirportNm)
+        if (Array.isArray(ctx.searchingData)) {
+            setAirline(ctx.searchingData[0]?.airlineNm)
+            setArrNm(ctx.searchingData[0]?.arrAirportNm)
+            setDepNm(ctx.searchingData[0]?.depAirportNm)
         }
-    }, [ctx.raw])
+    }, [open])
+
     const handleClose = ()=>{
         onClose()
     }
+
     return (<>
         <Modal
             open={open}
             onClose={handleClose}>
 
             <div className="modalBox">
-                <div className="modalheaderBox">
-                    <MdClose className="closeIcon" onClick={handleClose} />
-                    <div className="modalTypoBox">
-                        <p>{depNm}</p>
-                        <BsArrowRight className="arrowIcon" />
-                        <p>{arrNm}</p>
-                    </div>
-                </div>
                 <DataCharts onChartOpen={onOpen} airline={airline} arr={arrNm} dep={depNm}/>
             </div>
         </Modal>
