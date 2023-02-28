@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { createContext, useState, useEffect } from "react";
 import { AirlineReq, AirportReq, DataUpdateReq, TagoServerReq } from "../util/tagoAPI";
 
@@ -6,17 +7,23 @@ export const LookupContext = createContext();
 export function LookupContextProvider({ children }) {
     const [airlineListData, setAirlineListData] = useState(null);
     const [airportListData, setPortlineListData] = useState();
+
     const [searchingData, setSearchingData] = useState();
     const [searchisLoading, setSearchingLoading] = useState(false);
-    const [refresh, setRefresh] = useState(false);
 
+    const [dataTotalCnt,setDataTotalCnt] = useState(0);
+    const [refresh, setRefresh] = useState(false);
     const [raw, setRaw] = useState([]);
+    
+    const [initialData,setInitailData] = useState();
+
 
 
     //searchingBar - airport
     async function airportlistReq() {
         let result = await AirportReq();
         if (result.status === 200) {
+            console.log(result,"result")
             let data = await result.data.response.body.items;
 
             if (data) {
@@ -48,13 +55,16 @@ export function LookupContextProvider({ children }) {
     const handleSearch = async (data) => {
         setSearchingLoading(true)
         if (data) {
+            setInitailData(data) //검색한 데이터 저장
+            
             let result = await TagoServerReq(data);
 
             if (result.status === 200) {
                 let data = result?.data?.response?.body?.items;
-                setRaw(data) //원본데이터
-
+                setRaw(data) //검색해온 원본 데이터 저장
+                
                 if (data) {
+                    setDataTotalCnt(result.data.response.body.totalCount) 
                     let arr = [];
                     let item = data.item;
                     if(Array.isArray(item)){
@@ -77,11 +87,42 @@ export function LookupContextProvider({ children }) {
         }
     }   
 
-    useEffect(() => {
-        airportlistReq();
-        airlinelistReq();
-    }, [])
+    //페이지 별 데이터 
+    const handlePageChange = async (page) =>{
+        
+        if(initialData && page){
+            let data = {...initialData,pageNo:page}
+            let result = await TagoServerReq(data);
 
+            if (result.status === 200) {
+
+                let data = result?.data?.response?.body?.items;
+                console.log(data)
+                setRaw(data) //검색해온 원본 데이터 저장
+                
+                if (data) {
+                    setDataTotalCnt(result.data.response.body.totalCount) 
+                    let arr = [];
+                    let item = data.item;
+                    if(Array.isArray(item)){
+                        item.forEach((elm, index) => {
+                            arr.push({ id: index, ...elm })
+                        })
+    
+                        setSearchingData(arr); //수정데이터
+                        setSearchingLoading(false);
+
+                    }else{ //결과값이 1개일 땐 배열이 아닌 객체로 들어와서 배열로 변경.
+                        setSearchingData([item]);
+                        setSearchingLoading(false);
+                    }
+                  
+                } else {
+                    setSearchingLoading(false);
+                }
+            }
+        }
+    }
 
 
     /** 데이터 업데이트 */
@@ -108,8 +149,17 @@ export function LookupContextProvider({ children }) {
         setRefresh(c=>!c)
     }
 
+
+    useEffect(() => {
+        airportlistReq();
+        airlinelistReq();
+    }, [])
+    
+
     return (
         <LookupContext.Provider value={{
+            handlePageChange,
+            dataTotalCnt,
             searchisLoading,
             raw,
             airlineListData,

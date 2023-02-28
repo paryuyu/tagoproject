@@ -1,18 +1,8 @@
 
 import { Box } from "@mui/system";
+import { DateFormatter } from "../../../lib/formatter";
 
 function FinalChkList({ item }) {
-
-    function DateFormatter(date) {
-        
-    let year = String(date).slice(2, 4);
-    let mon = String(date).slice(4, 6);
-    let day = String(date).slice(6, 8);
-    let hour = String(date).slice(8, 10);
-    let min = String(date).slice(10, 12);
-
-    return `${year}/${mon}/${day} ${hour}:${min}`
-    }
 
     return (<>
         {item &&

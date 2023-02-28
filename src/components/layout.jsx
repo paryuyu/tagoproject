@@ -36,7 +36,7 @@ export default function Layout() {
 
         if (pathname === "/auth" && authCtx.auth) {
             navigate("/searching")
-        }else if(pathname === "/register" && authCtx.auth){
+        } else if (pathname === "/register" && authCtx.auth) {
             navigate("/searching")
         }
 
@@ -57,7 +57,10 @@ export default function Layout() {
 
     return (<div className="headerBox">
         <header>
-            <h1 className="headerTypo" onClick={handleNavigation}>국내 항공 조회 서비스</h1>
+            <div className="headerIconBox" onClick={handleNavigation}>
+                <img src="flightImg.png" className="homeImg"/>
+                <h1 className="headerTypo" >국내 항공 조회 서비스</h1>
+            </div>
             <button onClick={handleAuth} className="headerloginBtn">{authCtx.auth ? "로그아웃" : "로그인"}</button>
         </header>
 
