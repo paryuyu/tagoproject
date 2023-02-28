@@ -14,7 +14,7 @@ export default function DataCharts({ onChartOpen }) {
 
     useEffect(() => {
         let newData = [];
-        if (!ctx.searchisLoading) {
+        if (!ctx?.searchisLoading) {
             let item = ctx.searchingData;
 
             if (Array.isArray(item)) { //정보가 1개면 객체로 들어옴

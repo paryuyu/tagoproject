@@ -8,36 +8,27 @@ import "./style/resultTable.css"
 export default function ResultTable({ searchingState }) {
 
     const [chartOpen, setChartOpen] = useState(false);
-    const [noResultState, setNoresultState] = useState(false);
     let ctx = useContext(LookupContext);
 
     const handleChartOpen = () => {
         setChartOpen(c => !c)
     }
-    
+
     const handleChartClose = () => {
         setChartOpen(false)
     }
 
-    // useEffect(() => {
-    //     if (ctx.raw?.item === []) {
-    //         setNoresultState(false);
-    //     } else {
-    //         setNoresultState(true);
-    //     }
-    // }, [ctx.raw])
-
-    
+    console.log(ctx.searchisLoading)
     return (<div className="tableBox">
 
         {searchingState ?
             !ctx.searchisLoading ?
-            ctx.searchingData ?
+                ctx.searchingData ?
                     <>
                         <ChartModal onClose={handleChartClose} onOpen={handleChartOpen} open={chartOpen} />
                         <DataGridTable onChartOpen={handleChartOpen} />
                     </>
-                  :<p className="ment"> 검색값이 존재하지 않습니다. </p>
+                    : <p className="ment"> 검색값이 존재하지 않습니다. </p>
 
 
                 : <CircularProgress color="inherit" className="loadingProgress" />

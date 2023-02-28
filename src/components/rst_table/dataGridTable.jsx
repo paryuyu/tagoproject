@@ -1,12 +1,13 @@
-import { Modal } from '@mui/material';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+
 import { AgGridReact } from "ag-grid-react";
 import _ from 'lodash';
 
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { AuthContext } from '../../context/auth_context';
 import { LookupContext } from "../../context/lookup_context";
+import { DateFormatter, PriceFormmater } from '../../lib/formatter';
+import PaginationCustom from './PaginationCustom';
 import ResultModal from './resultModal';
 
 
@@ -24,42 +25,16 @@ const columnDefs = [
     },
     { headerName: '항공사', field: "airlineNm", },
     { headerName: '항공편', field: "vihicleId", },
-    { headerName: '출발시간', field: "depPlandTime", valueFormatter: dateFormatter },
-    { headerName: '도착시간', field: "arrPlandTime", valueFormatter: dateFormatter },
-    { headerName: '일반석운임', field: "economyCharge", valueFormatter: priceFormmater },
-    { headerName: '비즈니스석운임', field: "prestigeCharge", valueFormatter: priceFormmater },
+    { headerName: '출발시간', field: "depPlandTime", valueFormatter: DateFormatter },
+    { headerName: '도착시간', field: "arrPlandTime", valueFormatter: DateFormatter },
+    { headerName: '일반석운임', field: "economyCharge", valueFormatter: PriceFormmater },
+    { headerName: '비즈니스석운임', field: "prestigeCharge", valueFormatter: PriceFormmater },
     { headerName: '출발공항', field: "depAirportNm", },
     { headerName: '도착공항', field: "arrAirportNm", },
 ];
 
-/**데이터그리드의 내 가격 포맷터 */
-function priceFormmater(params) {
-    let formatter = new Intl.NumberFormat("ko", {
-        style: 'currency',
-        currency: "krw"
-    })
-
-    if (params.value) {
-        return `${formatter.format(params.value)}`
-    } else {
-        return `${formatter.format(0)}`
-    }
-}
-
-/**날짜 및 시간 포맷터 */
-function dateFormatter(params) {
-    let year = String(params.value).slice(2, 4);
-    let mon = String(params.value).slice(4, 6);
-    let day = String(params.value).slice(6, 8);
-    let hour = String(params.value).slice(8, 10);
-    let min = String(params.value).slice(10, 12);
-
-    return `${year}/${mon}/${day} ${hour}:${min}`
-}
-
-
 export default function DataGridTable({ onChartOpen }) {
-    const { searchingData,searchisLoading } = useContext(LookupContext);
+    const { searchingData, searchisLoading } = useContext(LookupContext);
 
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
     const gridRef = useRef();
@@ -76,7 +51,7 @@ export default function DataGridTable({ onChartOpen }) {
         if (searchingData.length > 0) {
             setRowData(searchingData.sort((a, b) => b.id - a.id))
         }
-    }, [searchisLoading])
+    }, [searchisLoading, searchingData])
 
     /**column 설정 */
     const defaultColDef = useMemo(() => ({
@@ -134,6 +109,8 @@ export default function DataGridTable({ onChartOpen }) {
     }, [rowData])
 
     //style class 붙여주는 함수
+
+
     const handleGetRowClass = (params) => {
         if ('delete' === params.node.data.flag) {
             return 'delete-warning';
@@ -208,10 +185,10 @@ export default function DataGridTable({ onChartOpen }) {
                     onCellEditingStopped={handleCellUpdate}
                     defaultColDef={defaultColDef}
                     getRowClass={handleGetRowClass}
-                    paginationPageSize={10}
-                    pagination={true}
+                    paginationAutoPageSize={false}
                 />
             </div>
+            <PaginationCustom />
             <div className="modifyBtnBox">
                 <button className="modifyBtn" onClick={handleFinalUpdate}>수정하기</button>
             </div>
