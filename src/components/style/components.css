@@ -1,15 +1,13 @@
-.headerIconBox{
- display: flex;
- flex-direction: row;
- justify-content: center;
- align-items: center;
+.headerIconBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
 }
 
-.headerBox {
- 
-}
 
-.homeImg{
+.homeImg {
     cursor: pointer;
     padding-right: 10px;
     height: 40px;
@@ -36,9 +34,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border:1px solid #ddd;
+    border: 1px solid #ddd;
     margin-bottom: 20px;
- 
+
 
 }
 
@@ -91,7 +89,7 @@ header {
     font-size: medium;
     color: #333;
     font-weight: 600;
-    cursor:default;
+    cursor: default;
 }
 
 .date-select {
@@ -103,6 +101,6 @@ header {
     width: 170px;
 }
 
-.schBtn{
-width: 100%;
+.schBtn {
+    width: 100%;
 }

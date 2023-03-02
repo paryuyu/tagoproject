@@ -9,13 +9,11 @@ export default function Layout() {
     const authCtx = useContext(AuthContext);
 
     const navigate = useNavigate()
-    const [auth, setAuth] = useState();
 
     const { pathname } = useLocation();
 
     const handleAuth = () => {
         if (authCtx.auth) {
-
             authCtx.dispatch({ type: "logout" });
             localStorage.removeItem("access_token");
 
@@ -28,8 +26,11 @@ export default function Layout() {
         navigate("/searching")
     }
 
-
+    useEffect(()=>{
+        console.log(authCtx.auth,'<==auth')
+    },[])
     useEffect(() => {
+
         if (pathname === "/") {
             navigate("/searching")
         }

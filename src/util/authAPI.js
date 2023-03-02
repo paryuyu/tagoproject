@@ -1,13 +1,14 @@
 import axios from "axios";
+
 let baseUrl = process.env.REACT_APP_BASEURL;
 
-export async function UserRegisterReq(registerData){
+export async function UserRegisterReq(registerData) {
     try {
         console.log('register--!');
-        let response = await axios.post(`${baseUrl}/register`,{
-            registerData: registerData
+        let response = await axios.post(`${baseUrl}/register`, {
+            user_data: registerData
         })
-        
+
         return response;
 
     } catch (error) {
@@ -15,27 +16,22 @@ export async function UserRegisterReq(registerData){
         console.log(error)
         return error.message;
     }
-    
+
 
 }
 
-
-
 //로그인 응답
-export async function AuthLoginReq(auth) {
+export async function AuthLoginReq(id, pw) {
     try {
-        console.log('example: auth start-!')
+        
+        console.log('login start-!')
+        let response = await axios.post(`${baseUrl}/login_token`, {
+            id: id,
+            pw: pw
+        });
 
-        // let response = await axios.post(`${baseUrl}/auth`, {
-        //     auth_data: auth
-        // });
+        return response;
 
-        // return response;
-
-        return  { status: 200, 
-            access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpdGVtcyI6WyIxLjEiLCIyLjIiLCIzLjMiXSwiZm9vLmJhciI6IjQyIiwiaWF0IjoxMDAwLCJzdWIiOiJtZSIsImV4cCI6ODc0MDAsImlzcyI6InRlc3Quand0LnNlcnZlciJ9.Jl0cz325ePBYRh5vEAsGPnOsjdH3GV4xGlwjIKV-FgM", 
-            refresh_token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpdGVtcyI6WyIxLjEiLCIyLjIiLCIzLjMiXSwiZm9vLmJhciI6IjQyIiwiaWF0IjoxMDAwLCJzdWIiOiJtZSIsImV4cCI6ODc0MDAsImlzcyI6InRlc3Quand0LnNlcnZlciJ9.Jl0cz325ePBYRh5vEAsGPnOsjdH3GV4xGlwjIKV-FgM" }; 
-            
     } catch (e) {
         return e
     }
@@ -57,7 +53,7 @@ export async function AccessTokenValidReq(accessToken) {
 }
 
 
-/** Refresh Token server request function*/
+/** Refresh Token 유효성 검사 요청*/
 export async function RefreshTokenValidReq(refreshToken) {
     try {
         let response = await axios.get(`${baseUrl}/refresh`, {
