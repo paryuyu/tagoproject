@@ -1,5 +1,5 @@
 import { Modal } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../context/auth_context";
 import FinalChkList from "./item/finalChklist";
@@ -8,10 +8,16 @@ export default function ResultModal({ open, onOpen, updateData, onUpdate }) {
 
     const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
+
     const handleLogin = ()=>{
         navigate("/auth")
     }
+    console.log(updateData)
 
+    useEffect(()=>{
+      //TODO: updateData에 flag:add 인 값을 찾아서 값이 없으면 빼주기
+    },[updateData])
+    
     return (<>
         <Modal
             open={open}

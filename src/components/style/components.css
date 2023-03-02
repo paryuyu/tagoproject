@@ -20,12 +20,14 @@
     text-align: center;
     cursor: pointer;
     font-family: 'Jua', sans-serif;
+
 }
+
 
 .schSection {
     display: flex;
-    width: 700px;
     justify-content: space-between;
+    width: 700px;
     padding: 20px;
 }
 
@@ -103,4 +105,38 @@ header {
 
 .schBtn {
     width: 100%;
+}
+
+
+
+@media (max-width: 600px) {
+    .homeImg {
+        height: 15px;
+        width: 15px;
+    }
+
+    .headerTypo {
+        font-size: 15px;
+    }
+
+    .headerloginBtn {
+        width: 45px;
+        font-size: 11px;
+    }
+
+    header {
+        margin: 0px;
+
+    }
+
+    .schBarOutline {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .schSection {
+        display: flex;
+        justify-content: column;
+    }
+
 }

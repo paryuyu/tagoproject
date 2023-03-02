@@ -1,3 +1,4 @@
+import { LinearProgress } from '@mui/material';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
@@ -5,8 +6,10 @@ import { AgGridReact } from "ag-grid-react";
 import _ from 'lodash';
 
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { AuthContext } from '../../context/auth_context';
 import { LookupContext } from "../../context/lookup_context";
 import { DateFormatter, PriceFormmater } from '../../lib/formatter';
+import { DataUpdateReq } from '../../util/tagoAPI';
 import PaginationCustom from './PaginationCustom';
 import ResultModal from './resultModal';
 
@@ -34,7 +37,9 @@ const columnDefs = [
 ];
 
 export default function DataGridTable({ onChartOpen }) {
-    const { searchingData, searchisLoading } = useContext(LookupContext);
+
+    const { searchingData, searchisLoading, pageLoading, handleCtxUpdate } = useContext(LookupContext);
+    const authCtx = useContext(AuthContext);
 
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
     const gridRef = useRef();
@@ -48,6 +53,7 @@ export default function DataGridTable({ onChartOpen }) {
 
 
     useEffect(() => {
+        console.log(authCtx.auth,'<==auth')
         if (searchingData.length > 0) {
             setRowData(searchingData.sort((a, b) => b.id - a.id))
         }
@@ -108,9 +114,8 @@ export default function DataGridTable({ onChartOpen }) {
         gridRef?.current?.api?.redrawRows();
     }, [rowData])
 
+
     //style class 붙여주는 함수
-
-
     const handleGetRowClass = (params) => {
         if ('delete' === params.node.data.flag) {
             return 'delete-warning';
@@ -145,7 +150,9 @@ export default function DataGridTable({ onChartOpen }) {
         let flagFilter = chkArr.filter(one => Object.keys(one).includes("flag"))
         setFinalChk(flagFilter)
 
-        //모달에서 ok를 누르면 서버로 보내지게 단계를 하나 만들기.
+        //add된 값이랑 delete된 값이 겹치면 서버에 보내줄 때만 빼버리기 UI에서는 보여줄거임
+
+        //확인창 -> 모달에서 ok를 누르면 서버로 보내지게 단계를 하나 만들기.
         setAlretOpen(c => !c)
     }
 
@@ -158,7 +165,19 @@ export default function DataGridTable({ onChartOpen }) {
     }
 
     const handleUpdateFinish = () => {
+        
         //서버로 수정된 데이터 보내주기 : 마지막
+        // let updateData = //토큰으로 보내주기
+        
+        let result = handleCtxUpdate(finalChk)
+        // console.log(result, '<==update result')
+        // if(result.status === 200){
+        //     console.log("update success-->refresh..!(다시 한번 find 요청 보내기)")
+        //     handleAlretOpen()
+        // }else{
+        //     console.log("update failed..!")
+        //     handleAlretOpen()
+        // }
     }
 
     return (
@@ -171,6 +190,8 @@ export default function DataGridTable({ onChartOpen }) {
                 <button onClick={handleChartView} className={"chartBtn"}>
                     Price Chart View</button>
             </div>
+            {pageLoading && <LinearProgress color='primary'  />}
+
             <div
                 style={gridStyle}
                 className={"ag-theme-alpine"}>
@@ -187,10 +208,12 @@ export default function DataGridTable({ onChartOpen }) {
                     paginationAutoPageSize={false}
                 />
             </div>
+
             <PaginationCustom />
             <div className="modifyBtnBox">
                 <button className="modifyBtn" onClick={handleFinalUpdate}>수정하기</button>
             </div>
+            
             <ResultModal open={alretOpen} onOpen={handleAlretOpen} updateData={finalChk} onUpdate={handleUpdateFinish} />
         </div>)
 }

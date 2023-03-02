@@ -39,9 +39,8 @@ export function AuthContextProvider({ children }) {
             if (result.status === 200) { //서버 로그인 성공 시
 
                 let decode = decodeToken(result.data.access)
-                console.log(decode.id, 'decode')
                 if (decode.id) {
-                    dispatch({ type: "login", payload: { data: decode.id } }) //reducer에 저장
+                    dispatch({ type: "login", payload: { userId: decode.id } }) //reducer에 저장
                 }
 
                 //token을 response body로 받는다고 가정
@@ -49,13 +48,14 @@ export function AuthContextProvider({ children }) {
 
                     //Access Token은 localStorage에 저장
                     //Refresh Token은 cookies에 저장
+
                     localStorage.setItem('access_token', result.data.access);
-                    let refreshTokenExp = decode(result.data.refresh)
-                    
-                    console.log(refreshTokenExp,'refreshTokenExp')
+                    let refreshTokenExp = decodeToken(result.data.refresh);
+
+                    //cookies refresh 만료기한 재설정 -> 
                     cookies.set("refresh_token", result.data.refresh, {
                         secure: true,
-                        maxAge: 60 * 60 * 24 * 7 //maxAge 단위는 ms가 아닌 s. //만료기한 일주일로 가정.
+                        expires: new Date(refreshTokenExp.exp*1000)
                     });
 
                     return { result: true, message: "로그인 성공" }
@@ -80,13 +80,14 @@ export function AuthContextProvider({ children }) {
         let accessToken = localStorage.getItem("access_token");
         let refreshToken = cookies.get("refresh_token");
 
-        if (accessToken !== null) { //로컬 스토리지에 엑세스 토큰 존재
+        if (accessToken !== null && refreshToken) { //로컬 스토리지에 엑세스 토큰 존재
 
             const accessTokenExp = isExpired(accessToken) //토큰 유효성 검사 //true : 만료 false: 유효한 토큰
 
-            if (accessTokenExp) {  //access 토큰 만료상태
+            if (accessTokenExp && refreshToken) {  //access 토큰 만료상태
 
                 localStorage.removeItem("access_token"); //access 토큰을 localStorage에서 제거
+
                 const refreshTokenExp = isExpired(refreshToken); //리프레쉬 토큰 만료 확인
 
                 if (refreshTokenExp) {  //refresh token이 만료가 되었다면 
@@ -102,8 +103,9 @@ export function AuthContextProvider({ children }) {
 
                     } else { //응답에 오류가 있다면 실패메세지
                         console.log("token 발급에 실패하여 로그아웃됩니다.")
+
                         dispatch({ type: 'logout' }); //로그아웃
-                        cookies.remove("refresh_token");
+                        cookies.remove("refresh_token"); //쿠키에서 refresh 토큰 제거
                     }
 
                 }
@@ -111,7 +113,9 @@ export function AuthContextProvider({ children }) {
             } else { //access 토큰 유효상태 
                 let data = localStorage.getItem("access_token");
                 let decode = decodeToken(data)
-                dispatch({ type: "login", payload: { data: decode.id } })
+                if(decode.id){
+                    dispatch({ type: "login", payload: { userId: decode.id } })
+                }
             }
 
 
