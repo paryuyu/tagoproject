@@ -33,8 +33,6 @@ export default function AuthPage() {
   //로그인은 AuthContext에서 처리
   const handleLoginClick = async () => {
 
-
-
     if (email.length > 6 && password.length > 8 && !pswdErr && !emailErr) {
       let login_result = await ctx.handleCtxLoginReq(email, password);
  
@@ -62,17 +60,13 @@ export default function AuthPage() {
 
   }
 
-  useEffect(() => {
-
-  }, [email, password])
 
   const handleVisible = ()=>{ //password 확인할 수 있는 아이콘 생성
     setPswdView(c=>!c)
   }
 
 
-
-  return (<section className="authOutlineContainer">
+  return (<section className="authOutlineContainer" >
 
     <div className="authBox">
       <Typography variant="h6">Login</Typography>
@@ -111,7 +105,7 @@ export default function AuthPage() {
         </div>
       }
 
-      <button className="LoginBtn" type="submit" onClick={handleLoginClick}>로그인</button>
+      <button className="LoginBtn" type="submit" onClick={handleLoginClick} >로그인</button>
       <a href="/register">회원가입으로 바로가기</a>
 
     </div>
