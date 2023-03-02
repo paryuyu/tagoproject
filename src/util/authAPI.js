@@ -5,10 +5,11 @@ let baseUrl = process.env.REACT_APP_BASEURL;
 export async function UserRegisterReq(registerData) {
     try {
         console.log('register--!');
-        let response = await axios.post(`${baseUrl}/register`, {
-            user_data: registerData
+        let response = await axios.post(`${baseUrl}/join`, {
+            id: registerData.id,
+            pw: registerData.password
         })
-
+        console.log(response,'response')
         return response;
 
     } catch (error) {
@@ -23,9 +24,9 @@ export async function UserRegisterReq(registerData) {
 //로그인 응답
 export async function AuthLoginReq(id, pw) {
     try {
-        
+
         console.log('login start-!')
-        let response = await axios.post(`${baseUrl}/login_token`, {
+        let response = await axios.post(`${baseUrl}/auth`, {
             id: id,
             pw: pw
         });
@@ -59,6 +60,7 @@ export async function RefreshTokenValidReq(refreshToken) {
         let response = await axios.get(`${baseUrl}/refresh`, {
             headers: { Authorization: `Bearer ${refreshToken}` },
         })
+        console.log(response,'refreshvalid')
 
         return response;
 

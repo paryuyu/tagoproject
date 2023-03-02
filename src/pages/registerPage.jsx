@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 import { UserRegisterReq } from "../util/authAPI";
 import { useNavigate } from "react-router-dom";
 
@@ -41,17 +42,18 @@ export default function RegisterPage() {
     }
 
 
-    
+
     useEffect(() => {
         let emailReg = /^[a-z0-9_]{4,8}$/g;
-        
+
         if (email.length > 0 && !emailReg.test(email)) {
             setEmailErr(true);
         } else {
             setEmailErr(false);
         }
-      
-        if (password.length > 0 && password.length < 8 ) {
+
+        let pswdReg = /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=*.]).*$/;
+        if (password.length > 0 && !pswdReg.test(password)) {
             setPswdErr(true);
         } else {
             setPswdErr(false);
@@ -67,7 +69,7 @@ export default function RegisterPage() {
 
 
     const handleRegisterClick = async () => {
-        if(!emailErr && !pswdErr && !pswdChkErr){
+        if (!emailErr && !pswdErr && !pswdChkErr) {
             let data = {
                 id: email,
                 password: password
@@ -75,14 +77,14 @@ export default function RegisterPage() {
 
             let result = await UserRegisterReq(data);
 
-            if(result.status === 200){
+            if (result.status === 200) {
                 navigate("/auth");
                 setResultErr(false);
                 setPassword("");
                 setEmail("");
                 setPasswordChk("");
 
-            }else{
+            } else {
                 console.log("register error--!");
                 setResultErr(true);
                 setPassword("");
@@ -107,7 +109,7 @@ export default function RegisterPage() {
                 error={emailErr}
                 label={"*id"} />
 
-{emailErr && <p className="err_ment register_input">4~8자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.</p>}
+            {emailErr && <p className="err_ment register_input">4~8자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.</p>}
 
             <FormControl variant="outlined" className="pswd">
                 <InputLabel>*Password</InputLabel>
