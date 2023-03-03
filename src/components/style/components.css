@@ -107,36 +107,146 @@ header {
     width: 100%;
 }
 
-
-
-@media (max-width: 600px) {
+@media (max-width: 750px) {
     .homeImg {
-        height: 15px;
-        width: 15px;
+        height: 20px;
+        width: 20px;
     }
 
     .headerTypo {
-        font-size: 15px;
+        font-size: 20px;
+        color: #fff
     }
 
     .headerloginBtn {
-        width: 45px;
-        font-size: 11px;
+        display: none;
     }
 
     header {
         margin: 0px;
-
+        background-color: #317fc9;
     }
 
     .schBarOutline {
+        display: none;
+    }
+
+    .schBtn {
+        width: 93%;
+        margin-top: 5px;
+    }
+
+    .select-box {
+        width: 150px;
+    }
+
+    .airline {
+        width: 150px;
+        margin: 0px;
+    }
+
+    .mobileSchBarOutline {
+        margin: 10px;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 2px #ddd solid;
+        padding: 10px;
+        cursor: pointer;
     }
 
-    .schSection {
+
+    .airportSelect {
+        position: relative;
+        width: 90%;
+    }
+
+    .selectbox {
         display: flex;
-        justify-content: column;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0px 10px 0px 10px;
+        align-items: center;
+
+        border: 1px #ddd solid;
+        margin: 2px;
+        border-radius: 10px;
+        height: 40px;
     }
 
+    .selectbox:hover {
+        background-color: #317fc930;
+    }
+
+    .selectOption {
+        background-color: #fff;
+        position: absolute;
+        width: 98%;
+        z-index: 100;
+        overflow-y: scroll;
+        height: 300px;  
+        border:1px solid #ddd;
+        border-radius: 10px;
+    }
+
+    .selectTypo {
+        border-bottom: 1px #ddd solid;
+        text-align: center;
+        padding: 10px 0px 10px 0px;
+        margin: 0px;
+    }
+
+    .date-select {
+        background-color: #fff;
+        width: 300px;
+        padding: 5px;
+        border: #ddd 1px solid;
+        font-size: medium;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        cursor: pointer;
+    }
+    .dateBox{
+        display: flex;
+        align-items: center;
+        border:1px solid #ddd;
+        width: 87%;
+        justify-content: space-around;
+        border-radius: 10px;
+        box-sizing: content-box;
+        height: 45px;
+        margin: 2px;
+        padding: 0px 5px;
+    }
+
+    .date-title{
+        font-weight: 200;
+        font-size: 15px;
+        min-width: 60px;
+    }
+
+    .menuItem{
+        border-bottom: 1px dashed #ddd;
+        cursor: pointer;
+    }
+
+    .menuItem:hover{
+        background-color: #efefef;
+    }
+
+    .menuBox{
+        width: 200px;
+    }
+
+}
+
+
+@media (min-width:750px) {
+    .mobileSchBarOutline {
+        display: none;
+    }
+
+    .headerMenuIconBox{
+        display: none;
+    }
 }

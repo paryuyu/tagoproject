@@ -1,4 +1,4 @@
-import { LinearProgress } from '@mui/material';
+import { LinearProgress, useMediaQuery } from '@mui/material';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
@@ -24,7 +24,7 @@ const columnDefs = [
         headerCheckboxSelection: true,
         checkboxSelection: true,
         editable: false,
-
+    
     },
     { headerName: '항공사', field: "airlineNm", },
     { headerName: '항공편', field: "vihicleId", },
@@ -37,6 +37,8 @@ const columnDefs = [
 ];
 
 export default function DataGridTable({ onChartOpen }) {
+    const responsiveWidth = useMediaQuery('(max-width:750px)')
+    console.log(responsiveWidth,'matches')
 
     const { searchingData, searchisLoading, pageLoading, handleCtxUpdate } = useContext(LookupContext);
     const authCtx = useContext(AuthContext);
@@ -50,10 +52,7 @@ export default function DataGridTable({ onChartOpen }) {
     //얘로 다 처리하기
     const [selectArr, setSelectArr] = useState([]);
     const [rowData, setRowData] = useState();
-
-
     useEffect(() => {
-        console.log(authCtx.auth,'<==auth')
         if (searchingData.length > 0) {
             setRowData(searchingData.sort((a, b) => b.id - a.id))
         }
@@ -182,7 +181,7 @@ export default function DataGridTable({ onChartOpen }) {
     }
 
     return (
-        <div className="ag-theme-alpine" style={{ height: 600, width: "90%" }}>
+        <div className="ag-theme-alpine gridTableBox">
             <div className="btnBox">
                 <div className="btnAddDelBox">
                     <button onClick={handleDataAdd}>Add</button>
@@ -211,6 +210,7 @@ export default function DataGridTable({ onChartOpen }) {
             </div>
 
             <PaginationCustom />
+            
             <div className="modifyBtnBox">
                 <button className="modifyBtn" onClick={handleFinalUpdate}>수정하기</button>
             </div>

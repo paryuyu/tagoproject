@@ -1,5 +1,8 @@
 .ment {
     font-weight: bold;
+    background-color: #efefef;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .tableBox {
@@ -184,4 +187,101 @@
     top: -10px;
     font-weight: 500;
     font-size: 13px;
+}
+
+
+.gridTableBox {
+    height: 500px;
+    width: 90%;
+}
+
+.ag-header-cell-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+@media (max-width: 750px) {
+
+    .gridTableBox {
+        height: 70%;
+        width: 95%;
+        position: relative;
+    }
+
+    .tableBox {
+        justify-content: start;
+        align-items: center;
+    }
+
+    .totalNum {
+        position: absolute;
+        right: 20px;
+        top: 30px;
+        font-weight: 500;
+        font-size: 13px;
+    }
+
+    .modifyBtn {
+        position: absolute;
+        top: 2px;
+        right: 5px;
+        height: 30px;
+        padding: 0px 10px;
+    }
+
+    .chartBtn {
+        display: none;
+    }
+
+    .ment {
+        font-size: small;
+        color: #333;
+        background-color: #2196f31a;
+        padding: 10px;
+        border-radius: 10px;
+
+    }
+
+    .ag-row {
+        padding: 0;
+        margin: 0;
+        height: 30px;
+    }
+
+    .ag-cell {
+        font-size: 12px;
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ag-text-field-input {
+        width: 50px;
+        height: 30px;
+    }
+
+    .ag-cell-inline-editing {
+        width: 100%;
+        height: 30px;
+    }
+    
+    .final-update-chkbox {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        box-shadow: 50;
+        padding: 1rem;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+    
+    }
 }

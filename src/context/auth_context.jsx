@@ -23,6 +23,7 @@ export function AuthContextProvider({ children }) {
     const cookies = new Cookies();
 
     useEffect(() => {
+        // RefreshTokenValidReq()
         handleCtxTokenValidReq();
         // 창이 마운트 될때마다 토큰 유효성 검사를 하는데 test하는 token이 이미 만료된 토큰이라 자꾸 초기화 됨.
     }, [])

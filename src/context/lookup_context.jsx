@@ -6,6 +6,7 @@ import { AirlineReq, AirportReq, DataUpdateReq, TagoServerReq } from "../util/ta
 export const LookupContext = createContext();
 
 export function LookupContextProvider({ children }) {
+
     const [airlineListData, setAirlineListData] = useState(null);
     const [airportListData, setPortlineListData] = useState();
 
@@ -155,7 +156,6 @@ export function LookupContextProvider({ children }) {
         setRefresh(c => !c)
     }
 
-
     useEffect(() => {
         airportlistReq();
         airlinelistReq();
@@ -164,17 +164,17 @@ export function LookupContextProvider({ children }) {
 
     return (
         <LookupContext.Provider value={{
-            handlePageChange,
             dataTotalCnt,
             searchisLoading,
             raw,
             airlineListData,
             airportListData,
             searchingData,
+            pageLoading,
+            handlePageChange,
             handleCtxUpdate,
             handleSearch,
-            handleRefresh,
-            pageLoading
+            handleRefresh
         }}>
 
             {children}

@@ -1,22 +1,24 @@
-import { useContext, useEffect } from "react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth_context";
+import MenuIcon from '@mui/icons-material/Menu';
 import "./style/components.css"
+import { IconButton } from "@mui/material";
+import MobileDrawer from "./mobileComponents/mobileDrawer";
 
 
 export default function Layout() {
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const authCtx = useContext(AuthContext);
 
     const navigate = useNavigate()
-
     const { pathname } = useLocation();
+
 
     const handleAuth = () => {
         if (authCtx.auth) {
             authCtx.dispatch({ type: "logout" });
             localStorage.removeItem("access_token");
-
         } else {
             navigate("/auth")
         }
@@ -26,9 +28,6 @@ export default function Layout() {
         navigate("/searching")
     }
 
-    useEffect(()=>{
-        console.log(authCtx.auth,'<==auth')
-    },[])
     useEffect(() => {
 
         if (pathname === "/") {
@@ -56,15 +55,27 @@ export default function Layout() {
     }, [pathname, authCtx])
 
 
+
+    const handleDrawer = () => {
+        setDrawerOpen(c => !c)
+    }
+
+
     return (<div className="headerBox">
         <header>
             <div className="headerIconBox" onClick={handleNavigation}>
-                <img src="flightImg.png" className="homeImg"/>
+                <img src="flightImg.png" className="homeImg" />
                 <h1 className="headerTypo" >국내 항공 조회 서비스</h1>
             </div>
-            <button onClick={handleAuth} className="headerloginBtn">{authCtx.auth ? "로그아웃" : "로그인"}</button>
-        </header>
 
+            <button onClick={handleAuth} className="headerloginBtn">{authCtx.auth ? "로그아웃" : "로그인"}</button>
+            <div className="headerMenuIconBox">
+                <IconButton className="headerMenuIcon" onClick={handleDrawer}>
+                    <MenuIcon />
+                </IconButton>
+            </div>
+        </header>
+        <MobileDrawer onDraw={handleDrawer} drawerOpen={drawerOpen} />
         <Outlet />
 
         <footer >
