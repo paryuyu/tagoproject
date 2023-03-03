@@ -6,6 +6,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import { UserRegisterReq } from "../util/authAPI";
 import { useNavigate } from "react-router-dom";
+import { AltRoute } from "@mui/icons-material";
 
 export default function RegisterPage() {
     const [email, setEmail] = useState("");
@@ -69,7 +70,9 @@ export default function RegisterPage() {
 
 
     const handleRegisterClick = async () => {
-        if (!emailErr && !pswdErr && !pswdChkErr) {
+
+        if (!emailErr && !pswdErr && !pswdChkErr && email && password) {
+
             let data = {
                 id: email,
                 password: password
@@ -90,8 +93,11 @@ export default function RegisterPage() {
                 setPassword("");
                 setEmail("")
                 setPasswordChk("")
-
             }
+
+        } else {
+            console.log("아이디 비밀번호를 입력하세요")
+            setResultErr(true);
 
         }
     }
@@ -100,20 +106,27 @@ export default function RegisterPage() {
 
     return (<section className="authOutlineContainer">
 
+
         <div className="authBox registerBox">
+
             <Typography variant="h6">Register</Typography>
+
+
+
             <TextField
+                className="register_input"
                 value={email}
                 onChange={handleEmailChange}
                 placeholder="*id"
                 error={emailErr}
                 label={"*id"} />
 
-            {emailErr && <p className="err_ment register_input">4~8자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.</p>}
+            {emailErr && <p className="err_ment">4~8자의 영문 소문자, 숫자와 특수기호(_)만 사용 가능합니다.</p>}
 
             <FormControl variant="outlined" className="pswd">
                 <InputLabel>*Password</InputLabel>
                 <OutlinedInput
+                    className="register_input"
                     onChange={handlePasswordChange}
                     value={password}
                     error={pswdErr}
@@ -126,12 +139,13 @@ export default function RegisterPage() {
 
                 /></FormControl>
 
-            {pswdErr && <p className="err_ment register_input">8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</p>}
+            {pswdErr && <p className="err_ment">8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</p>}
 
 
             <FormControl variant="outlined" className="pswd">
                 <InputLabel>*Password Check</InputLabel>
                 <OutlinedInput
+                    className="register_input"
                     error={pswdChkErr}
                     onChange={handlePasswordChk}
                     value={passwordChk}
@@ -144,10 +158,17 @@ export default function RegisterPage() {
                 />
             </FormControl>
 
-            {pswdChkErr && <p className="err_ment register_input">비밀번호가 일치하지 않습니다.</p>}
-            {resultErr && <p className="err_ment register_input">회원가입에 실패하였습니다.</p>}
+            {pswdChkErr && <p className="err_ment">비밀번호가 일치하지 않습니다.</p>}
 
             <button className="LoginBtn" onClick={handleRegisterClick}>회원가입</button>
+
+            {resultErr && <div className="finalRegisterErr">
+                <p className="err_ment registerFinalTypo">회원가입에 실패하였습니다.</p>
+                <p className="err_ment registerFinalTypo">아이디 비밀번호를 확인하세요.</p>
+            </div>}
+
+
+
         </div>
 
     </section>);

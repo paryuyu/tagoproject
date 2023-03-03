@@ -16,7 +16,7 @@ export default function AuthPage() {
 
   const [emailErr, setEmailErr] = useState(false);
   const [pswdErr, setPswdErr] = useState(false);
-  const [pswdView, setPswdView] =useState(false);
+  const [pswdView, setPswdView] = useState(false);
   const [loginError, setLoginError] = useState(false);
 
   const ctx = useContext(AuthContext);
@@ -33,25 +33,25 @@ export default function AuthPage() {
   //로그인은 AuthContext에서 처리
   const handleLoginClick = async () => {
 
-    if (email.length > 6 && password.length > 8 && !pswdErr && !emailErr) {
+    if (!pswdErr && !emailErr) {
       let login_result = await ctx.handleCtxLoginReq(email, password);
- 
+      //정규식 추가
+
       if (login_result.result) { //로그인 성공하면
         navigate('/searching'); //searching으로 가기.
-
         setLoginError(false);
 
         //input value 비워주기
         setPassword("");
         setEmail("");
-        
+
       } else {
 
         //로그인 에러 true : 에러멘트 보여주고 패스워드 및 아이디 input value 비워주기
         setLoginError(true);
 
         setPassword("");
-        setEmail("")
+        setEmail("");
       }
 
     } else {
@@ -61,8 +61,8 @@ export default function AuthPage() {
   }
 
 
-  const handleVisible = ()=>{ //password 확인할 수 있는 아이콘 생성
-    setPswdView(c=>!c)
+  const handleVisible = () => { //password 확인할 수 있는 아이콘 생성
+    setPswdView(c => !c)
   }
 
 
@@ -74,6 +74,7 @@ export default function AuthPage() {
 
 
       <TextField
+        className="authInput"
         value={email}
         onChange={handleEmailChange}
         placeholder="*id"
@@ -81,19 +82,19 @@ export default function AuthPage() {
         label={"*id"} />
 
       <FormControl className="authInput">
-      <InputLabel>*Password</InputLabel>
-      <OutlinedInput
-        onChange={handlePasswordChange}
-        value={password}
-        placeholder="*password"
-        type={pswdView ? "text" : "password"}
-        label={"*password"}
-        endAdornment={
-          !pswdView ? <IconButton onClick={handleVisible}><VisibilityIcon/></IconButton> 
-          : <IconButton onClick={handleVisible}><VisibilityOffIcon/></IconButton>
-        }
+        <InputLabel>*Password</InputLabel>
+        <OutlinedInput
+          onChange={handlePasswordChange}
+          value={password}
+          placeholder="*password"
+          type={pswdView ? "text" : "password"}
+          label={"*password"}
+          endAdornment={
+            !pswdView ? <IconButton onClick={handleVisible}><VisibilityIcon /></IconButton>
+              : <IconButton onClick={handleVisible}><VisibilityOffIcon /></IconButton>
+          }
         />
-        </FormControl>
+      </FormControl>
 
 
 
@@ -109,9 +110,5 @@ export default function AuthPage() {
       <a href="/register">회원가입으로 바로가기</a>
 
     </div>
-
-
-
-
   </section>);
 }
