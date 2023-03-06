@@ -89,6 +89,7 @@ export function LookupContextProvider({ children }) {
             }
         }
     }
+    
     //페이지 별 데이터 
     const handlePageChange = async (page) => {
         setPageLoading(true)

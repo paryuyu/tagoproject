@@ -89,21 +89,26 @@
 
 
 .modifyBtnBox {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px
+    position: absolute;
+    bottom: -45px;
+    right: 10px;
 }
 
+.ag-theme-alpine {
+    position: relative;
+}
 
 .delete-warning {
     background-color: #ddd !important;
-
 }
 
 
 .update-warning {
     background-color: rgb(255, 153, 0) !important;
+}
 
+.add-warning {
+    background-color: rgba(0, 132, 255, 0.103) !important;
 }
 
 .final-update-chkbox {
@@ -119,7 +124,23 @@
     background-color: #fff;
     display: flex;
     flex-direction: column;
+}
 
+.modalbox {
+    overflow-y: scroll;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border: 1px #ddd solid;
+    max-height: 400px;
+}
+
+.modalbox::-webkit-scrollbar {
+    width: 5px;
+}
+
+.modalbox::-webkit-scrollbar-thumb {
+    background-color: #317fc9;
+    border-radius: 6px;
 }
 
 .modal-btn {
@@ -157,7 +178,6 @@
 .modal-itembox {
     display: flex;
     align-items: center;
-
 }
 
 .finish-modal-item-box {
@@ -179,14 +199,22 @@
     display: flex;
     justify-content: center;
     margin-top: 10px;
+    width: 100%;
 }
 
-.totalNum {
+.pageNumBox {
     position: absolute;
-    right: 20px;
-    top: -10px;
-    font-weight: 500;
-    font-size: 13px;
+    top: 0px;
+    left: 10px;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #3180c95d;
+}
+
+.page {
+    margin: 0px;
+    font-weight: bold;
+    font-size: 12px;
 }
 
 
@@ -202,8 +230,63 @@
 
 }
 
+.add {
+    color: #317fc9;
+}
+
+.update {
+    color: rgb(255, 153, 0);
+}
+
+.delete {
+    color: #b6b6b6;
+}
+
+.modalText {
+    font-size: small;
+    text-align: center;
+
+}
+
+.modalBtnBox {
+    display: flex;
+    flex-direction: row;
+}
+
+.modalBtn {
+    width: 100%;
+}
+
+.completeBtn {
+    background-color: #2196f31a;
+}
+
+.completeBtn:hover {
+    background-color: #2195f333;
+}
+
+.modifyBtn {
+    position: relative;
+    cursor: pointer;
+    z-index: 50;
+}
 
 @media (max-width: 750px) {
+
+    .modifyBtnBox {
+        position: absolute;
+        top: -36px;
+        right: 10px;
+    }
+
+
+    .pageControler {
+        margin-top: 5px;
+    }
+
+    .paginationTabBar {
+        justify-content: right;
+    }
 
     .gridTableBox {
         height: 70%;
@@ -224,14 +307,6 @@
         font-size: 13px;
     }
 
-    .modifyBtn {
-        position: absolute;
-        top: 2px;
-        right: 5px;
-        height: 30px;
-        padding: 0px 10px;
-    }
-
     .chartBtn {
         display: none;
     }
@@ -242,7 +317,6 @@
         background-color: #2196f31a;
         padding: 10px;
         border-radius: 10px;
-
     }
 
     .ag-row {
@@ -268,7 +342,7 @@
         width: 100%;
         height: 30px;
     }
-    
+
     .final-update-chkbox {
         position: absolute;
         top: 50%;
@@ -282,6 +356,7 @@
         background-color: #fff;
         display: flex;
         flex-direction: column;
-    
+
     }
+
 }
