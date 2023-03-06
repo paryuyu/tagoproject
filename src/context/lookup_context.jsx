@@ -26,7 +26,7 @@ export function LookupContextProvider({ children }) {
     async function airportlistReq() {
         let result = await AirportReq();
         if (result.status === 200) {
-            console.log(result, "result")
+
             let data = await result.data.response.body.items;
 
             if (data) {
@@ -52,82 +52,64 @@ export function LookupContextProvider({ children }) {
         }
     }
 
+    async function Search(searchData, page) {
+        if (page) {
+            searchData = { ...initialData, pageNo: page }
+        }
 
+        let result = await TagoServerReq(searchData);
 
+        if (result.status === 200) {
+            let data = result?.data?.response?.body?.items;
+            setRaw(data) //검색해온 원본 데이터 저장
 
-    const handleSearch = async (data) => {
-        setSearchingLoading(true)
-        if (data) {
-            setInitailData(data) //검색한 데이터 저장
+            if (data) {
+                setDataTotalCnt(result.data.response.body.totalCount)
 
-            let result = await TagoServerReq(data);
-            console.log(result, '<====result')
-            if (result.status === 200) {
-                let data = result?.data?.response?.body?.items;
-                setRaw(data) //검색해온 원본 데이터 저장
-
-                if (data) {
-                    setDataTotalCnt(result.data.response.body.totalCount)
+                let item = data.item;
+                if (Array.isArray(item)) {
                     let arr = [];
-                    let item = data.item;
+                    //pk가 있으면 id index 붙여주는건 삭제
+                    item.forEach((elm, index) => {
+                        arr.push({ id: index, ...elm })
+                    })
 
-                    if (Array.isArray(item)) {
-                        item.forEach((elm, index) => {
-                            arr.push({ id: index, ...elm })
-                        })
-
-                        setSearchingData(arr); //수정데이터
-                        setSearchingLoading(false);
-
-                    } else { //결과값이 1개일 땐 배열이 아닌 객체로 들어와서 배열로 변경.
-                        setSearchingData([item]);
-                        setSearchingLoading(false);
-                    }
+                    setSearchingData(arr); //수정데이터
+                    setSearchingLoading(false);
+                    page && setPageLoading(false);
 
                 } else {
-                    setSearchingData([]);
-                    setSearchingLoading(c=>!c);
+                    //결과값이 1개일 땐 배열이 아닌 객체로 들어와서 배열로 변경.
+                    setSearchingData([item]);
+                    setSearchingLoading(false);
+                    page && setPageLoading(false);
                 }
+
+            } else {
+                setSearchingData([]);
+                setSearchingLoading(c => !c);
             }
         }
     }
 
 
-    //페이지 별 데이터 
+
+    //데이터 검색
+    const handleSearch = async (data) => {
+        setSearchingLoading(true)
+
+        if (data) {
+            setInitailData(data) //검색한 데이터 저장
+            Search(data)
+        }
+    }
+
+
+    //페이지 별 검색
     const handlePageChange = async (page) => {
         setPageLoading(true)
-        if (initialData && page) {
-            let data = { ...initialData, pageNo: page }
-            let result = await TagoServerReq(data);
-
-            if (result.status === 200) {
-
-                let data = result?.data?.response?.body?.items;
-                setRaw(data) //검색해온 원본 데이터 저장
-
-                if (data) {
-                    setDataTotalCnt(result.data.response.body.totalCount)
-                    let arr = [];
-                    let item = data.item;
-                    if (Array.isArray(item)) {
-                        item.forEach((elm, index) => {
-                            arr.push({ id: index, ...elm })
-                        })
-
-                        setSearchingData(arr); //수정데이터
-                        setSearchingLoading(false);
-                        setPageLoading(false);
-                    } else { //결과값이 1개일 땐 배열이 아닌 객체로 들어와서 배열로 변경.
-                        setSearchingData([item]);
-                        setSearchingLoading(false);
-                        setPageLoading(false);
-                    }
-
-                } else {
-                    setSearchingData([]);
-                    setSearchingLoading(c=>!c);
-                }
-            }
+        if (page) {
+            Search(initialData, page)
         }
     }
 
