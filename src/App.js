@@ -23,6 +23,7 @@ function App() {
                   <Route path="/searching" element={<MainPage />} />
                   <Route path="/auth" element={<AuthPage />} />
                   <Route path="/register" element={<RegisterPage />} />
+                  <Route path="/mypage" element={<MainPage />} />
                 </Route>
               </Routes>
             </Router>

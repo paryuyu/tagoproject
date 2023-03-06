@@ -9,10 +9,9 @@ import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AuthContext } from '../../context/auth_context';
 import { LookupContext } from "../../context/lookup_context";
 import { DateFormatter, PriceFormmater } from '../../lib/formatter';
-import { DataUpdateReq } from '../../util/tagoAPI';
 import PaginationCustom from './PaginationCustom';
 import ResultModal from './resultModal';
-
+import TimelineIcon from '@mui/icons-material/Timeline';
 
 
 
@@ -37,9 +36,9 @@ const columnDefs = [
 ];
 
 export default function DataGridTable({ onChartOpen }) {
-    const { searchingData, searchisLoading, pageLoading, handleCtxUpdate } = useContext(LookupContext);
+    const { searchingData, pageLoading, handleCtxUpdate } = useContext(LookupContext);
     const authCtx = useContext(AuthContext);
-
+    const matches = useMediaQuery('(min-width:750px)');
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
     const gridRef = useRef();
 
@@ -210,8 +209,12 @@ export default function DataGridTable({ onChartOpen }) {
                     <button onClick={handleDataAdd}>Add</button>
                     <button onClick={handleDataDelete}>Delete</button>
                 </div>
-                <button onClick={handleChartView} className={"chartBtn"}>
-                    Price Chart View</button>
+                {matches ? <button onClick={handleChartView} className={"chartBtn"}>
+                    Price Chart View</button> :
+                    <div className='chartIcon' onClick={handleChartView}>
+                        <TimelineIcon />
+                    </div>
+                }
             </div>
             {pageLoading && <LinearProgress color='primary' />}
 

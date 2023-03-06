@@ -116,13 +116,12 @@ export function LookupContextProvider({ children }) {
 
     /** 데이터 업데이트 */
     const handleCtxUpdate = async (data) => {
-        console.log(data)
 
         const cookies = new Cookies();
-        let refreshToken = cookies.get("refresh_token")
-        console.log(refreshToken, 'refresh')
+        let refreshToken = cookies.get("refresh_token");
+
         if (data) {
-            //데이터가 있으면 서버로 보내주기.
+            
             let result = await DataUpdateReq(data, refreshToken);
 
             if (result.status === 200) {

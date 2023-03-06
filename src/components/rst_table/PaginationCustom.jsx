@@ -24,8 +24,8 @@ export default function PaginationCustom() {
         <div className="paginationTabBar">
 
             <Pagination
-                className="pageControler"
-                siblingCount={!matches ? 0 : 1}
+            className="pageControler"
+                siblingCount={!matches ? 0: 1}
                 count={pageCnt}
                 onChange={handlePageChange}
                 size={!matches ? "small" : "medium"}

@@ -78,9 +78,6 @@ export default function DataCharts({ onChartOpen }) {
     }
 
     return (<div className="chartmodalBox">
-
-
-
         <div className="modalheaderBox">
             <MdClose className="closeIcon" onClick={onChartOpen} />
             <div className="modalTypoBox">
@@ -92,7 +89,7 @@ export default function DataCharts({ onChartOpen }) {
 
         {data.length > 0 && !dataErr ?
             !ctx.searchisLoading &&
-            <AgChartsReact options={options} /> :
+            <AgChartsReact options={options}/> :
 
             <>
                 <div className="no-data-ment">
