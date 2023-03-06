@@ -307,14 +307,18 @@
 
 
 @media (max-width: 750px) {
+
     .chartIcon {
         background-color: #f0f0f0;
         position: absolute;
-        right: 70px;
-        padding: 3px 5px;
+        top:-1px;
+        right: 15%;
+        padding: 4px 8px;
         border-radius: 10px;
         cursor: pointer;
+        display: flex;
     }
+
     .chartIcon:hover{
         background-color: #ffbbbb;
     }
@@ -333,7 +337,7 @@
 
     .modifyBtnBox {
         position: absolute;
-        top: -36px;
+        top: -35px;
         right: 0px;
     }
 

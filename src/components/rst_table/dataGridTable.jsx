@@ -19,7 +19,7 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 const columnDefs = [
     {
         maxWidth: 200,
-        width: 20,
+        width: 65,
         headerCheckboxSelection: true,
         checkboxSelection: true,
         editable: false,
@@ -200,8 +200,6 @@ export default function DataGridTable({ onChartOpen }) {
     }
 
 
-
-
     return (
         <div className=" gridTableBox">
             <div className="btnBox">
@@ -232,6 +230,7 @@ export default function DataGridTable({ onChartOpen }) {
                     getRowClass={handleGetRowClass}
                     paginationAutoPageSize={false}
                 />
+
                 <div className="modifyBtnBox">
                     <button className="modifyBtn" onClick={handleFinalUpdate}>수정하기</button>
                 </div>
