@@ -40,6 +40,7 @@ function FinalChkList({ item }) {
             <>
                 <Box className={"modal-itembox"}>
                     <p className={"finish-modal-typo modal-title "+flagClass}>{item.flag}</p>
+                    
                     <div className="finish-modal-item-box">
                         <p className="finish-modal-typo">항공사 : {item.airlineNm}</p>
                         <p className="finish-modal-typo">도착 공항 : {item.arrAirportNm}</p>

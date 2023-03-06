@@ -234,11 +234,7 @@ export default function DataGridTable({ onChartOpen }) {
                     <button className="modifyBtn" onClick={handleFinalUpdate}>수정하기</button>
                 </div>
             </div>
-
             <PaginationCustom />
-
-
-
             <ResultModal open={alretOpen} onOpen={handleAlretOpen} updateData={finalChk} onUpdate={handleUpdateFinish} />
         </div>)
 }

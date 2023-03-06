@@ -40,10 +40,6 @@
     padding: 20px;
     border: 2px #333 solid;
     border-radius: 20px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .modalCloseBtn {
@@ -102,7 +98,6 @@
     background-color: #ddd !important;
 }
 
-
 .update-warning {
     background-color: rgb(255, 153, 0) !important;
 }
@@ -124,6 +119,7 @@
     background-color: #fff;
     display: flex;
     flex-direction: column;
+    cursor: default;
 }
 
 .modalbox {
@@ -136,12 +132,38 @@
 
 .modalbox::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
 }
 
 .modalbox::-webkit-scrollbar-thumb {
-    background-color: #317fc9;
+    background-color: #317fc988;
     border-radius: 6px;
 }
+
+
+
+.ag-body-horizontal-scroll-viewport::-webkit-scrollbar {
+    height: 6px;
+}
+
+.ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb {
+    background-color: #317fc988;
+    border-radius: 10px;
+}
+
+
+.ag-body-vertical-scroll-viewport::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ag-body-vertical-scroll-viewport::-webkit-scrollbar-thumb {
+    background-color: #3180c988;
+    border-radius: 10px;
+
+}
+
+
+
 
 .modal-btn {
     margin-top: 10px;
@@ -170,23 +192,23 @@
 .modal-title {
     font-size: 15px;
     font-weight: bold;
-    color: #333;
-    text-align: center;
+    margin-left: 10px;
     flex: 1;
+    border-bottom: 0.5px dashed #333;
+    padding: 5px;
+    width: 100%;
 }
 
 .modal-itembox {
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 
 .finish-modal-item-box {
-    width: 100%;
-    flex: 2;
-    border: 1px #ddd solid;
-    margin-bottom: 5px;
-    border-radius: 3px;
-    padding: 5px;
+    width: 90%;
+    padding: 10px 0px;
+    padding-left: 2px;
 }
 
 .close-btn {
@@ -269,16 +291,24 @@
     position: relative;
     cursor: pointer;
     z-index: 50;
+    margin: 0px;
 }
+
+
+.chartmodalBox{
+    width: 500px;
+}
+
+
+
 
 @media (max-width: 750px) {
 
     .modifyBtnBox {
         position: absolute;
         top: -36px;
-        right: 10px;
+        right: 0px;
     }
-
 
     .pageControler {
         margin-top: 5px;
@@ -358,5 +388,11 @@
         flex-direction: column;
 
     }
+
+   
+    .chartmodalBox{
+        width: 300px;
+    }
+    
 
 }

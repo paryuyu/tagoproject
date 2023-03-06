@@ -61,7 +61,7 @@ export function LookupContextProvider({ children }) {
             setInitailData(data) //검색한 데이터 저장
 
             let result = await TagoServerReq(data);
-
+            console.log(result, '<====result')
             if (result.status === 200) {
                 let data = result?.data?.response?.body?.items;
                 setRaw(data) //검색해온 원본 데이터 저장
@@ -70,6 +70,7 @@ export function LookupContextProvider({ children }) {
                     setDataTotalCnt(result.data.response.body.totalCount)
                     let arr = [];
                     let item = data.item;
+
                     if (Array.isArray(item)) {
                         item.forEach((elm, index) => {
                             arr.push({ id: index, ...elm })
@@ -84,12 +85,14 @@ export function LookupContextProvider({ children }) {
                     }
 
                 } else {
-                    setSearchingLoading(false);
+                    setSearchingData([]);
+                    setSearchingLoading(c=>!c);
                 }
             }
         }
     }
-    
+
+
     //페이지 별 데이터 
     const handlePageChange = async (page) => {
         setPageLoading(true)
@@ -121,7 +124,8 @@ export function LookupContextProvider({ children }) {
                     }
 
                 } else {
-                    setSearchingLoading(false);
+                    setSearchingData([]);
+                    setSearchingLoading(c=>!c);
                 }
             }
         }
@@ -134,7 +138,7 @@ export function LookupContextProvider({ children }) {
 
         const cookies = new Cookies();
         let refreshToken = cookies.get("refresh_token")
-        console.log(refreshToken,'refresh')
+        console.log(refreshToken, 'refresh')
         if (data) {
             //데이터가 있으면 서버로 보내주기.
             let result = await DataUpdateReq(data, refreshToken);
