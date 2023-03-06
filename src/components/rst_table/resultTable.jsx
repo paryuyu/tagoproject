@@ -18,19 +18,17 @@ export default function ResultTable({ searchingState }) {
         setChartOpen(false)
     }
 
-    console.log(ctx.searchisLoading)
+
     return (<div className="tableBox">
 
         {searchingState ?
             !ctx.searchisLoading ?
-                ctx.searchingData ?
+                ctx.searchingData && ctx.searchingData.length > 0 ?
                     <>
                         <ChartModal onClose={handleChartClose} onOpen={handleChartOpen} open={chartOpen} />
                         <DataGridTable onChartOpen={handleChartOpen} />
                     </>
                     : <p className="ment"> 검색값이 존재하지 않습니다. </p>
-
-
                 : <CircularProgress color="inherit" className="loadingProgress" />
             : <p className="ment">항공편을 조회해보세요.</p>}
     </div>);
