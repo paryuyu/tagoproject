@@ -44,7 +44,6 @@ export async function TagoServerReq(data) {
 
 }
 
-
 //update request
 export async function DataUpdateReq(data,refreshToken){
 
