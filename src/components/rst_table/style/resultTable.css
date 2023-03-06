@@ -33,13 +33,25 @@
 }
 
 .modalBox {
-    background-color: #fff;
+    /*모달 가장 바깥쪽*/
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    border: 2px #333 solid;
-    border-radius: 20px;
+    width: 600px;
+    min-height: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.chartmodalBox {
+    /* chart 모달 안쪽 */
+    width: 100%;
 }
 
 .modalCloseBtn {
@@ -63,12 +75,15 @@
     color: #333;
 }
 
+
 .modalTypoBox {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     gap: 20px;
     cursor: default;
+    margin: 0px 20px;
+    border-bottom: 1.5px solid #ddd;
 }
 
 .closeIcon {
@@ -140,8 +155,6 @@
     border-radius: 6px;
 }
 
-
-
 .ag-body-horizontal-scroll-viewport::-webkit-scrollbar {
     height: 6px;
 }
@@ -161,9 +174,6 @@
     border-radius: 10px;
 
 }
-
-
-
 
 .modal-btn {
     margin-top: 10px;
@@ -295,14 +305,31 @@
 }
 
 
-.chartmodalBox{
-    width: 500px;
-}
-
-
-
 
 @media (max-width: 750px) {
+    .chartIcon {
+        background-color: #f0f0f0;
+        position: absolute;
+        right: 70px;
+        padding: 3px 5px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+    .chartIcon:hover{
+        background-color: #ffbbbb;
+    }
+
+
+    .closeIcon {
+        top: 15px;
+        right: 50px;
+    }
+
+    .modalBox {
+        /*모달 가장 바깥쪽*/
+        width: 350px;
+        min-height: 300px;
+    }
 
     .modifyBtnBox {
         position: absolute;
@@ -335,10 +362,6 @@
         top: 30px;
         font-weight: 500;
         font-size: 13px;
-    }
-
-    .chartBtn {
-        display: none;
     }
 
     .ment {
@@ -389,10 +412,10 @@
 
     }
 
-   
-    .chartmodalBox{
+
+    .chartmodalBox {
         width: 300px;
     }
-    
+
 
 }
