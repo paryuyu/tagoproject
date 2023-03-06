@@ -111,8 +111,6 @@ export default function RegisterPage() {
 
             <Typography variant="h6">Register</Typography>
 
-
-
             <TextField
                 className="register_input"
                 value={email}

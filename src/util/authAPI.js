@@ -5,10 +5,12 @@ let baseUrl = process.env.REACT_APP_BASEURL;
 export async function UserRegisterReq(registerData) {
     try {
         console.log('register--!');
+        
         let response = await axios.post(`${baseUrl}/join`, {
             id: registerData.id,
             pw: registerData.password
         })
+
         console.log(response,'response')
         return response;
 
@@ -57,7 +59,8 @@ export async function AccessTokenValidReq(accessToken) {
 /** Refresh Token 유효성 검사 요청*/
 export async function RefreshTokenValidReq(refreshToken) {
     try {
-        let response = await axios.get(`${baseUrl}/refresh`, {
+        let response = await axios.get(`http://172.30.1.201:8080/refresh`, {
+        // let response = await axios.get(`${baseUrl}/refresh`, {
             headers: { Authorization: `Bearer ${refreshToken}` },
         })
         console.log(response,'refreshvalid')
