@@ -7,7 +7,7 @@ import { LookupContext } from "../../context/lookup_context";
 
 
 export default function ChartModal({ onClose, onOpen, open }) {
-
+    
     let ctx = useContext(LookupContext);
     const [arrNm, setArrNm] = useState("")
     const [depNm, setDepNm] = useState("")

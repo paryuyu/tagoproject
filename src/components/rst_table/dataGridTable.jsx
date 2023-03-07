@@ -1,18 +1,19 @@
 import { LinearProgress, useMediaQuery } from '@mui/material';
+
+import { AgGridReact } from "ag-grid-react";
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
-import { AgGridReact } from "ag-grid-react";
 import _ from 'lodash';
 
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AuthContext } from '../../context/auth_context';
 import { LookupContext } from "../../context/lookup_context";
 import { DateFormatter, PriceFormmater } from '../../lib/formatter';
-import PaginationCustom from './PaginationCustom';
-import ResultModal from './resultModal';
-import TimelineIcon from '@mui/icons-material/Timeline';
 
+import PaginationCustom from './item/PaginationCustom';
+import ResultModal from './resultModal';
+import GridButtons from './item/gridButtons';
 
 
 /** grid column 설정 */
@@ -27,17 +28,19 @@ const columnDefs = [
     },
     { headerName: '항공사', field: "airlineNm", },
     { headerName: '항공편', field: "vihicleId", },
+    { headerName: '출발공항', field: "depAirportNm", },
     { headerName: '출발시간', field: "depPlandTime", valueFormatter: DateFormatter },
+    { headerName: '도착공항', field: "arrAirportNm", },
     { headerName: '도착시간', field: "arrPlandTime", valueFormatter: DateFormatter },
     { headerName: '일반석운임', field: "economyCharge", valueFormatter: PriceFormmater },
     { headerName: '비즈니스석운임', field: "prestigeCharge", valueFormatter: PriceFormmater },
-    { headerName: '출발공항', field: "depAirportNm", },
-    { headerName: '도착공항', field: "arrAirportNm", },
+   
 ];
 
 export default function DataGridTable({ onChartOpen }) {
-    const { searchingData, pageLoading, handleCtxUpdate } = useContext(LookupContext);
+    const { searchingData, pageLoading, handleCtxUpdate  } = useContext(LookupContext);
     const authCtx = useContext(AuthContext);
+
     const matches = useMediaQuery('(min-width:750px)');
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
     const gridRef = useRef();
@@ -153,11 +156,6 @@ export default function DataGridTable({ onChartOpen }) {
     }
 
 
-    //차트 모달 오픈
-    const handleChartView = () => {
-        onChartOpen();
-    }
-
     //마지막 확인 모달 오픈
     const handleAlretOpen = () => {
         setAlretOpen(c => !c);
@@ -182,38 +180,10 @@ export default function DataGridTable({ onChartOpen }) {
 
 
 
-    //서버로 수정된 데이터 보내주기 : 1. user정보는 header로.
-    const handleUpdateFinish = () => {
-        //서버에는 빈 데이터가 안들어가게
-
-        let result = handleCtxUpdate(finalChk)
-
-        //서버 결과창
-        // if(result.status === 200){
-        // 검색 키워드 기억하고 있다가 다시 요청을 보내야함
-        //     console.log("update success-->refresh..!(다시 한번 find 요청 보내기)")
-        //     handleAlretOpen()
-        // }else{
-        //     console.log("update failed..!")
-        //     handleAlretOpen()
-        // }
-    }
-
 
     return (
         <div className=" gridTableBox">
-            <div className="btnBox">
-                <div className="btnAddDelBox">
-                    <button onClick={handleDataAdd}>Add</button>
-                    <button onClick={handleDataDelete}>Delete</button>
-                </div>
-                {matches ? <button onClick={handleChartView} className={"chartBtn"}>
-                    Price Chart View</button> :
-                    <div className='chartIcon' onClick={handleChartView}>
-                        <TimelineIcon />
-                    </div>
-                }
-            </div>
+            <GridButtons onUpdate={handleFinalUpdate} onChartOpen={onChartOpen} onAdd={handleDataAdd} onDelete={handleDataDelete}/>
             {pageLoading && <LinearProgress color='primary' />}
 
             <div
@@ -230,13 +200,10 @@ export default function DataGridTable({ onChartOpen }) {
                     getRowClass={handleGetRowClass}
                     paginationAutoPageSize={false}
                 />
-
-                <div className="modifyBtnBox">
-                    <button className="modifyBtn" onClick={handleFinalUpdate}>수정하기</button>
-                </div>
             </div>
-            <PaginationCustom />
-            <ResultModal open={alretOpen} onOpen={handleAlretOpen} updateData={finalChk} onUpdate={handleUpdateFinish} />
+
+            <PaginationCustom onUpdate={handleFinalUpdate} />
+            <ResultModal open={alretOpen} onOpen={handleAlretOpen} updateData={finalChk}/>
         </div>)
 }
 

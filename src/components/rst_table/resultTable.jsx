@@ -17,8 +17,7 @@ export default function ResultTable({ searchingState }) {
     const handleChartClose = () => {
         setChartOpen(false)
     }
-
-
+    
     return (<div className="tableBox">
 
         {searchingState ?

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Cookies } from "react-cookie";
 
 let key=process.env.REACT_APP_KEY;
 let endpoint = process.env.REACT_APP_END_POINT;
@@ -34,7 +35,9 @@ export async function TagoServerReq(data) {
     console.log("tago-req")
     try {
         let reqUrl = `${endpoint}/getFlightOpratInfoList?serviceKey=${key}&depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}&_type=json&pageNo=${data.pageNo}&numOfRows=10`;
+
         // let reqUrl = `${baseUrl}/flight?depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}&pageNo=${data.pageNo}&numOfRows=10`
+        
         let response = await axios.get(reqUrl);
         return response;
 
@@ -46,9 +49,12 @@ export async function TagoServerReq(data) {
 
 
 //update request
-export async function DataUpdateReq(data,refreshToken){
+export async function DataUpdateReq(data){
 
-
+    console.log(data,'Update Request----!@!@!@!@!@!@!@!')
+    let cookies = new Cookies();
+    let refreshToken = cookies.get("refresh_token");
+    
     try{ 
 
         let response = await axios.put(baseUrl+"/update" , {

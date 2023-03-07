@@ -10,6 +10,7 @@ function FinalChkList({ item }) {
     useEffect(() => {
 
         setFlagClass(item.flag)
+        
         if (Object.values(item).includes("add")) {
             //객체 반복문 => 새로운 객체 생성
             for (let i in item) {
@@ -31,8 +32,8 @@ function FinalChkList({ item }) {
                 }
             }
 
-
         }
+
     }, [item])
 
     return (<>
@@ -51,7 +52,7 @@ function FinalChkList({ item }) {
                         <p className="finish-modal-typo">이코노미운임 : {item.economyCharge}</p>
                         <p className="finish-modal-typo">비즈니스운임 : {item.prestigeCharge}</p>
 
-                        {!addDataState && Object.values(item).includes("add") ? <p className="ment modalText">추가된 데이터가 비어있으면 수정이 되지 않습니다.</p> : <></>}
+                        {!addDataState && Object.values(item).includes("add") ? <p className="ment modalText">추가된 데이터가 비어있으면 수정에 반영되지 않습니다.</p> : <></>}
 
                     </div>
                 </Box>
