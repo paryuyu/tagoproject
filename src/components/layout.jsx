@@ -52,6 +52,10 @@ export default function Layout() {
             document.title = "TAGO: 회원가입"
         }
 
+        if (pathname === "/mypage") {
+            document.title = "TAGO: 마이페이지"
+        }
+
     }, [pathname, authCtx])
 
 
@@ -60,7 +64,7 @@ export default function Layout() {
         setDrawerOpen(c => !c)
     }
 
-    const handleMypage = () =>{
+    const handleMypage = () => {
         navigate("/mypage")
     }
 
@@ -70,10 +74,10 @@ export default function Layout() {
                 <img src="flightImg.png" className="homeImg" />
                 <h1 className="headerTypo" >국내 항공 조회 서비스</h1>
             </div>
-            <div className="btnBox">
-                <div className="myPageIcon" onClick={handleMypage}>
-                    <PersonIcon />
-                </div>
+            <div className="headerbtnBox">
+                {authCtx.auth && <div className="myPageIcon" onClick={handleMypage}>
+                    <PersonIcon className="personIcon" />
+                </div>}
                 <button onClick={handleAuth} className="headerloginBtn">{authCtx.auth ? "로그아웃" : "로그인"}</button>
             </div>
             <div className="headerMenuIconBox">

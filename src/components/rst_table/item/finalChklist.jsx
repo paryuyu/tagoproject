@@ -1,7 +1,7 @@
 
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { DateFormatter } from "../../../lib/formatter";
+import { DateFormatter } from "../options/formatter";
 
 function FinalChkList({ item }) {
     const [addDataState, setAddDataState] = useState(false)

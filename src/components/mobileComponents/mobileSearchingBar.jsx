@@ -1,6 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LookupContext } from "../../context/lookup_context";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import RecentSeachingKeyword from "../rst_table/item/itemResearching";
 
 
 function MobileSearchingBar({ onSchState }) {
@@ -18,6 +19,8 @@ function MobileSearchingBar({ onSchState }) {
     const [depPort, setDepPort] = useState("");
     const [depSelectOpen, setDepSelectOpen] = useState(false);
 
+    const [keywords,setKeywords] = useState([]);
+    
     const [depDate, setDepDate] = useState(new Date().toISOString().slice(0, 10));
 
     const handleSearch = (evt) => {
@@ -34,7 +37,13 @@ function MobileSearchingBar({ onSchState }) {
         
         ctx.handleSearch(data)
         onSchState(true)
+        setKeywords([...keywords, {depPort: depPort, arrPort:arrPort}])
     }
+
+    useEffect(() => {
+        console.log(keywords)
+        localStorage.setItem("mkeywords",JSON.stringify(keywords))
+    }, [keywords])
 
     const handleDepSelect = (evt) => {
         setDepPortId(evt.target.dataset.value);
@@ -148,7 +157,7 @@ function MobileSearchingBar({ onSchState }) {
         </div>
 
         <button type="submit" className="schBtn" onClick={handleSearch}>검색</button>
-
+        <RecentSeachingKeyword/>
     </section>);
 }
 

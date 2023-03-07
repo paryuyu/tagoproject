@@ -9,36 +9,18 @@ import _ from 'lodash';
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AuthContext } from '../../context/auth_context';
 import { LookupContext } from "../../context/lookup_context";
-import { DateFormatter, PriceFormmater } from '../../lib/formatter';
 
 import PaginationCustom from './item/PaginationCustom';
 import ResultModal from './resultModal';
 import GridButtons from './item/gridButtons';
+import { columnDefs, defaultColDef } from './options/gridOption';
 
 
-/** grid column 설정 */
-const columnDefs = [
-    {
-        maxWidth: 200,
-        width: 65,
-        headerCheckboxSelection: true,
-        checkboxSelection: true,
-        editable: false,
 
-    },
-    { headerName: '항공사', field: "airlineNm", },
-    { headerName: '항공편', field: "vihicleId", },
-    { headerName: '출발공항', field: "depAirportNm", },
-    { headerName: '출발시간', field: "depPlandTime", valueFormatter: DateFormatter },
-    { headerName: '도착공항', field: "arrAirportNm", },
-    { headerName: '도착시간', field: "arrPlandTime", valueFormatter: DateFormatter },
-    { headerName: '일반석운임', field: "economyCharge", valueFormatter: PriceFormmater },
-    { headerName: '비즈니스석운임', field: "prestigeCharge", valueFormatter: PriceFormmater },
-   
-];
+
 
 export default function DataGridTable({ onChartOpen }) {
-    const { searchingData, pageLoading, handleCtxUpdate  } = useContext(LookupContext);
+    const { searchingData, pageLoading } = useContext(LookupContext);
     const authCtx = useContext(AuthContext);
 
     const matches = useMediaQuery('(min-width:750px)');
@@ -60,17 +42,10 @@ export default function DataGridTable({ onChartOpen }) {
     }, [searchingData])
 
 
-    /**column 설정 */
-    const defaultColDef = useMemo(() => ({
-        sortable: true,
-        filter: true,
-        editable: true,
-    }), [])
-
 
     //추가 데이터 : 빈 데이터 생성
     function addItems() {
-        let addItem = {
+        const addItem = {
             flag: 'add',
             name: `add${cnt}`,
             airlineNm: '',
@@ -155,7 +130,6 @@ export default function DataGridTable({ onChartOpen }) {
 
     }
 
-
     //마지막 확인 모달 오픈
     const handleAlretOpen = () => {
         setAlretOpen(c => !c);
@@ -184,7 +158,7 @@ export default function DataGridTable({ onChartOpen }) {
 
     return (
         <div className=" gridTableBox">
-            <GridButtons onUpdate={handleFinalUpdate} onChartOpen={onChartOpen} onAdd={handleDataAdd} onDelete={handleDataDelete}/>
+            <GridButtons onUpdate={handleFinalUpdate} onChartOpen={onChartOpen} onAdd={handleDataAdd} onDelete={handleDataDelete} />
             {pageLoading && <LinearProgress color='primary' />}
 
             <div
@@ -204,7 +178,7 @@ export default function DataGridTable({ onChartOpen }) {
             </div>
 
             <PaginationCustom onUpdate={handleFinalUpdate} />
-            <ResultModal open={alretOpen} onOpen={handleAlretOpen} updateData={finalChk}/>
+            <ResultModal open={alretOpen} onOpen={handleAlretOpen} updateData={finalChk} />
         </div>)
 }
 

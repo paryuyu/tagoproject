@@ -7,6 +7,18 @@
     border-top: 1px solid #333;
 }
 
+.mypageOutlined {
+    cursor: default;
+}
+
+.mypage-hello {
+    
+}
+
+.mypageTypo {
+    margin: 0px;
+}
+
 .authBox {
     display: flex;
     flex-direction: column;
