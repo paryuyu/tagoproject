@@ -114,7 +114,7 @@ export default function SearchingBar({ onSchState }) {
                 <div className="schSection" >
                     <button type="submit" className="schBtn" onClick={handleSearch}>검색</button>
                 </div>
-                <RecentSeachingKeyword/>
+                {/* <RecentSeachingKeyword/> */}
             </section>
 
         </>);
