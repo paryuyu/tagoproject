@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth_context";
 import MenuIcon from '@mui/icons-material/Menu';
-import "./style/components.css"
 import { IconButton } from "@mui/material";
 import MobileDrawer from "./mobileComponents/mobileDrawer";
-
+import PersonIcon from '@mui/icons-material/Person';
+import "./style/components.css"
 
 export default function Layout() {
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -60,6 +60,9 @@ export default function Layout() {
         setDrawerOpen(c => !c)
     }
 
+    const handleMypage = () =>{
+        navigate("/mypage")
+    }
 
     return (<div className="headerBox">
         <header>
@@ -67,8 +70,12 @@ export default function Layout() {
                 <img src="flightImg.png" className="homeImg" />
                 <h1 className="headerTypo" >국내 항공 조회 서비스</h1>
             </div>
-
-            <button onClick={handleAuth} className="headerloginBtn">{authCtx.auth ? "로그아웃" : "로그인"}</button>
+            <div className="btnBox">
+                <div className="myPageIcon" onClick={handleMypage}>
+                    <PersonIcon />
+                </div>
+                <button onClick={handleAuth} className="headerloginBtn">{authCtx.auth ? "로그아웃" : "로그인"}</button>
+            </div>
             <div className="headerMenuIconBox">
                 <IconButton className="headerMenuIcon" onClick={handleDrawer}>
                     <MenuIcon />

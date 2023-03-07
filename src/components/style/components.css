@@ -106,7 +106,23 @@ header {
     width: 100%;
 }
 
+.myPageIcon{
+    background-color: #efefef;
+    padding: 2px 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 2px;
+}
+
+.myPageIcon:hover{
+    background-color: #ddd;
+}
+
+
 @media (max-width: 750px) {
+    .myPageIcon{
+        display: none;
+    }
     .homeImg {
         height: 20px;
         width: 20px;
@@ -236,7 +252,10 @@ header {
     .menuBox{
         width: 200px;
     }
-
+    .drawer-avatar{
+        color:red;
+        
+    }
 }
 
 

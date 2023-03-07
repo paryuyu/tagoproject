@@ -49,29 +49,30 @@ a {
     width: 225px;
 }
 
-.authInput{
+.authInput {
     width: 225px;
 }
 
 
 
-.finalRegisterErr{
+.finalRegisterErr {
     width: 100%;
     padding: 10px 0px;
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 10px;
     border: 1px #ecaaaa solid;
 }
 
-.registerFinalTypo{
+.registerFinalTypo {
     font-weight: bold;
 }
 
-.register_input{
+.register_input {
     width: 225px;
 }
+
 @media(max-width: 750px) {
     .authOutlineContainer {
         border: 0px;

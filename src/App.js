@@ -7,6 +7,7 @@ import { LookupContextProvider } from "./context/lookup_context";
 
 import AuthPage from "./pages/authPage";
 import MainPage from "./pages/mainPage";
+import Mypage from "./pages/mypage";
 import RegisterPage from "./pages/registerPage";
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
                   <Route path="/searching" element={<MainPage />} />
                   <Route path="/auth" element={<AuthPage />} />
                   <Route path="/register" element={<RegisterPage />} />
-                  <Route path="/mypage" element={<MainPage />} />
+                  <Route path="/mypage" element={<Mypage />} />
                 </Route>
               </Routes>
             </Router>

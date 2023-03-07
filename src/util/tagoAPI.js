@@ -1,7 +1,8 @@
 import axios from "axios";
 import { Cookies } from "react-cookie";
 
-let key=process.env.REACT_APP_KEY;
+let key = "Lg3xW55zPXZOKKGy%2F9yuUYPbKZnBYzrDHtABcdAECRZiwNt0igZqOXoADrNI7%2BoSNrgN6raYgbrkNG2%2FUWerGA%3D%3D";
+// let key = process.env.REACT_APP_KEY;
 let endpoint = process.env.REACT_APP_END_POINT;
 let baseUrl = process.env.REACT_APP_BASEURL;
 
@@ -12,8 +13,11 @@ export async function AirportReq() {
         //path값은 명사 -> 동사X
         // let reqUrl = `${baseUrl}/airport`
         let response = await axios.get(reqUrl);
+        // let response = await fetch(reqUrl)
+        console.log(response)
         return response;
     } catch (e) {
+        console.log(e)
         return e
     }
 }
@@ -37,7 +41,7 @@ export async function TagoServerReq(data) {
         let reqUrl = `${endpoint}/getFlightOpratInfoList?serviceKey=${key}&depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}&_type=json&pageNo=${data.pageNo}&numOfRows=10`;
 
         // let reqUrl = `${baseUrl}/flight?depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}&pageNo=${data.pageNo}&numOfRows=10`
-        
+
         let response = await axios.get(reqUrl);
         return response;
 
@@ -48,22 +52,23 @@ export async function TagoServerReq(data) {
 }
 
 //update request
-export async function DataUpdateReq(data){
+export async function DataUpdateReq(data) {
 
-    console.log(data,'Update Request----!@!@!@!@!@!@!@!')
-    let cookies = new Cookies();
-    let refreshToken = cookies.get("refresh_token");
+    console.log(data, 'Update Request----!@!@!@!@!@!@!@!')
+   
+    try {
+        let cookies = new Cookies();
+        let refreshToken = cookies.get("refresh_token");
     
-    try{ 
+        let headers = { Authorization: `Bearer ${refreshToken}` }
+        let response = await axios.put(baseUrl + "/update", data, { headers });
 
-        let response = await axios.put(baseUrl+"/update" , {
-            headers: { Authorization: `Bearer ${refreshToken}` },
-        }, data);
         //update가 성공적으로 끝나면 find 요청을 다시 한번 더 보내자.
-        
+
         return response;
 
-    }catch(err){
+    } catch (err) {
+
         console.log(err.message)
         return err.message;
     }
