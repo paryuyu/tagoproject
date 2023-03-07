@@ -157,7 +157,7 @@ function MobileSearchingBar({ onSchState }) {
         </div>
 
         <button type="submit" className="schBtn" onClick={handleSearch}>검색</button>
-        <RecentSeachingKeyword/>
+        {/* <RecentSeachingKeyword/> */}
     </section>);
 }
 
