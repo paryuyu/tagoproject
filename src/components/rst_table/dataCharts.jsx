@@ -1,17 +1,15 @@
 import { AgChartsReact } from "ag-charts-react";
-import { useEffect } from "react";
-import { useContext, useState } from "react";
+import { useEffect , useContext, useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 import { LookupContext } from "../../context/lookup_context";
-//onChartOpen={onOpen}
+
 export default function DataCharts({ onChartOpen }) {
     const [data, setData] = useState([]);
     const [dataErr, setDataErr] = useState(false);
     const [arr, setArr] = useState("");
     const [dep, setDep] = useState("")
     let ctx = useContext(LookupContext)
-
     useEffect(() => {
         let newData = [];
         if (!ctx?.searchisLoading) {

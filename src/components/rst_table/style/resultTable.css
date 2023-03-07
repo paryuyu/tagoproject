@@ -99,12 +99,6 @@
 }
 
 
-.modifyBtnBox {
-    position: absolute;
-    bottom: -45px;
-    right: 10px;
-}
-
 .ag-theme-alpine {
     position: relative;
 }
@@ -227,17 +221,13 @@
 }
 
 .paginationTabBar {
-    position: relative;
     display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 10px 0px 10px;
 }
 
 .pageNumBox {
-    position: absolute;
-    top: 0px;
-    left: 10px;
     border-radius: 10px;
     padding: 5px;
     background-color: #3180c95d;
@@ -248,7 +238,6 @@
     font-weight: bold;
     font-size: 12px;
 }
-
 
 .gridTableBox {
     height: 500px;
@@ -297,11 +286,9 @@
     background-color: #2195f333;
 }
 
-.modifyBtn {
-    position: relative;
-    cursor: pointer;
-    z-index: 50;
-    margin: 0px;
+
+.gridheaderBtnBox {
+    display: flex;
 }
 
 
@@ -310,16 +297,14 @@
 
     .chartIcon {
         background-color: #f0f0f0;
-        position: absolute;
-        top:-1px;
-        right: 15%;
         padding: 4px 8px;
         border-radius: 10px;
         cursor: pointer;
         display: flex;
+        margin-right: 2px;
     }
 
-    .chartIcon:hover{
+    .chartIcon:hover {
         background-color: #ffbbbb;
     }
 
@@ -336,17 +321,11 @@
     }
 
     .modifyBtnBox {
-        position: absolute;
-        top: -35px;
-        right: 0px;
+        display: none;
     }
 
     .pageControler {
         margin-top: 5px;
-    }
-
-    .paginationTabBar {
-        justify-content: right;
     }
 
     .gridTableBox {
@@ -416,10 +395,8 @@
 
     }
 
-
     .chartmodalBox {
         width: 300px;
     }
-
 
 }
