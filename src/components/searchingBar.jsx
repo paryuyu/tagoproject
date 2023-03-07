@@ -12,7 +12,6 @@ export default function SearchingBar({ onSchState }) {
     const [depPortNm,setDepPortNm] = useState("");
     const [arrPortNm,setArrPortNm] = useState("");
     const [depDate, setDepDate] = useState(new Date().toISOString().slice(0, 10));
-    const [keywords,setKeywords] = useState([]);
     
     const handleSearch = (evt) => {
         let year = depDate.slice(0, 4);
@@ -28,14 +27,7 @@ export default function SearchingBar({ onSchState }) {
 
         ctx.handleSearch(data)
         onSchState(true)
-        setKeywords([...keywords, {depPort: depPortNm, arrPort:arrPortNm}])
     }
-
-    useEffect(() => {
-        console.log(keywords)
-        localStorage.setItem("keywords",JSON.stringify(keywords))
-    }, [keywords])
-    
 
     const handleDepSelect = (evt) => {
         setDepPort(evt.target.value)
@@ -114,7 +106,6 @@ export default function SearchingBar({ onSchState }) {
                 <div className="schSection" >
                     <button type="submit" className="schBtn" onClick={handleSearch}>검색</button>
                 </div>
-                <RecentSeachingKeyword/>
             </section>
 
         </>);

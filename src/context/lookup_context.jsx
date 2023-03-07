@@ -20,8 +20,6 @@ export function LookupContextProvider({ children }) {
 
     const [initialData, setInitailData] = useState();
 
-
-
     //searchingBar - airport
     async function airportlistReq() {
         let result = await AirportReq();
@@ -117,13 +115,7 @@ export function LookupContextProvider({ children }) {
 
     /** 데이터 업데이트 */
     const handleCtxUpdate = async (data) => {
-        
         let result = await DataUpdateReq(data);
-        
-        // const cookies = new Cookies();
-        // let refreshToken = cookies.get("refresh_token");
-
-        
     }
 
 

@@ -42,7 +42,7 @@ export default function PaginationCustom({ onUpdate }) {
                     className="modifyBtn"
                     onClick={onUpdate}>수정하기</button>
 
-                {mouse && <p className="modifyPcMent">수정은 페이지 내에서만 가능합니다.</p>}
+                {mouse && <p className="modifyPcMent">수정은 해당 페이지 내에서만 가능합니다.</p>}
             </div>
 
         </div>
