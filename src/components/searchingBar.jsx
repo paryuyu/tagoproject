@@ -1,6 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LookupContext } from "../context/lookup_context";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Chip, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import RecentSeachingKeyword from "./rst_table/item/itemResearching";
 
 export default function SearchingBar({ onSchState }) {
     const ctx = useContext(LookupContext);
@@ -8,8 +9,11 @@ export default function SearchingBar({ onSchState }) {
     const [airline, setAirline] = useState("");
     const [arrPort, setArrPort] = useState("");
     const [depPort, setDepPort] = useState("");
+    const [depPortNm,setDepPortNm] = useState("");
+    const [arrPortNm,setArrPortNm] = useState("");
     const [depDate, setDepDate] = useState(new Date().toISOString().slice(0, 10));
-
+    const [keywords,setKeywords] = useState([]);
+    
     const handleSearch = (evt) => {
         let year = depDate.slice(0, 4);
         let month = depDate.slice(5, 7);
@@ -24,14 +28,23 @@ export default function SearchingBar({ onSchState }) {
 
         ctx.handleSearch(data)
         onSchState(true)
+        setKeywords([...keywords, {depPort: depPortNm, arrPort:arrPortNm}])
     }
+
+    useEffect(() => {
+        console.log(keywords)
+        localStorage.setItem("keywords",JSON.stringify(keywords))
+    }, [keywords])
+    
 
     const handleDepSelect = (evt) => {
         setDepPort(evt.target.value)
+        setDepPortNm(evt.target.innerText)
     }
 
     const handleArrSelect = (evt) => {
         setArrPort(evt.target.value)
+        setArrPortNm(evt.target.innerText)
     }
 
     const handleLineSelect = (evt) => {
@@ -42,6 +55,7 @@ export default function SearchingBar({ onSchState }) {
         setDepDate(evt.target.value)
     }
 
+    
     return (
         <>
             <section className="schBarOutline">
@@ -90,8 +104,6 @@ export default function SearchingBar({ onSchState }) {
                                 </Select>}
                         </FormControl>
 
-
-
                     </div >
                     <div className="schBarItemBox">
                         <p className="schMiniTitle date-title">출발날짜: </p>
@@ -102,7 +114,7 @@ export default function SearchingBar({ onSchState }) {
                 <div className="schSection" >
                     <button type="submit" className="schBtn" onClick={handleSearch}>검색</button>
                 </div>
-
+                <RecentSeachingKeyword/>
             </section>
 
         </>);
