@@ -52,7 +52,7 @@
 .chartmodalBox {
     /* chart 모달 안쪽 */
     width: 100%;
-    
+
 }
 
 .modalCloseBtn {
@@ -215,28 +215,52 @@ table {
     width: 95%;
     border-collapse: collapse;
     text-align: center;
-    margin-top: 5px; 
-    border-radius: 1em;
+    margin: 10px;
 }
 
-thead{
-    background-color: #317fc930;
+thead {
+    border-radius: 10px;
 }
 
-tbody{
+tbody {
     font-size: small;
 }
 
 th {
     text-transform: uppercase;
     padding: 10px 0px;
-   
+
 }
 
 td {
     border: 1px solid #ddd;
     padding: 3px 0px;
-    
+
+}
+
+.modifyBox {
+    position: relative;
+}
+
+.modifyMent {
+    position: absolute;
+    top: 25px;
+    z-index: 100;
+    background-color: #2a6eae;
+    left: -120px;
+    font-size: small;
+    padding: 2px 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    color: #fff;
+}
+
+.UpdateTableTitle{
+    font-family: jua;
+}
+
+.datatitle {
+    background-color: #317fc970;
 }
 
 .finish-modal-item-box {
@@ -296,7 +320,11 @@ td {
 .modalText {
     font-size: small;
     text-align: center;
-
+    margin: 0px 10px;
+    padding: 5px 8px;
+    background-color: #317fc950;
+    border-radius: 10px;
+    font-weight: 500;
 }
 
 .modalBtnBox {
@@ -321,7 +349,22 @@ td {
     display: flex;
 }
 
+.modifyBtnBox {
+    position: relative;
+}
 
+.modifyPcMent {
+    position: absolute;
+    z-index: 100;
+    left: -110px;
+    top:25px;
+    background-color: #2a6eae;
+    font-size: small;
+    padding: 2px 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    color: #fff;
+}
 
 @media (max-width: 750px) {
 
@@ -354,6 +397,7 @@ td {
     .modifyBtnBox {
         display: none;
     }
+
 
     .pageControler {
         margin-top: 5px;
