@@ -52,6 +52,7 @@
 .chartmodalBox {
     /* chart 모달 안쪽 */
     width: 100%;
+    
 }
 
 .modalCloseBtn {
@@ -207,6 +208,35 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    width: 100%;
+}
+
+table {
+    width: 95%;
+    border-collapse: collapse;
+    text-align: center;
+    margin-top: 5px; 
+    border-radius: 1em;
+}
+
+thead{
+    background-color: #317fc930;
+}
+
+tbody{
+    font-size: small;
+}
+
+th {
+    text-transform: uppercase;
+    padding: 10px 0px;
+   
+}
+
+td {
+    border: 1px solid #ddd;
+    padding: 3px 0px;
+    
 }
 
 .finish-modal-item-box {
@@ -317,7 +347,8 @@
     .modalBox {
         /*모달 가장 바깥쪽*/
         width: 350px;
-        min-height: 300px;
+        min-height: 250px;
+        max-height: 400px;
     }
 
     .modifyBtnBox {
@@ -397,6 +428,7 @@
 
     .chartmodalBox {
         width: 300px;
+        max-height: 400px;
     }
 
 }
