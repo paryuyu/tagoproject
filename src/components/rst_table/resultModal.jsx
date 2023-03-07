@@ -16,12 +16,10 @@ export default function ResultModal({ open, onOpen, updateData }) {
         navigate("/auth")
     }
 
-    //TODO: updateData에 flag:add 인 값을 찾아서 값이 없으면 빼주기
-    //서버로 수정된 데이터 보내주기 : 1. user정보는 header로.
     const handleUpdateFinish = async () => {
 
 
-        //비어있는 데이터 잡기 -> add Data
+        //비어있는 데이터 잡기 -> C
         let createCondition = updateData.filter(elm => elm.flag === "add").filter(one => {
 
             if (one.airlineNm && one.arrAirportNm && one.depAirportNm && one.vihicleId) {
@@ -33,11 +31,8 @@ export default function ResultModal({ open, onOpen, updateData }) {
             }
         })
 
-        console.log(createCondition, '<===================createCondition'); //C
-
         //update Data 에서 add된 데이터(유일하게 name키가 있음)에서 삭제된 데이터는 빼고 update로 보내주기.
         let deleteCondition = updateData.filter(elm => elm.flag === "delete").filter(elm => !elm.name); //D
-        console.log(deleteCondition, '<===================deleteCondition');
 
         //CUD Final Data
         let updateCondition = updateData.filter(elm => elm.flag === "update");
