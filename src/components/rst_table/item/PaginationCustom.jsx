@@ -6,8 +6,8 @@ export default function PaginationCustom({ onUpdate }) {
     const ctx = useContext(LookupContext);
     const matches = useMediaQuery('(min-width:750px)')
     const [pageCnt, setPageCnt] = useState();
-    const [page,setPage] = useState(1);
-
+    const [page, setPage] = useState(1);
+    const [mouse, setMouse] = useState(false);
     useEffect(() => {
         let pageNum = Math.ceil(ctx.dataTotalCnt / 10)
         setPageCnt(pageNum)
@@ -36,7 +36,13 @@ export default function PaginationCustom({ onUpdate }) {
             />
 
             <div className="modifyBtnBox">
-                <button className="modifyBtn" onClick={onUpdate}>수정하기</button>
+                <button
+                    onMouseEnter={() => { setMouse(true); }}
+                    onMouseLeave={() => { setMouse(false) }}
+                    className="modifyBtn"
+                    onClick={onUpdate}>수정하기</button>
+
+                {mouse && <p className="modifyPcMent">수정은 페이지 내에서만 가능합니다.</p>}
             </div>
 
         </div>
