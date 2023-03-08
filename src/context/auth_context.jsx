@@ -23,7 +23,6 @@ export function AuthContextProvider({ children }) {
     const cookies = new Cookies();
 
     useEffect(() => {
-        // RefreshTokenValidReq();
         handleCtxTokenValidReq();
         // 창이 마운트 될때마다 토큰 유효성 검사를 하는데 test하는 token이 이미 만료된 토큰이라 자꾸 초기화 됨.
     }, [])
@@ -36,9 +35,9 @@ export function AuthContextProvider({ children }) {
         if (email && password) {
 
             let result = await AuthLoginReq(email, password); //로그인 요청
+            console.log(result,'resultState')
 
-            if (result.status === 200) { //서버 로그인 성공 시
-
+            if (result.status === 201) { //서버 로그인 성공 시
                 let decode = decodeToken(result.data.access)
                 if (decode.id) {
                     dispatch({ type: "login", payload: { userId: decode.id } }) //reducer에 저장
@@ -64,9 +63,10 @@ export function AuthContextProvider({ children }) {
 
                     return { result: false, message: "서버 응답에 토큰 값이 없습니다." }
                 }
-
-            } else {
+                
+            } else{
                 //로그인 실패 
+                console.log(result.response.status)
                 return { result: false, message: "로그인에 실패하였습니다." }
             }
 
@@ -87,7 +87,6 @@ export function AuthContextProvider({ children }) {
             if (accessTokenExp && refreshToken) {  //access 토큰 만료상태
 
                 localStorage.removeItem("access_token"); //access 토큰을 localStorage에서 제거
-
                 const refreshTokenExp = isExpired(refreshToken); //리프레쉬 토큰 만료 확인
 
                 if (refreshTokenExp) {  //refresh token이 만료가 되었다면 

@@ -108,23 +108,30 @@ header {
 
 .headerbtnBox {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     gap: 5px;
 
 }
 
 .myPageIcon {
     background-color: #317fc9;
-    padding: 5px 8px;
-    border-radius: 50%;
+    padding: 0px 8px;
+    border-radius: 20px;
     cursor: pointer;
     margin-right: 2px;
+    display: flex;
+    align-items: center;
 }
 
 .myPageIcon:hover {
     background-color: #317fc970;
 }
 
+.userIdTypo{
+    color:#fff;
+    font-weight: 600;
+    margin: 0px 5px;
+}
 .personIcon {
     color: #fff;
     font-size: medium;
@@ -182,6 +189,8 @@ header {
         border-bottom: 2px #ddd solid;
         padding: 10px;
         cursor: pointer;
+        position: relative;
+        padding-bottom: 80px;
     }
 
 
@@ -216,6 +225,7 @@ header {
         height: 300px;
         border: 1px solid #ddd;
         border-radius: 10px;
+     
     }
 
     .selectTypo {

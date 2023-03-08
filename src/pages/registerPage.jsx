@@ -6,7 +6,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import { UserRegisterReq } from "../util/authAPI";
 import { useNavigate } from "react-router-dom";
-import { AltRoute } from "@mui/icons-material";
 
 export default function RegisterPage() {
     const [email, setEmail] = useState("");
@@ -77,9 +76,8 @@ export default function RegisterPage() {
                 id: email,
                 password: password
             }
-
             let result = await UserRegisterReq(data);
-
+            console.log(result,'result')
             if (result.status === 200) {
                 navigate("/auth");
                 setResultErr(false);

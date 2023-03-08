@@ -19,6 +19,38 @@ export function LookupContextProvider({ children }) {
     const [raw, setRaw] = useState([]);
 
     const [initialData, setInitailData] = useState();
+    const [keywords, setKeywords] = useState("");
+
+    // 키워드 저장
+    const handleKeyword = (data) => {
+        console.log("keywordSave---!")
+
+        let keywordData = { depPort: data.dep, arrPort: data.arr, airline: data.line, depDate: data.date }
+        //mui select 에서 name이나 옵션값이 따로 저장이 되지 않아 처음에 받아오는 공항데이터랑 비교
+
+        if(!data.arr){ 
+           let findNm =  airportListData.find(elm => elm.airportId === data.arrId )
+           console.log(findNm,'findNm')
+           data.arr = findNm.airportNm
+        }
+
+        if(!data.dep){
+            let findNm =  airportListData.find(elm => elm.airportId === data.depId )
+            console.log(findNm,'findNm')
+            data.dep = findNm.airportNm
+         }
+         
+
+        //중복키워드 제거해주기
+        setKeywords([...keywords, data])
+
+
+    }
+
+    //키워드 이벤트가 발생할 때 마다 로컬로 저장
+    useEffect(()=>{
+        localStorage.setItem("keywords", JSON.stringify(keywords))
+    },[keywords])
 
     //searchingBar - airport
     async function airportlistReq() {
@@ -57,9 +89,9 @@ export function LookupContextProvider({ children }) {
         }
 
         let result = await TagoServerReq(searchData);
-
+        console.log(result,'flightResult')
         if (result.status === 200) {
-            console.log(result,'result')
+            console.log(result, 'result')
             let data = result?.data?.response?.body?.items;
             setRaw(data) //검색해온 원본 데이터 저장
 
@@ -132,6 +164,8 @@ export function LookupContextProvider({ children }) {
 
     return (
         <LookupContext.Provider value={{
+            keywords,
+            handleKeyword,
             dataTotalCnt,
             searchisLoading,
             raw,

@@ -77,7 +77,12 @@ export default function Layout() {
             <div className="headerbtnBox">
                 {authCtx.auth && <div className="myPageIcon" onClick={handleMypage}>
                     <PersonIcon className="personIcon" />
-                </div>}
+                    <p className="userIdTypo">{authCtx?.auth?.userId}</p>
+                </div>
+                
+                
+                }
+
                 <button onClick={handleAuth} className="headerloginBtn">{authCtx.auth ? "로그아웃" : "로그인"}</button>
             </div>
             <div className="headerMenuIconBox">
