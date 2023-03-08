@@ -19,8 +19,6 @@ function MobileSearchingBar({ onSchState }) {
     const [depPort, setDepPort] = useState("");
     const [depSelectOpen, setDepSelectOpen] = useState(false);
 
-    const [keywords,setKeywords] = useState([]);
-    
     const [depDate, setDepDate] = useState(new Date().toISOString().slice(0, 10));
 
     const handleSearch = (evt) => {
@@ -37,14 +35,8 @@ function MobileSearchingBar({ onSchState }) {
         
         ctx.handleSearch(data)
         onSchState(true)
-        setKeywords([...keywords, {depPort: depPort, arrPort:arrPort}])
     }
-
-    useEffect(() => {
-        console.log(keywords)
-        localStorage.setItem("mkeywords",JSON.stringify(keywords))
-    }, [keywords])
-
+    
     const handleDepSelect = (evt) => {
         setDepPortId(evt.target.dataset.value);
         setDepPort(evt.target.innerText)
