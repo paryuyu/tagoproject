@@ -14,6 +14,7 @@
 }
 
 .btnBox {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -33,7 +34,6 @@
 }
 
 .modalBox {
-    /*모달 가장 바깥쪽*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,7 +52,28 @@
 .chartmodalBox {
     /* chart 모달 안쪽 */
     width: 100%;
+}
 
+.chartmodalIconBox {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 3px;
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+}
+
+.charticon {
+    background-color: #317fc920;
+    padding: 3px;
+    border-radius: 5px;
+    color: #317fc9;
+    cursor: pointer;
+}
+
+.charticon:hover {
+    color: #317fc970;
 }
 
 .modalCloseBtn {
@@ -72,26 +93,29 @@
 }
 
 .arrowIcon {
-    font-size: 20px;
-    color: #333;
+    font-size: 15px;
+    color: #303030;
 }
 
 
 .modalTypoBox {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
     gap: 20px;
     cursor: default;
     margin: 0px 20px;
     border-bottom: 1.5px solid #ddd;
 }
 
+.chartTitleBox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .closeIcon {
-    position: absolute;
-    top: 20px;
-    right: 15px;
-    font-size: 25px;
+    font-size: 20px;
     cursor: pointer;
 }
 
@@ -130,6 +154,7 @@
     display: flex;
     flex-direction: column;
     cursor: default;
+    gap: 10px
 }
 
 .modalbox {
@@ -180,7 +205,6 @@
 }
 
 .no-data-ment {
-    border: 1px solid #f1f1f1;
     padding: 20px;
     border-radius: 10px;
     font-size: 15px;
@@ -247,15 +271,25 @@ td {
     top: 25px;
     z-index: 100;
     background-color: #2a6eae;
-    left: -120px;
+    right: 2px;
     font-size: small;
     padding: 2px 5px;
     border-radius: 5px;
     border: 1px solid #ddd;
     color: #fff;
+    width: 190px;
+    opacity: 0.95;
+    font-size: 12px;
 }
 
-.UpdateTableTitle{
+.chartMent {
+    background-color: #fa6f6f;
+    right: 10px;
+    top: 27px;
+
+}
+
+.UpdateTableTitle {
     font-family: jua;
 }
 
@@ -357,7 +391,7 @@ td {
     position: absolute;
     z-index: 100;
     left: -110px;
-    top:25px;
+    top: 25px;
     background-color: #2a6eae;
     font-size: small;
     padding: 2px 5px;
@@ -366,12 +400,66 @@ td {
     color: #fff;
 }
 
-.addMent{
-    left: 10px;
+.addMent {
+    background-color: #303030;
+    left: 2px;
     width: 190px;
+    top: 27px;
+}
+
+.chartElmBox {
+    margin: 10px;
+}
+
+.modalBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    max-width: 600px;
+    min-width: 400px;
+    max-height: 400px;
+    min-height: 250px;
+    padding: 10px;
 }
 
 @media (max-width: 750px) {
+    .chartmodalIconBox {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        bottom: 40%;
+        right: 15px;
+    }
+
+    .charticon {
+        background-color: #efefef;
+        padding: 3px;
+        border-radius: 5px;
+        color: #317fc9;
+        cursor: pointer;
+    }
+
+    .charticon:hover {
+        color: #317fc970
+    }
+
+
+    .modalBox {
+        position: relative;
+        max-height: 400px;
+        padding: 5px 0px;
+        min-height: 250px;
+        max-width: 350px;
+        min-width: 220px;
+    }
 
     .chartIcon {
         background-color: #f0f0f0;
@@ -392,12 +480,6 @@ td {
         right: 50px;
     }
 
-    .modalBox {
-        /*모달 가장 바깥쪽*/
-        width: 350px;
-        min-height: 250px;
-        max-height: 400px;
-    }
 
     .modifyBtnBox {
         display: none;
@@ -460,19 +542,7 @@ td {
     }
 
     .final-update-chkbox {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
         width: 300px;
-        border: 1px solid #ddd;
-        border-radius: 20px;
-        box-shadow: 50;
-        padding: 1rem;
-        background-color: #fff;
-        display: flex;
-        flex-direction: column;
-
     }
 
     .chartmodalBox {

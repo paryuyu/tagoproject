@@ -1,15 +1,20 @@
 import { AgChartsReact } from "ag-charts-react";
-import { useEffect , useContext, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import { BsArrowRight } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 import { LookupContext } from "../../context/lookup_context";
-
+import BarChartIcon from '@mui/icons-material/BarChart';
+import TimelineIcon from '@mui/icons-material/Timeline';
 export default function DataCharts({ onChartOpen }) {
     const [data, setData] = useState([]);
     const [dataErr, setDataErr] = useState(false);
+
     const [arr, setArr] = useState("");
-    const [dep, setDep] = useState("")
-    let ctx = useContext(LookupContext)
+    const [dep, setDep] = useState("");
+
+    const [chartType, setChartType] = useState("line")
+    let ctx = useContext(LookupContext);
+
     useEffect(() => {
         let newData = [];
         if (!ctx?.searchisLoading) {
@@ -23,7 +28,7 @@ export default function DataCharts({ onChartOpen }) {
                     if (elm.economyCharge > 0 || elm.prestigeCharge > 0) {
 
                         newData.push({
-                            quarter: `P${index}`,
+                            quarter: elm?.vihicleId,
                             economy: elm.economyCharge ? elm.economyCharge : 0,
                             business: elm.prestigeCharge ? elm.prestigeCharge : 0
                         })
@@ -35,7 +40,7 @@ export default function DataCharts({ onChartOpen }) {
                 setDep(item.depAirportNm);
 
                 newData.push({
-                    quarter: `P${0}`,
+                    quarter: item?.vihicleId,
                     economy: item?.economyCharge ? item.economyCharge : 0,
                     business: item?.prestigeCharge ? item.prestigeCharge : 0
                 })
@@ -61,6 +66,7 @@ export default function DataCharts({ onChartOpen }) {
 
     const options = {
         data: data,
+        type: chartType,
 
         legend: {
             position: "bottom"
@@ -77,21 +83,37 @@ export default function DataCharts({ onChartOpen }) {
 
     return (<div className="chartmodalBox">
         <div className="modalheaderBox">
-            <MdClose className="closeIcon" onClick={onChartOpen} />
             <div className="modalTypoBox">
-                <p>{dep}</p>
-                <BsArrowRight className="arrowIcon" />
-                <p>{arr}</p>
+
+                <MdClose className="closeIcon" onClick={onChartOpen} />
+                <div className="chartTitleBox">
+                    <p>{dep}</p>
+                    <BsArrowRight className="arrowIcon" />
+                    <p>{arr}</p>
+                </div>
             </div>
         </div>
 
         {data.length > 0 && !dataErr ?
             !ctx.searchisLoading &&
-            <AgChartsReact options={options}/> :
+            <>
+
+                <div className="chartElmBox">
+                    <AgChartsReact options={options} /></div>
+                <div className="chartmodalIconBox">
+                    <BarChartIcon
+                        onClick={() => setChartType("column")}
+                        className="barchartIcon charticon" />
+                    <TimelineIcon
+                        onClick={() => setChartType("line")}
+                        className="linechartIcon charticon" />
+                </div>
+
+            </> :
 
             <>
                 <div className="no-data-ment">
-                    <p>{dep}에서 {arr}로 도착하는 해당 노선에 대한 가격정보가 없습니다.</p>
+                    <p>{dep}에서 {arr}(으)로 도착하는 해당 노선에 대한 가격정보가 없습니다.</p>
                 </div>
                 <button onClick={onChartOpen} className="close-btn">돌아가기</button>
             </>
