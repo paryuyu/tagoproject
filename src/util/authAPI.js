@@ -5,14 +5,16 @@ let baseUrl = process.env.REACT_APP_BASEURL;
 
 export async function UserRegisterReq(registerData) {
     try {
-        console.log('register--!');
-
-        let response = await axios.post(`${baseUrl}/join`, {
+        console.log('register start--!');
+      
+        let data={
             id: registerData.id,
             pw: registerData.password
-        })
+        }
 
+        let response = await axios.post(`${baseUrl}/join`, data);
         console.log(response, 'response')
+
         return response;
 
     } catch (error) {
@@ -28,12 +30,11 @@ export async function UserRegisterReq(registerData) {
 export async function AuthLoginReq(id, pw) {
     try {
 
-        console.log('login start-!')
-        let response = await axios.post(`${baseUrl}/auth`, {
+        let response = await axios.post(`${baseUrl}/login`, {
             id: id,
             pw: pw
         });
-
+   
         return response;
 
     } catch (e) {
@@ -43,7 +44,8 @@ export async function AuthLoginReq(id, pw) {
 
 
 /** Refresh Token 유효성 검사 요청*/
-export async function RefreshTokenValidReq(refreshToken) {
+export async function RefreshTokenValidReq() {
+
     try {
         let cookies = new Cookies();
         let refreshToken = cookies.get("refresh_token");
@@ -56,12 +58,8 @@ export async function RefreshTokenValidReq(refreshToken) {
             Authorization: `Bearer ${refreshToken}`,
         };
 
-        //local server
-        let response = await axios.get(`http://172.30.1.201:8080/refresh`, { headers });
-
-        //docker server
-        //let response = await axios.get(`${baseUrl}/refresh`, { headers });
-
+        let response = await axios.get(`${baseUrl}/refresh`, { headers });
+      
         return response;
 
     } catch (error) {

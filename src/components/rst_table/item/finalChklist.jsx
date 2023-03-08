@@ -17,10 +17,11 @@ function FinalChkList({ item }) {
             if (item.airlineNm && item.arrAirportNm && item.depAirportNm && item.vihicleId) {
                 if (parseInt(item.arrPlandTime) > 0 && parseInt(item.depPlandTime) > 0) {
                     if (parseInt(item.economyCharge) >= 0 && parseInt(item.prestigeCharge) >= 0) {
-                        return item;
+                        setAddDataState(true)
                     }
                 }
             }
+            // console.log(item)
         }
 
     }, [item])

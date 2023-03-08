@@ -9,10 +9,13 @@ function MobileSearchingBar({ onSchState }) {
 
     const ctx = useContext(LookupContext);
     const [airlineSelectOpen, setAirlineSelectOpen] = useState(false);
+
     const [airline, setAirline] = useState("");
+
     const [lineId, setLineId] = useState("");
     const [arrPort, setArrPort] = useState("");
     const [arrPortId, setArrPortId] = useState("");
+
     const [arrSelectOpen, setArrSelectOpen] = useState(false);
 
     const [depPortId, setDepPortId] = useState("");
@@ -32,7 +35,18 @@ function MobileSearchingBar({ onSchState }) {
             depPlandTime: year + month + date,
             airlineId: lineId
         }
-        
+
+        let keywordData = {
+            depId: depPortId,
+            arrId: arrPortId,
+            lineId: lineId,
+            arr:arrPort,
+            dep:depPort,
+            line:airline,
+            date: year + month + date
+        }
+
+        ctx.handleKeyword(keywordData)
         ctx.handleSearch(data)
         onSchState(true)
     }

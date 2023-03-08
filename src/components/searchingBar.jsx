@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { LookupContext } from "../context/lookup_context";
 import { Chip, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import RecentSeachingKeyword from "./rst_table/item/itemResearching";
@@ -6,11 +6,15 @@ import RecentSeachingKeyword from "./rst_table/item/itemResearching";
 export default function SearchingBar({ onSchState }) {
     const ctx = useContext(LookupContext);
 
+    const depRef = useRef();
+    
     const [airline, setAirline] = useState("");
     const [arrPort, setArrPort] = useState("");
     const [depPort, setDepPort] = useState("");
     const [depPortNm,setDepPortNm] = useState("");
     const [arrPortNm,setArrPortNm] = useState("");
+    
+    const [airlineNm,setAirlineNm] = useState("");
     const [depDate, setDepDate] = useState(new Date().toISOString().slice(0, 10));
     
     const handleSearch = (evt) => {
@@ -24,30 +28,43 @@ export default function SearchingBar({ onSchState }) {
             depPlandTime: year + month + date,
             airlineId: airline
         }
+        console.log(arrPortNm,depPortNm,airlineNm ,'datachk' )
+        let keywordData = {
+            depId: depPort,
+            arrId: arrPort,
+            lineId: airline,
+            arr:arrPortNm,
+            dep:depPortNm,
+            line:airlineNm,
+            date: year + month + date
+        }
 
+        ctx.handleKeyword(keywordData)
         ctx.handleSearch(data)
         onSchState(true)
     }
 
     const handleDepSelect = (evt) => {
         setDepPort(evt.target.value)
-        setDepPortNm(evt.target.innerText)
+        setDepPortNm(evt.target.name)
+        console.log(evt)
     }
 
     const handleArrSelect = (evt) => {
         setArrPort(evt.target.value)
-        setArrPortNm(evt.target.innerText)
+        setArrPortNm(evt.target.name)
+        console.log(evt.target,'evt.target.name')
     }
 
     const handleLineSelect = (evt) => {
         setAirline(evt.target.value)
+        setAirlineNm(evt.target.name)
+        console.log(evt.target,'evt.target.name')
     }
 
     const handleDepDate = (evt) => {
         setDepDate(evt.target.value)
     }
-
-    
     return (
         <>
             <section className="schBarOutline">
@@ -57,9 +74,8 @@ export default function SearchingBar({ onSchState }) {
                             <InputLabel id="demo-simple-select-label">출발지</InputLabel>
                             {ctx.airportListData &&
                                 <Select onChange={handleDepSelect} value={depPort} >
-
                                     {ctx.airportListData.map((item, index) => {
-                                        return <MenuItem value={item.airportId} key={index}>{item.airportNm}</MenuItem>
+                                        return <MenuItem value={item.airportId} key={index} >{item.airportNm}</MenuItem>
                                     })
                                     }
                                 </Select>}
@@ -73,7 +89,7 @@ export default function SearchingBar({ onSchState }) {
                                 <Select onChange={handleArrSelect} value={arrPort} >
 
                                     {ctx.airportListData.reverse().map((item, index) => {
-                                        return <MenuItem value={item.airportId} key={index}>{item.airportNm}</MenuItem>
+                                        return <MenuItem value={item.airportId} key={index}  name={item.airportNm}>{item.airportNm}</MenuItem>
                                     })
                                     }
                                 </Select>}
@@ -88,9 +104,8 @@ export default function SearchingBar({ onSchState }) {
                             <InputLabel id="demo-simple-select-label">항공기 조회</InputLabel>
                             {ctx.airlineListData &&
                                 <Select onChange={handleLineSelect} value={airline} >
-
                                     {ctx.airlineListData.map((item, index) => {
-                                        return <MenuItem value={item.airlineId} key={index}>{item.airlineNm}</MenuItem>
+                                        return <MenuItem value={item.airlineId} key={index} name={item.airlineNm}>{item.airlineNm}</MenuItem>
                                     })
                                     }
                                 </Select>}
@@ -106,6 +121,7 @@ export default function SearchingBar({ onSchState }) {
                 <div className="schSection" >
                     <button type="submit" className="schBtn" onClick={handleSearch}>검색</button>
                 </div>
+                <RecentSeachingKeyword/>
             </section>
 
         </>);
