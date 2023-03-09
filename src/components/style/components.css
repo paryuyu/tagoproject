@@ -110,7 +110,22 @@ header {
     display: flex;
     flex-direction: row;
     gap: 5px;
-
+    position: relative;
+}
+.loginMent{
+    position: absolute;
+    top: 30px;
+    z-index: 100;
+    background-color: #2a6eae;
+    right: 2px;
+    font-size: small;
+    padding: 2px 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    color: #fff;
+    width: 190px;
+    opacity: 0.95;
+    font-size: 12px;
 }
 
 .myPageIcon {
@@ -190,7 +205,6 @@ header {
         padding: 10px;
         cursor: pointer;
         position: relative;
-        padding-bottom: 80px;
     }
 
 
