@@ -35,7 +35,7 @@ export function AuthContextProvider({ children }) {
         if (email && password) {
 
             let result = await AuthLoginReq(email, password); //로그인 요청
-            console.log(result,'resultState')
+          
 
             if (result.status === 201) { //서버 로그인 성공 시
                 let decode = decodeToken(result.data.access)
@@ -101,7 +101,7 @@ export function AuthContextProvider({ children }) {
                         localStorage.setItem(result.data.access) //받아온 access 토큰을 저장
 
                     } else { //응답에 오류가 있다면 실패메세지
-                        console.log("token 발급에 실패하여 로그아웃됩니다.")
+                       
 
                         dispatch({ type: 'logout' }); //로그아웃
                         cookies.remove("refresh_token"); //쿠키에서 refresh 토큰 제거

@@ -27,7 +27,7 @@ export default function SearchingBar({ onSchState }) {
             depPlandTime: year + month + date,
             airlineId: airline
         }
-        console.log(arrPortNm,depPortNm,airlineNm ,'datachk' )
+
         let keywordData = {
             depId: depPort,
             arrId: arrPort,
@@ -46,19 +46,18 @@ export default function SearchingBar({ onSchState }) {
     const handleDepSelect = (evt) => {
         setDepPort(evt.target.value)
         setDepPortNm(evt.target.name)
-        console.log(evt)
+     
     }
 
     const handleArrSelect = (evt) => {
         setArrPort(evt.target.value)
         setArrPortNm(evt.target.name)
-        console.log(evt.target,'evt.target.name')
+
     }
 
     const handleLineSelect = (evt) => {
         setAirline(evt.target.value)
         setAirlineNm(evt.target.name)
-        console.log(evt.target,'evt.target.name')
     }
 
     const handleDepDate = (evt) => {

@@ -22,8 +22,7 @@ export function LookupContextProvider({ children }) {
 
     // 키워드 저장
     const handleKeyword = (data) => {
-        console.log("keywordSave---!")
-        
+     
         //mui select 에서 name이나 옵션값이 따로 저장이 되지 않아 처음에 받아오는 공항데이터랑 비교
         if(!data.arr){ 
            let findNm =  airportListData.find(elm => elm.airportId === data.arrId )
@@ -94,8 +93,6 @@ export function LookupContextProvider({ children }) {
         //TODO:: result.data <- 서버에서 넘어오는 형식으로 변경
         if (result.status === 200) {
 
-            console.log(result, 'result') 
-        
             let data = result?.data?.response?.body?.items;
             setRaw(data) //검색해온 원본 데이터 저장
 

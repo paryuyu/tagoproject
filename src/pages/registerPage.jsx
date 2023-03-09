@@ -77,7 +77,6 @@ export default function RegisterPage() {
                 password: password
             }
             let result = await UserRegisterReq(data);
-            console.log(result,'result')
             if (result.status === 200) {
                 navigate("/auth");
                 setResultErr(false);

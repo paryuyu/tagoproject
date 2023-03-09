@@ -17,7 +17,6 @@ export default function RecentSeachingKeyword() {
     const [recent, setRecent] = useState([]);
 
     useEffect(() => {
-        console.log("=====실행")
         let token = localStorage.getItem("access_token");
         let item = localStorage.getItem("keywords_" + token);
 
