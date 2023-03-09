@@ -58,7 +58,6 @@ export async function TagoServerReq(data) {
 //update request
 export async function DataUpdateReq(data) {
 
-    console.log(data, 'Update Request----!@!@!@!@!@!@!@!')
 
     try {
         let cookies = new Cookies();
