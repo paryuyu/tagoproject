@@ -1,7 +1,7 @@
+import { AuthLoginReq, RefreshTokenValidReq } from "../util/authAPI";
 import { createContext, useEffect, useReducer } from "react";
 import { Cookies } from "react-cookie";
 import { isExpired, decodeToken } from "react-jwt";
-import { AuthLoginReq, AccessTokenValidReq, RefreshTokenValidReq } from "../util/authAPI";
 
 export const AuthContext = createContext();
 
@@ -17,10 +17,10 @@ const authReducer = (state = null, action) => {
 
 export function AuthContextProvider({ children }) {
 
-
     const [auth, dispatch] = useReducer(authReducer, null);
 
     const cookies = new Cookies();
+
 
     useEffect(() => {
         handleCtxTokenValidReq();
@@ -51,7 +51,7 @@ export function AuthContextProvider({ children }) {
                     localStorage.setItem('access_token', result.data.access);
                     let refreshTokenExp = decodeToken(result.data.refresh);
 
-                    //cookies refresh 만료기한 재설정 -> 
+                    //cookies refresh 만료기한 설정: 서버에서 설정한 만료기한으로 설정
                     cookies.set("refresh_token", result.data.refresh, {
                         secure: true,
                         expires: new Date(refreshTokenExp.exp*1000)
@@ -65,8 +65,8 @@ export function AuthContextProvider({ children }) {
                 }
                 
             } else{
+
                 //로그인 실패 
-                console.log(result.response.status)
                 return { result: false, message: "로그인에 실패하였습니다." }
             }
 
@@ -106,7 +106,6 @@ export function AuthContextProvider({ children }) {
                         dispatch({ type: 'logout' }); //로그아웃
                         cookies.remove("refresh_token"); //쿠키에서 refresh 토큰 제거
                     }
-
                 }
 
             } else { //access 토큰 유효상태 

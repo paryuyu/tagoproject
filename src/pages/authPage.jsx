@@ -33,11 +33,10 @@ export default function AuthPage() {
   //로그인은 AuthContext에서 처리
   const handleLoginClick = async () => {
 
-    if (!pswdErr && !emailErr) {
+    if (!pswdErr && !emailErr && password && email) {
       let login_result = await ctx.handleCtxLoginReq(email, password);
-      //정규식 추가
-
-      if (login_result.result) { //로그인 성공하면
+  
+      if (login_result?.result) { //로그인 성공하면
         navigate('/searching'); //searching으로 가기.
         setLoginError(false);
 

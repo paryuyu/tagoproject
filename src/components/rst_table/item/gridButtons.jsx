@@ -17,7 +17,7 @@ export default function GridButtons({ onUpdate, onAdd, onDelete, onChartOpen }) 
             <div className="gridheaderBtnBox">
                 <button
                     onMouseEnter={() => { setAddMouse(true); }}
-                    onMouseLeave={() => { setAddMouse(false) }}
+                    onMouseLeave={() => { setAddMouse(false); }}
                     onClick={onAdd}>Add</button>
                 <button onClick={onDelete}>Delete</button>
                 {addmouse && <p className="modifyMent addMent">새로 추가하는 데이터가 비어있으면 수정에 반영되지 않습니다.</p>}
@@ -25,17 +25,24 @@ export default function GridButtons({ onUpdate, onAdd, onDelete, onChartOpen }) 
 
             {matches ?
                 <div className="gridheaderBtnBox">
-                    <button onClick={onChartOpen} className={"chartBtn"}>
+                    <button 
+                    onMouseEnter={() => { setChartMouse(true); }}
+                    onMouseLeave={() => { setChartMouse(false); }}
+                    onClick={onChartOpen} 
+                    className={"chartBtn"}>
                         Price Chart View</button>
+                        {chartmouse && <p className="modifyMent chartMent">가격정보를 차트 형태로 보실 수 있습니다.</p>}
                 </div>
+                
                 : <div className="gridheaderBtnBox">
 
                     <div className='chartIcon'
                         onMouseEnter={() => { setChartMouse(true); }}
-                        onMouseLeave={() => { setChartMouse(false) }}
+                        onMouseLeave={() => { setChartMouse(false); }}
                         onClick={onChartOpen}>
                         <TimelineIcon />
                     </div>
+
                     {chartmouse && <p className="modifyMent chartMent">가격정보를 차트 형태로 보실 수 있습니다.</p>}
 
                     <div className="modifyBox">

@@ -1,46 +1,59 @@
-import { Chip, useMediaQuery } from "@mui/material";
-import _ from "lodash";
-import { useContext, useEffect, useState } from "react";
-import { LookupContext } from "../../../context/lookup_context";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import _ from "lodash";
+
+import { useContext, useEffect, useState } from "react";
+import { decodeToken } from "react-jwt";
+
+import { LookupContext } from "../../../context/lookup_context";
+import { AuthContext } from "../../../context/auth_context";
+import { MenuContext } from "../../../context/menu_context";
+import RecentKeyword from './recentKeyword';
+
 export default function RecentSeachingKeyword() {
-    const [recent, setRecent] = useState([]);
+    const menuCtx = useContext(MenuContext);
     const ctx = useContext(LookupContext);
-    const matches = useMediaQuery('(min-width:750px)')
+    const authCtx = useContext(AuthContext);
+
+    const [recent, setRecent] = useState([]);
+
     useEffect(() => {
+        console.log("=====실행")
+        let token = localStorage.getItem("access_token");
+        let item = localStorage.getItem("keywords_" + token);
 
-        let item = localStorage.getItem("keywords");
-        let json = JSON.parse(item);
-        setRecent(json)
+        let decode = decodeToken(token);
+        if (item && decode.id === authCtx?.auth?.userId) {
+            let json = JSON.parse(item);
+            const uniqueArr = _.uniqBy(json, (obj) => obj.arr + obj.dep);
+            setRecent(uniqueArr);
+            
+        }
 
-    }, [ctx.keywords])
-    console.log(recent, 'recent')
-    const [recentView, setRecentView] = useState(false);
+    }, [ctx.refresh])
+
     const handleView = () => {
-        setRecentView(c => !c);
+        menuCtx.handleRecentView(true);
     }
+
     return (<>
         <div className="recentSearchingDataBox">
-
             <div className="recentTitleBox" onClick={handleView}>
                 <p className="recentKeywordTitle">최근 검색어 보기</p>
                 <ArrowDropDownIcon />
             </div>
-            {recentView &&
+
+            {menuCtx.recentView &&
                 <div className="recentValueBox">
 
-                    {recentView &&
-                        recent?.length > 0 ? recent?.map((one, index) => {
-                            return (<div className="recentChipBox">
-                                <p className="recentChipTypo recentChipTitle">출발공항</p>
-                                <p className="recentChipTypo recentChipContent">{one.dep}</p>
-                                <p className="recentChipTypo recentChipTitle">도착공항</p>
-                                <p className="recentChipTypo recentChipContent">{one.arr}</p>
-                            </div>)
+                    {menuCtx.recentView &&
+                        recent?.length > 0 
+                        ? recent?.map((one, index) => {
+                            return (<RecentKeyword arr={one.arr} dep={one.dep} key={index} />)
                         })
+
                         : <p className="ment recentSearchMent">저장된 검색어가 없습니다.</p>
-                        
-                        }
+
+                    }
                 </div>}
         </div>
     </>);

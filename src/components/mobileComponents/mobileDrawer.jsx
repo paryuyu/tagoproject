@@ -12,8 +12,9 @@ function MobileDrawer({ onDraw, drawerOpen }) {
 
     const handleNavigation = () => {
         if (authCtx.auth) {
-            authCtx.dispatch({ type: "logout" })
-            localStorage.removeItem("access_token")
+            authCtx.dispatch({ type: "logout" });
+            // localStorage.removeItem("access_token")
+            localStorage.clear();
             onDraw();
         } else {
             navigate("/auth");

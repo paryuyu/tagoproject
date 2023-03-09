@@ -4,6 +4,7 @@ import Layout from "./components/layout";
 
 import { AuthContextProvider } from "./context/auth_context";
 import { LookupContextProvider } from "./context/lookup_context";
+import { MenuContextProvider } from "./context/menu_context";
 
 import AuthPage from "./pages/authPage";
 import MainPage from "./pages/mainPage";
@@ -15,7 +16,9 @@ function App() {
 
 
   return (
-      <CookiesProvider>
+
+    <CookiesProvider>
+      <MenuContextProvider>
         <AuthContextProvider>
           <LookupContextProvider>
             <Router>
@@ -30,12 +33,9 @@ function App() {
             </Router>
           </LookupContextProvider>
         </AuthContextProvider>
-      </CookiesProvider>
+      </MenuContextProvider>
+    </CookiesProvider>
   );
 }
-
-
-
-
 
 export default App;

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { LookupContext } from "../context/lookup_context";
 import { Chip, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import RecentSeachingKeyword from "./rst_table/item/itemResearching";
 
 export default function SearchingBar({ onSchState }) {
     const ctx = useContext(LookupContext);
@@ -121,7 +120,6 @@ export default function SearchingBar({ onSchState }) {
                 <div className="schSection" >
                     <button type="submit" className="schBtn" onClick={handleSearch}>검색</button>
                 </div>
-                <RecentSeachingKeyword/>
             </section>
 
         </>);
