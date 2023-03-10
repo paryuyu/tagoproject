@@ -9,16 +9,15 @@ let baseUrl = process.env.REACT_APP_BASEURL;
 export async function AirportReq() {
     try {
 
-
-        let reqUrl = `${endpoint}/getArprtList?serviceKey=${key}&_type=json`;
+        // let reqUrl = `${endpoint}/getArprtList?serviceKey=${key}&_type=json`;
         //path값은 명사 -> 동사X
-        // let reqUrl = `${baseUrl}/airport`
+        let reqUrl = `${baseUrl}/airport`
         let response = await axios.get(reqUrl);
 
         return response;
-    } catch (e) {
-        console.log(e)
-        return e
+    } catch (err) {
+        console.log(err,'airline_err--!')
+        return { status: 404 };
     }
 }
 
@@ -26,13 +25,13 @@ export async function AirportReq() {
 export async function AirlineReq() {
     try {
 
-
-        let reqUrl = `${endpoint}/getAirmanList?serviceKey=${key}&_type=json`;
-        // let reqUrl = `${baseUrl}/airline`
+        // let reqUrl = `${endpoint}/getAirmanList?serviceKey=${key}&_type=json`;
+        let reqUrl = `${baseUrl}/airline`
         let response = await axios.get(reqUrl);
         return response;
-    } catch (e) {
-        return e;
+    } catch (err) {
+        console.log(err,'airline_err--!')
+        return { status: 404 };
     }
 }
 
@@ -40,8 +39,6 @@ export async function AirlineReq() {
 export async function TagoServerReq(data) {
 
     try {
-
-
         let reqUrl = `${endpoint}/getFlightOpratInfoList?serviceKey=${key}&depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}&_type=json&pageNo=${data.pageNo}&numOfRows=10`;
 
         // let reqUrl = `${baseUrl}/flight?depAirportId=${data.depAirportId}&arrAirportId=${data.arrAirportId}&depPlandTime=${data.depPlandTime}&airlineId=${data.airlineId}&pageNo=${data.pageNo ? data.pageNo : 1}&numOfRows=10`
@@ -50,7 +47,8 @@ export async function TagoServerReq(data) {
         return response;
 
     } catch (err) {
-        return err;
+        console.log(err,'flight_err--!')
+        return { status: 404 };
     }
 
 }
@@ -58,20 +56,15 @@ export async function TagoServerReq(data) {
 //update request
 export async function DataUpdateReq(data) {
 
-
     try {
-        let cookies = new Cookies();
-        let refreshToken = cookies.get("refresh_token");
-
-        let headers = { Authorization: `Bearer ${refreshToken}` }
-        let response = await axios.post(baseUrl + "/update", data, { headers });
-
-        //update가 성공적으로 끝나면 find 요청을 다시 한번 더 보내자.
+     
+        // let getRefreshToken = localStorage.setItem("refresh_token");
+        // let headers = { Authorization: `Bearer ${JSON.parse(getRefreshToken)}` }
+        let response = await axios.post(baseUrl + "/update", data);
         return response;
 
     } catch (err) {
-        console.log(err.message)
-        return err.message;
+        return { status: 404 };
     }
 
 }

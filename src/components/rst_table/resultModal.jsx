@@ -1,6 +1,6 @@
 import { Modal } from "@mui/material";
 import _ from "lodash";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../context/auth_context";
 import { LookupContext } from "../../context/lookup_context";
@@ -9,19 +9,17 @@ import FinalChkList from "./item/finalChklist";
 export default function ResultModal({ open, onOpen, updateData }) {
     const ctx = useContext(LookupContext);
     const authCtx = useContext(AuthContext);
-    const [addDataState, setAddDataState] = useState(false);
+
     const navigate = useNavigate();
+    const [updateState, setUpdateState] = useState(1);
 
     const handleLogin = () => {
         navigate("/auth")
     }
 
     const handleUpdateFinish = async () => {
-
-
         //비어있는 데이터 잡기 -> C
         let createCondition = updateData.filter(elm => elm.flag === "add").filter(one => {
-
             if (one.airlineNm && one.arrAirportNm && one.depAirportNm && one.vihicleId) {
                 if (parseInt(one.arrPlandTime) > 0 && parseInt(one.depPlandTime) > 0) {
                     if (parseInt(one.economyCharge) >= 0 && parseInt(one.prestigeCharge) >= 0) {
@@ -37,20 +35,24 @@ export default function ResultModal({ open, onOpen, updateData }) {
         //CUD Final Data
         let updateCondition = updateData.filter(elm => elm.flag === "update");
         let CudFinalData = createCondition.concat(deleteCondition).concat(updateCondition)
-        
-        let result = await ctx.handleCtxUpdate(CudFinalData)
-        
+        setUpdateState(1);
 
+        let result = await ctx.handleCtxUpdate(CudFinalData);
 
-        //서버 통신 결과
-        // if (result.status === 200) {
-        //     //검색 키워드 기억하고 있다가 다시 요청을 보내야함(Search 가공)
-        //     console.log("update success-->refresh..!(다시 한번 find 요청 보내기)")
-        //     onOpen()
-        // } else {
-        //     console.log("update failed..!")
-        //     onOpen()
-        // }
+        // 서버 통신 결과
+        if (result.status === 200 || result.status === 201) {
+            setUpdateState(2);
+
+        } else if (result.status >= 400) {
+            setUpdateState(3);
+        }
+
+    }
+
+    const handleReturn = () => {
+        console.log("return", updateState)
+        setUpdateState(1);
+        onOpen();
     }
 
     return (<>
@@ -65,16 +67,26 @@ export default function ResultModal({ open, onOpen, updateData }) {
                             <div className="modalbox">
                                 {updateData.map((one, index) => <FinalChkList item={one} key={index} />)}
                             </div>
-                            <p className="ment modalText">완료하기를 누르시면 데이터가 영구적으로 수정됩니다. <br /> 수정하시겠습니까?</p>
+
+
+
+                            {updateState === 1 ? <p className="ment modalText">완료하기를 누르시면 데이터가 영구적으로 수정됩니다. <br /> 수정하시겠습니까?</p> :
+                                updateState === 2 ?
+                                    <p className="ment modalText updateSuccess">업데이트가 성공적으로 반영되었습니다.</p>
+                                    : 
+                                    updateState === 3 && <p className="ment modalText updateErr">수정에 실패하였습니다.</p>
+                            }
+
                             <div className="modalBtnBox">
                                 <button onClick={handleUpdateFinish} className="modalBtn completeBtn">수정완료하기</button>
                                 <button onClick={onOpen} className="modalBtn">돌아가기</button>
+                                <p></p>
                             </div>
                         </>
                         :
                         <>
                             <p className='no-data-ment'>수정데이터가 없습니다.</p>
-                            <button onClick={onOpen}>돌아가기</button>
+                            <button onClick={handleReturn}>돌아가기</button>
                         </>
                     :
                     <>

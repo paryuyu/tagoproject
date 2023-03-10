@@ -15,11 +15,9 @@ import ResultModal from './resultModal';
 import GridButtons from './item/gridButtons';
 import { columnDefs, defaultColDef } from './options/gridOption';
 
-
-
-
-
 export default function DataGridTable({ onChartOpen }) {
+
+
     const { searchingData, pageLoading } = useContext(LookupContext);
     const authCtx = useContext(AuthContext);
 
@@ -74,6 +72,7 @@ export default function DataGridTable({ onChartOpen }) {
         let delArr = gridRef.current.api.getSelectedRows();
 
         let newDeleteData = []; //delete flag가 달린 새로운 배열
+
         delArr.forEach(elm => {
             elm.flag = 'delete'
             newDeleteData.push(elm)
@@ -137,14 +136,13 @@ export default function DataGridTable({ onChartOpen }) {
 
 
     //수정 데이터 마지막 확인 모달창
-
     const handleFinalUpdate = () => {
 
         //선택된 데이터들
         let chkArr = gridRef.current.api.getSelectedRows();
 
         // flag가 존재하는 값들만 서버로 보내주기.
-        let flagFilter = chkArr.filter(one => Object.keys(one).includes("flag"))
+        let flagFilter = chkArr.filter(one => Object.keys(one).includes("flag") && one.flag )
         setFinalChk(flagFilter)
 
         //확인창 -> 모달에서 ok를 누르면 서버로 보내지게 단계를 하나 만들기.

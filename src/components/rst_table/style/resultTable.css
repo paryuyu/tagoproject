@@ -351,7 +351,17 @@ td {
     padding: 5px 8px;
     background-color: #317fc950;
     border-radius: 10px;
-    font-weight: 500;
+    font-weight: bold;
+}
+
+.updateSuccess{
+    background-color: #31c94550;
+}
+
+
+.updateErr{
+    background-color: #ff330050;
+
 }
 
 .modalBtnBox {
@@ -501,6 +511,12 @@ td {
     background-color: #317fc9;
     right: 5px;
     top:25px;
+}
+.schbarLoading{
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 

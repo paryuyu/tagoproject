@@ -18,14 +18,13 @@ export default function RecentSeachingKeyword() {
 
     useEffect(() => {
         let token = localStorage.getItem("access_token");
-        let item = localStorage.getItem("keywords_" + token);
-
+        let item = localStorage.getItem("keywords");
         let decode = decodeToken(token);
+        
         if (item && decode.id === authCtx?.auth?.userId) {
             let json = JSON.parse(item);
             const uniqueArr = _.uniqBy(json, (obj) => obj.arr + obj.dep);
             setRecent(uniqueArr);
-            
         }
 
     }, [ctx.refresh])
@@ -43,9 +42,8 @@ export default function RecentSeachingKeyword() {
 
             {menuCtx.recentView &&
                 <div className="recentValueBox">
-
                     {menuCtx.recentView &&
-                        recent?.length > 0 
+                        recent?.length > 0
                         ? recent?.map((one, index) => {
                             return (<RecentKeyword arr={one.arr} dep={one.dep} key={index} />)
                         })
