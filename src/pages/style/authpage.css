@@ -9,14 +9,64 @@
 
 .mypageOutlined {
     cursor: default;
+    justify-content: start;
 }
 
-.mypage-hello {
-    
+.myPagerecentViewBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border:1px #ddd solid;
+    padding:5px;
+    border-radius: 10px;
+    width:80%;
+    margin-bottom: 10px;
+}
+
+.myPageRecentViewHeaderBox:hover{
+    background-color: #ddd;
+    border-radius: 10px;
+}
+
+.myPageRecentViewHeaderBox{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    justify-content: space-between;
+    cursor: pointer;
+    padding:5px;
 }
 
 .mypageTypo {
     margin: 0px;
+}
+
+.myPagerecentViewContentBox {
+    width: 90%;
+}
+
+.myPagerecentViewContentItem{
+    margin-top: 3px;
+    display: flex;
+    flex-direction: row;
+    background-color: #ddd;
+    border-radius: 5px;
+    padding:2px;
+    gap:2px;
+    justify-content: center;
+    align-items: center;
+}
+
+.myPageRecentItemTypo{
+    margin:0px;
+    font-size: 13px;
+    color:#333;
+}
+
+.myPageRecentItemTitle{
+    font-weight: bold;
+    font-size: 13px;
 }
 
 .authBox {

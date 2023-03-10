@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { LookupContext } from "../../context/lookup_context";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { MenuContext } from "../../context/menu_context";
+import { CircularProgress } from "@mui/material";
 
 
 function MobileSearchingBar({ onSchState }) {
@@ -17,7 +18,7 @@ function MobileSearchingBar({ onSchState }) {
 
     const [depPortId, setDepPortId] = useState("");
     const [depPort, setDepPort] = useState("");
-   
+
 
     const [depDate, setDepDate] = useState(new Date().toISOString().slice(0, 10));
 
@@ -37,9 +38,9 @@ function MobileSearchingBar({ onSchState }) {
             depId: depPortId,
             arrId: arrPortId,
             lineId: lineId,
-            arr:arrPort,
-            dep:depPort,
-            line:airline,
+            arr: arrPort,
+            dep: depPort,
+            line: airline,
             date: year + month + date
         }
 
@@ -47,7 +48,7 @@ function MobileSearchingBar({ onSchState }) {
         ctx.handleSearch(data)
         onSchState(true)
     }
-    
+
     const handleDepSelect = (evt) => {
         setDepPortId(evt.target.dataset.value);
         setDepPort(evt.target.innerText)
@@ -108,58 +109,69 @@ function MobileSearchingBar({ onSchState }) {
     }
 
     return (<section className="mobileSchBarOutline">
-        <div className="airportSelect">
-            <div className="selectbox" onClick={handleDepOpen}>
-                <p>{depPort ? depPort : "출발지"}</p>
-                <KeyboardArrowDownIcon />
+        {ctx.airportListData && ctx.airlineListData ?
+
+            <>
+                <div className="airportSelect">
+                    <div className="selectbox" onClick={handleDepOpen}>
+                        <p>{depPort ? depPort : "출발지"}</p>
+                        <KeyboardArrowDownIcon />
+                    </div>
+
+                    {meunCtx.depSelectOpen &&
+                        <div className="selectOption">
+                            {ctx.airportListData.map((item, index) => {
+                                return <p className="selectTypo" onClick={handleDepSelect} data-value={item.airportId} key={index}>{item.airportNm}</p>
+                            })
+                            }
+                        </div>}
+                </div>
+
+
+                <div className="airportSelect">
+                    <div className="selectbox" onClick={handleArrOpen}>
+                        <p>{arrPort ? arrPort : "도착지"}</p>
+                        <KeyboardArrowDownIcon />
+                    </div>
+
+                    {meunCtx.arrSelectOpen &&
+                        <div className="selectOption">
+                            {ctx.airportListData.reverse().map((item, index) => {
+                                return <p className="selectTypo" onClick={handleArrSelect} data-value={item.airportId} key={index}>{item.airportNm}</p>
+                            })
+                            }
+                        </div>}
+                </div>
+
+
+                <div className="airportSelect">
+                    <div className="selectbox" onClick={handleAirlineOpen}>
+                        <p>{airline ? airline : "항공편"}</p>
+                        <KeyboardArrowDownIcon />
+                    </div>
+
+                    {meunCtx.airlineSelectOpen &&
+                        <div className="selectOption">
+                            {ctx.airlineListData.map((item, index) => {
+                                return <p className="selectTypo" onClick={handleLineSelect} data-value={item.airlineId} key={index}>{item.airlineNm}</p>
+                            })
+                            }
+                        </div>}
+                </div>
+                <div className="dateBox">
+                    <p className="schMiniTitle date-title">출발날짜</p>
+                    <input type="date" className="date-select" onChange={handleDepDate} value={depDate} />
+                </div>
+
+                <button type="submit" className="schBtn" onClick={handleSearch}>검색</button>
+            </>
+
+            :
+            <div>
+                <CircularProgress />
             </div>
+        }
 
-            {meunCtx.depSelectOpen &&
-                <div className="selectOption">
-                    {ctx.airportListData.map((item, index) => {
-                        return <p className="selectTypo" onClick={handleDepSelect} data-value={item.airportId} key={index}>{item.airportNm}</p>
-                    })
-                    }
-                </div>}
-        </div>
-
-
-        <div className="airportSelect">
-            <div className="selectbox" onClick={handleArrOpen}>
-                <p>{arrPort ? arrPort : "도착지"}</p>
-                <KeyboardArrowDownIcon />
-            </div>
-
-            {meunCtx.arrSelectOpen &&
-                <div className="selectOption">
-                    {ctx.airportListData.reverse().map((item, index) => {
-                        return <p className="selectTypo" onClick={handleArrSelect} data-value={item.airportId} key={index}>{item.airportNm}</p>
-                    })
-                    }
-                </div>}
-        </div>
-
-
-        <div className="airportSelect">
-            <div className="selectbox" onClick={handleAirlineOpen}>
-                <p>{airline ? airline : "항공편"}</p>
-                <KeyboardArrowDownIcon />
-            </div>
-
-            {meunCtx.airlineSelectOpen &&
-                <div className="selectOption">
-                    {ctx.airlineListData.map((item, index) => {
-                        return <p className="selectTypo" onClick={handleLineSelect} data-value={item.airlineId} key={index}>{item.airlineNm}</p>
-                    })
-                    }
-                </div>}
-        </div>
-        <div className="dateBox">
-            <p className="schMiniTitle date-title">출발날짜</p>
-            <input type="date" className="date-select" onChange={handleDepDate} value={depDate} />
-        </div>
-
-        <button type="submit" className="schBtn" onClick={handleSearch}>검색</button>
     </section>);
 }
 

@@ -5,7 +5,7 @@ import { isExpired, decodeToken } from "react-jwt";
 
 export const AuthContext = createContext();
 
-//TODO: useReducer 써보기 => 로그인 및 로그아웃 구현
+// useReducer 로그인 및 로그아웃 구현 //auth값에 userId 저장
 const authReducer = (state = null, action) => {
     switch (action.type) {
         case "login":
@@ -45,18 +45,11 @@ export function AuthContextProvider({ children }) {
 
                 //token을 response body로 받는다고 가정
                 if (result.data) {
-
                     //Access Token은 localStorage에 저장
-                    //Refresh Token은 cookies에 저장
+                    //FIXME: production환경에서 쿠키에 저장안되는 오류 발견 -> localStorage에 저장하는걸로 수정
                     localStorage.setItem('access_token', result.data.access);
-                    let refreshTokenExp = decodeToken(result.data.refresh);
-
-                    //cookies refresh 만료기한 설정: 서버에서 설정한 만료기한으로 설정
-                    cookies.set("refresh_token", result.data.refresh, {
-                        secure: true,
-                        expires: new Date(refreshTokenExp.exp*1000)
-                    });
-
+                    localStorage.setItem('refresh_token', result.data.refresh);
+            
                     return { result: true, message: "로그인 성공" }
 
                 } else {
@@ -78,7 +71,7 @@ export function AuthContextProvider({ children }) {
     const handleCtxTokenValidReq = async () => {
 
         let accessToken = localStorage.getItem("access_token");
-        let refreshToken = cookies.get("refresh_token");
+        let refreshToken = localStorage.getItem("refresh_token");
 
         if (accessToken !== null && refreshToken) { //로컬 스토리지에 엑세스 토큰 존재
 
@@ -92,7 +85,7 @@ export function AuthContextProvider({ children }) {
                 if (refreshTokenExp) {  //refresh token이 만료가 되었다면 
 
                     dispatch({ type: 'logout' }); //로그아웃
-                    cookies.remove("refresh_token"); //리프레쉬 토큰 제거
+                    localStorage.removeItem("refresh_token"); 
 
                 } else {//refresh token이 유효하다면 -> 서버에 access 토큰 요청
                     let result = await RefreshTokenValidReq(refreshToken) //서버 요청
@@ -101,14 +94,12 @@ export function AuthContextProvider({ children }) {
                         localStorage.setItem(result.data.access) //받아온 access 토큰을 저장
 
                     } else { //응답에 오류가 있다면 실패메세지
-                       
-
                         dispatch({ type: 'logout' }); //로그아웃
-                        cookies.remove("refresh_token"); //쿠키에서 refresh 토큰 제거
+                        localStorage.removeItem("refresh_token"); //쿠키에서 refresh 토큰 제거
                     }
                 }
 
-            } else { //access 토큰 유효상태 
+            } else if(accessToken){ //access 토큰 유효상태 
                 let data = localStorage.getItem("access_token");
                 let decode = decodeToken(data)
                 if(decode.id){

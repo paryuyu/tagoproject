@@ -41,7 +41,7 @@ function MobileDrawer({ onDraw, drawerOpen }) {
             
             <ListItem className="menuItem"  onClick={handleMypage}>
                 <ListItemAvatar><Avatar className="drawer-avatar"><PersonIcon /></Avatar></ListItemAvatar>
-                <ListItemText>내정보</ListItemText>
+                <ListItemText>{authCtx.auth.userId}님의 정보</ListItemText>
             </ListItem>}
             <ListItem className="menuItem" onClick={handleSearching}>
                 <ListItemAvatar><Avatar className="drawer-avatar"><Search /></Avatar></ListItemAvatar>

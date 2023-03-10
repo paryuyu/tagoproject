@@ -19,7 +19,6 @@ export function MenuContextProvider({ children }) {
 
     const handleLineSelectOpen = () => {
         setAirlineSelectOpen(c => !c)
-
     }
 
     const handlePageClick = () => {

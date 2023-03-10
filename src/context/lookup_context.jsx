@@ -22,43 +22,39 @@ export function LookupContextProvider({ children }) {
 
     // 키워드 저장
     const handleKeyword = (data) => {
-     
         //mui select 에서 name이나 옵션값이 따로 저장이 되지 않아 처음에 받아오는 공항데이터랑 비교
-        if(!data.arr){ 
-           let findNm =  airportListData.find(elm => elm.airportId === data.arrId )
-           data.arr = findNm.airportNm
+        if (!data.arr) {
+            let findNm = airportListData.find(elm => elm.airportId === data.arrId)
+            data.arr = findNm.airportNm
         }
 
-        if(!data.dep){
-            let findNm =  airportListData.find(elm => elm.airportId === data.depId )
+        if (!data.dep) {
+            let findNm = airportListData.find(elm => elm.airportId === data.depId)
             data.dep = findNm.airportNm
         }
 
         let token = localStorage.getItem("access_token")
-        let getLocalData = localStorage.getItem(`keywords_${token}`) 
-      
-        if(token){
-         
-        if(JSON.parse(getLocalData)){
-            setRefresh(c=>!c)
-            let getJson = JSON.parse(getLocalData);
-            getJson.push(data);
-            localStorage.setItem(`keywords_${token}`, JSON.stringify(getJson));
-        }else{
-            setRefresh(c=>!c)
-            localStorage.setItem(`keywords_${token}`, JSON.stringify([data]));
+        let getLocalData = localStorage.getItem("keywords")
+
+        if (token) {
+            if (JSON.parse(getLocalData)) {
+                setRefresh(c => !c)
+                let getJson = JSON.parse(getLocalData);
+                getJson.push(data);
+                localStorage.setItem("keywords", JSON.stringify(getJson));
+
+            } else {
+                setRefresh(c => !c)
+                localStorage.setItem("keywords", JSON.stringify([data]));
+            }
         }
     }
- 
-    }
-   
+
     //searchingBar - airport
     async function airportlistReq() {
         let result = await AirportReq();
         if (result.status === 200) {
-
-            let data = await result.data.response.body.items;
-
+            let data = await result.data.body.response.body.items;
             if (data) {
                 let item = data.item;
                 setPortlineListData(item);
@@ -72,9 +68,9 @@ export function LookupContextProvider({ children }) {
     //searchingBar - airline
     async function airlinelistReq() {
         let result = await AirlineReq();
+        console.log(result)
         if (result.status === 200) {
             let data = await result.data.response.body.items;
-
             if (data) {
                 let item = data.item;
                 setAirlineListData(item);
@@ -90,9 +86,8 @@ export function LookupContextProvider({ children }) {
 
         let result = await TagoServerReq(searchData);
 
-        //TODO:: result.data <- 서버에서 넘어오는 형식으로 변경
         if (result.status === 200) {
-
+            
             let data = result?.data?.response?.body?.items;
             setRaw(data) //검색해온 원본 데이터 저장
 
@@ -126,6 +121,7 @@ export function LookupContextProvider({ children }) {
     }
 
 
+
     //데이터 검색
     const handleSearch = async (data) => {
         setSearchingLoading(true)
@@ -145,15 +141,15 @@ export function LookupContextProvider({ children }) {
         }
     }
 
-
     /** 데이터 업데이트 */
     const handleCtxUpdate = async (data) => {
         let result = await DataUpdateReq(data);
+        return result;
     }
 
 
     //검색 버튼 클릭 시 refresh => 
- 
+
 
     useEffect(() => {
         airportlistReq();
@@ -175,7 +171,7 @@ export function LookupContextProvider({ children }) {
             handlePageChange,
             handleCtxUpdate,
             handleSearch,
-       
+
         }}>
 
             {children}
