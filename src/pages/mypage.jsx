@@ -34,7 +34,7 @@ export default function Mypage() {
 
     return (<section className="authOutlineContainer mypageOutlined" >
         <h2>{authCtx?.auth?.userId}님의 정보</h2>
-        <div className="myPagerecentViewBox">
+        {/* <div className="myPagerecentViewBox">
 
             <div className="myPageRecentViewHeaderBox" onClick={handleView}>
                 <p className="mypageTypo">최근 검색한 검색 데이터 보기</p>
@@ -50,7 +50,7 @@ export default function Mypage() {
                     <></>
                 }
             </div>
-        </div>
+        </div> */}
 
     </section>);
 }
