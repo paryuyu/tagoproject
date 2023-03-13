@@ -325,13 +325,6 @@ td {
     width: 90%;
 }
 
-.ag-header-cell-label {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-
 .add {
     color: #317fc9;
 }
@@ -519,6 +512,22 @@ td {
     align-items: center;
 }
 
+.titleLeftAlign{
+    text-align: left;
+    width:fit-content;
+}
+
+.titleRightAlign{
+    text-align: right;
+    
+    width:fit-content;
+}
+
+.titleCenterAlign{
+    text-align: center;
+    
+    width:fit-content;
+}
 
 @media (max-width: 750px) {
 
