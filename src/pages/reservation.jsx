@@ -74,7 +74,7 @@ export default function Reservation() {
 
         let result = await ReservationReq(reservationData)
 
-        console.log(result)
+        console.log(result,'reservation-result')
     }
 
 
