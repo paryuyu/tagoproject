@@ -1,11 +1,14 @@
 import { Pagination, useMediaQuery } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { LookupContext } from "../../../context/lookup_context";
 
-export default function PaginationCustom({ onUpdate }) {
+export default function PaginationCustom({ onUpdate, reservationData, onReservation }) {
     const ctx = useContext(LookupContext);
     const matches = useMediaQuery('(min-width:750px)')
+    const navigate = useNavigate();
     const [pageCnt, setPageCnt] = useState();
+
     const [page, setPage] = useState(1);
     const [mouse, setMouse] = useState(false);
     useEffect(() => {
@@ -41,9 +44,13 @@ export default function PaginationCustom({ onUpdate }) {
                     onMouseLeave={() => { setMouse(false) }}
                     className="modifyBtn"
                     onClick={onUpdate}>수정하기</button>
-
-                {mouse && <p className="modifyPcMent">수정은 해당 페이지 내에서만 가능합니다.</p>}
+                <button
+                    onMouseEnter={() => { setMouse(true); }}
+                    onMouseLeave={() => { setMouse(false) }}
+                    className="modifyBtn"
+                    onClick={onReservation}>예약하기</button>
             </div>
+
 
         </div>
     );

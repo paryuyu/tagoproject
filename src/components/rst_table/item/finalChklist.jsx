@@ -1,7 +1,6 @@
 
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import { DateFormatter } from "../options/formatter";
 
 function FinalChkList({ item }) {
     const [addDataState, setAddDataState] = useState(false)
@@ -48,7 +47,7 @@ function FinalChkList({ item }) {
                             </tr>
                             <tr>
                                 <td className="datatitle">도착 날짜</td>
-                                <td>{DateFormatter(item.arrPlandTime)}</td>
+                                <td>{item.arrPlandTime}</td>
                             </tr>
                             <tr>
                                 <td className="datatitle">출발 공항</td>

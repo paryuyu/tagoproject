@@ -14,10 +14,11 @@ import PaginationCustom from './item/PaginationCustom';
 import ResultModal from './resultModal';
 import GridButtons from './item/gridButtons';
 import { columnDefs, defaultColDef } from './options/gridOption';
+import { useNavigate } from 'react-router-dom';
 
 export default function DataGridTable({ onChartOpen }) {
 
-
+    const navigate = useNavigate();
     const { searchingData, pageLoading } = useContext(LookupContext);
     const authCtx = useContext(AuthContext);
 
@@ -142,15 +143,28 @@ export default function DataGridTable({ onChartOpen }) {
         let chkArr = gridRef.current.api.getSelectedRows();
 
         // flag가 존재하는 값들만 서버로 보내주기.
-        let flagFilter = chkArr.filter(one => Object.keys(one).includes("flag") && one.flag )
+        let flagFilter = chkArr.filter(one => Object.keys(one).includes("flag") && one.flag)
         setFinalChk(flagFilter)
 
         //확인창 -> 모달에서 ok를 누르면 서버로 보내지게 단계를 하나 만들기.
         setAlretOpen(c => !c)
     }
 
+    const [reservationData, setReservationData] = useState();
 
+    const handleReservation = () => {
+        let chkArr = gridRef.current.api.getSelectedRows();
 
+        if (chkArr.length === 0) {
+            return alert("예약할 비행기를 선택하세요.")
+        } else if (chkArr.length > 1) {
+            return alert("비행기는 2대 이상 선택하실 수 없습니다.")
+        }
+
+        setReservationData(chkArr)
+        return navigate("/reservation/" + chkArr[0].id, { state: chkArr })
+
+    }
 
     return (
         <div className=" gridTableBox">
@@ -173,7 +187,7 @@ export default function DataGridTable({ onChartOpen }) {
                 />
             </div>
 
-            <PaginationCustom onUpdate={handleFinalUpdate} />
+            <PaginationCustom onUpdate={handleFinalUpdate} reservationData={reservationData} onReservation={handleReservation} />
             <ResultModal open={alretOpen} onOpen={handleAlretOpen} updateData={finalChk} />
         </div>)
 }

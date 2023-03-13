@@ -10,6 +10,7 @@ import AuthPage from "./pages/authPage";
 import MainPage from "./pages/mainPage";
 import Mypage from "./pages/mypage";
 import RegisterPage from "./pages/registerPage";
+import Reservation from "./pages/reservation";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
                   <Route path="/auth" element={<AuthPage />} />
                   <Route path="/register" element={<RegisterPage />} />
                   <Route path="/mypage" element={<Mypage />} />
+                  <Route path="/reservation/:flightId" element={<Reservation />} />
                 </Route>
               </Routes>
             </Router>

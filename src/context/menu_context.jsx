@@ -30,7 +30,6 @@ export function MenuContextProvider({ children }) {
 
     const handleRecentView = (val) => {
         setRecentView(c => !c);
-
     }
 
     return (
@@ -38,12 +37,12 @@ export function MenuContextProvider({ children }) {
             airlineSelectOpen,
             depSelectOpen,
             arrSelectOpen,
+            recentView,
             handleArrSelectOpen,
             handleLineSelectOpen,
             handleDepSelectOpen,
             handlePageClick,
             handleRecentView,
-            recentView
         }}>
 
             {children}

@@ -24,6 +24,176 @@ button:hover {
    font-weight: bold;
 }
 
+.reservationPage {
+   height: 90vh;
+   border-top: 1px #333 solid;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.reservationHeader {
+   background-color: #317fc9;
+   width: 100%;
+   border-radius: 10px 10px 0px 0px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   box-sizing: border-box;
+}
+
+.reservationBox {
+   width: 90%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+
+}
+
+.reservationContent {
+   padding: 20px;
+   width: 100%;
+   border-radius: 0px 0px 10px 10px;
+   border-right: 2px solid #ddd;
+   border-left: 2px solid #ddd;
+   border-bottom: 2px solid #ddd;
+   height: 60vh;
+   box-sizing: border-box;
+}
+
+.reservationHeaderTypo {
+   color: #fff;
+   font-family: jua;
+   font-weight: 100;
+}
+
+.reservationContentBox,
+.reservationContentTitle {
+   display: flex;
+   flex-direction: row;
+   box-sizing: border-box;
+}
+
+.reservationContentTitle {
+   border-bottom: 2px solid #ddd;
+}
+
+.reservationContentBox {
+   display: flex;
+   border-bottom: 2px solid #ddd;
+}
+
+.reservationContentItem {
+   display: flex;
+   flex-direction: column;
+   width: 200px;
+   justify-content: center;
+   align-items: center;
+   position: relative;
+}
+
+
+
+.reservationContentTitleTypo {
+   width: 200px;
+   text-align: center;
+}
+
+.customSelectBox {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 80%;
+   margin: 0px;
+   border-radius: 10px;
+   padding-top: 5px;
+   padding-bottom: 5px;
+   border: 1px solid #ddd;
+   cursor: pointer;
+}
+
+.customSelectBox:hover {
+   background-color: #ddd;
+
+}
+
+.selectBoxPlaceholder {
+   margin: 0px;
+
+}
+
+.selectOpenOption {
+   position: absolute;
+   top: 75px;
+   background-color: #fff;
+   width: 80%;
+   text-align: center;
+   border: 1px solid #ddd;
+   border-radius: 10px;
+}
+
+.selectCloseOption {
+   display: none;
+}
+
+.selectOptionTypo {
+   font-size: 13px;
+   border-bottom: 1px solid #ddd;
+   cursor: pointer;
+   padding: 5px 0px;
+   margin: 0px;
+   font-size: 13px;
+   height: 50%;
+   color: #333;
+}
+
+.selectSeat {
+   width: 90%;
+}
+
+.selectOptionTypo:last-child {
+   border: 0px;
+
+}
+
+.selectOptionTypo:hover {
+   background-color: #ddd;
+}
+
+.selectOptionTypo:first-child:hover {
+   border-radius: 8px 8px 0px 0px;
+}
+
+.selectOptionTypo:last-child:hover {
+   border-radius: 0px 0px 8px 8px;
+}
+
+.reservationContentDetailTitle {
+   font-weight: bold;
+   height: 50%;
+   font-size: 17px;
+   color: #333;
+}
+
+.reservationPriceZero {
+   font-size: 13px;
+   height: 50%;
+   color: #333;
+   text-decoration: line-through;
+   margin:0px;
+   padding: 5px 0px;
+   cursor: default;
+}
+
+.reservationContentDetail {
+   font-weight: 400;
+   font-size: 13px;
+   height: 50%;
+   color: #333;
+}
 
 @media (max-width: 750px) {
    footer {
