@@ -6,15 +6,13 @@ let baseUrl = process.env.REACT_APP_BASEURL;
 export async function UserRegisterReq(registerData) {
     try {
         console.log('register start--!');
-        
-        let data={
-            id: registerData.id,
-            pw: registerData.password
-        }
-
-        let response = await axios.post(`${baseUrl}/join`, data);
-
+        console.log(registerData)
+       
+        let response = await axios.post("http://localhost:8080/register",registerData )
         return response;
+        // let response = await axios.post(`${baseUrl}/join`, registerData);
+
+        // return response;
 
     } catch (error) {
 
