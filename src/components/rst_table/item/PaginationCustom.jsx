@@ -1,14 +1,17 @@
 import { Pagination, useMediaQuery } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../context/auth_context";
 import { LookupContext } from "../../../context/lookup_context";
+import LoginModal from "../../modal/login";
 
 export default function PaginationCustom({ onUpdate, reservationData, onReservation }) {
     const ctx = useContext(LookupContext);
+    const authCtx = useContext(AuthContext);
     const matches = useMediaQuery('(min-width:750px)')
     const navigate = useNavigate();
     const [pageCnt, setPageCnt] = useState();
-
+    const [modalopen, setModalopen] = useState(false);
     const [page, setPage] = useState(1);
     const [mouse, setMouse] = useState(false);
     useEffect(() => {
@@ -20,6 +23,17 @@ export default function PaginationCustom({ onUpdate, reservationData, onReservat
     const handlePageChange = (evt, value) => {
         ctx.handlePageChange(value)
         setPage(value)
+    }
+    const handlemodalOpen = () => {
+        setModalopen(c => !c)
+    }
+
+    const handleReservationClick = () =>{
+        if(authCtx.auth){
+            onReservation();
+        }else{
+            handlemodalOpen();
+        }
     }
 
     return (
@@ -48,9 +62,11 @@ export default function PaginationCustom({ onUpdate, reservationData, onReservat
                     onMouseEnter={() => { setMouse(true); }}
                     onMouseLeave={() => { setMouse(false) }}
                     className="modifyBtn"
-                    onClick={onReservation}>예약하기</button>
+                    onClick={handleReservationClick}>예약하기</button>
+
             </div>
 
+            <LoginModal open={modalopen} onOpen={handlemodalOpen} />
 
         </div>
     );

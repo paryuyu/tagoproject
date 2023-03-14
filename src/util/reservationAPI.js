@@ -6,6 +6,7 @@ export async function ReservationReq(data) {
     
     try {
         let accessToken = localStorage.getItem("access_token");
+       
         let headers = {
             "access-control-allow-origin": "*",
             'Access-Control-Allow-Headers': 'Content-Type, Authorization',
@@ -13,9 +14,8 @@ export async function ReservationReq(data) {
             'Access-Control-Allow-Credentials': true,
             Authorization: `Bearer ${accessToken}`,
         };
-
         let reqUrl = `${baseUrl}/reservation`
-        let response = await axios.post(reqUrl, { headers: headers }, { data });
+        let response = await axios.post(reqUrl, data ,{ headers: headers });
 
         return response;
     } catch (err) {
