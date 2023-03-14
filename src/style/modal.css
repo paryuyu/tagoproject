@@ -1,0 +1,24 @@
+.address-box {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 400px;
+    min-height: 450px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 2px solid #333;
+}
+
+.address-item{
+    height: 480px;
+}
+
+@media (max-width: 750px) {
+    .address-box {
+        width: 300px;
+    }
+}
