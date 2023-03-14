@@ -106,7 +106,7 @@ export default function RegisterPage() {
 
         <div className="authBox registerBox">
 
-            <Typography variant="h6">Register</Typography>
+            <Typography variant="h6" className="auth-title">회원가입</Typography>
 
             <TextField
                 className="register_input"

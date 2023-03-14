@@ -68,7 +68,7 @@ export default function AuthPage() {
   return (<section className="authOutlineContainer" >
 
     <div className="authBox">
-      <Typography variant="h6">Login</Typography>
+      <Typography variant="h6"  className="auth-title">로그인</Typography>
 
 
 
