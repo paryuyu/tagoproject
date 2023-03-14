@@ -194,7 +194,11 @@ button:hover {
    height: 50%;
    color: #333;
 }
-
+.extra-people-ment{
+   font-size: 12px;
+   margin:0px;
+   padding-bottom:4px;
+}
 @media (max-width: 750px) {
 
    .selectOpenOption {
