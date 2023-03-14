@@ -17,8 +17,8 @@ export default function Reservation() {
     const [seatSelectOpen, setSeatSelectOpen] = useState(false);
     const [seatType, setSeatType] = useState("");
     const [personnel, setPersonnel] = useState(0);
-    const [flightId,setFlightId] =useState();
-    
+    const [flightId, setFlightId] = useState();
+
     useEffect(() => {
         setFlightId(params?.flightId)
         if (location.state) {
@@ -74,7 +74,7 @@ export default function Reservation() {
 
         let result = await ReservationReq(reservationData)
 
-        console.log(result,'reservation-result')
+        console.log(result, 'reservation-result')
     }
 
 
@@ -140,12 +140,11 @@ export default function Reservation() {
 
                     <div className="reservationContentItem">
                         <div className="customSelectBox " onClick={handleSeatSelect}>
-                            <p className="selectBoxPlaceholder">{seatType ? seatType === "economy" ? "일반석" : "비즈니스석" : "좌석"}</p>
+                            <p className="selectBoxPlaceholder priceZero">{seatType ? seatType === "economy" ? "일반석" : "비즈니스석" : "좌석"}</p>
                             <ArrowDropDownIcon />
                         </div>
                         <div className={seatSelectOpen ? "selectOpenOption selectSeat" : "selectCloseOption"}>
-                            <p
-                                onClick={handleSeatType}
+                            <p onClick={handleSeatType}
                                 className={priceFormatter(data.economyCharge) == 0 ? "reservationPriceZero" : "selectOptionTypo"}>일반석 {priceFormatter(data.economyCharge)}</p>
                             <p
                                 onClick={handleSeatType}

@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../context/auth_context";
 import { LookupContext } from "../../context/lookup_context";
+import LoginModal from "../modal/login";
 import FinalChkList from "./item/finalChklist";
 
 export default function ResultModal({ open, onOpen, updateData }) {
@@ -56,13 +57,13 @@ export default function ResultModal({ open, onOpen, updateData }) {
     }
 
     return (<>
-        <Modal
-            open={open}
-            onClose={onOpen}>
+        {authCtx.auth ?
+            <Modal
+                open={open}
+                onClose={onOpen}>
 
-            <div className='final-update-chkbox'>
-                {authCtx.auth ?
-                    updateData.length !== 0 ?
+                <div className='final-update-chkbox'>
+                    {updateData.length !== 0 ?
                         <>
                             <div className="modalbox">
                                 {updateData.map((one, index) => <FinalChkList item={one} key={index} />)}
@@ -73,7 +74,7 @@ export default function ResultModal({ open, onOpen, updateData }) {
                             {updateState === 1 ? <p className="ment modalText">완료하기를 누르시면 데이터가 영구적으로 수정됩니다. <br /> 수정하시겠습니까?</p> :
                                 updateState === 2 ?
                                     <p className="ment modalText updateSuccess">업데이트가 성공적으로 반영되었습니다.</p>
-                                    : 
+                                    :
                                     updateState === 3 && <p className="ment modalText updateErr">수정에 실패하였습니다.</p>
                             }
 
@@ -88,15 +89,11 @@ export default function ResultModal({ open, onOpen, updateData }) {
                             <p className='no-data-ment'>수정데이터가 없습니다.</p>
                             <button onClick={handleReturn}>돌아가기</button>
                         </>
-                    :
-                    <>
-                        <p className='no-data-ment'>로그인 후 이용해주세요.</p>
-                        <button onClick={handleLogin}>로그인 페이지로 바로가기</button>
-                    </>
-                }
-
-            </div>
-        </Modal>
-
+                    }
+                </div>
+            </Modal>
+            :
+            <LoginModal open={open} onOpen={onOpen} />
+        }
     </>);
 }

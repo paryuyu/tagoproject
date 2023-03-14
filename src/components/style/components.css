@@ -22,28 +22,33 @@
 
 }
 
+.datepicker {
+    width: 250px
+}
 
 .schSection {
     display: flex;
-    justify-content: space-between;
-    width: 700px;
-    padding: 20px;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .schBarOutline {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     border: 1px solid #ddd;
     margin-bottom: 20px;
 
+}
 
+.schRowStyle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
 }
 
 .schBarItemBox {
     display: flex;
-    flex-direction: row;
     margin-right: 10px;
     align-items: center;
 }
@@ -103,7 +108,8 @@ header {
 }
 
 .schBtn {
-    width: 100%;
+    width: 500px;
+    margin-bottom: 20px;
 }
 
 .headerbtnBox {
@@ -112,7 +118,8 @@ header {
     gap: 5px;
     position: relative;
 }
-.loginMent{
+
+.loginMent {
     position: absolute;
     top: 30px;
     z-index: 100;
@@ -142,15 +149,17 @@ header {
     background-color: #317fc970;
 }
 
-.userIdTypo{
-    color:#fff;
+.userIdTypo {
+    color: #fff;
     font-weight: 600;
     margin: 0px 5px;
 }
+
 .personIcon {
     color: #fff;
     font-size: medium;
 }
+
 
 
 @media (max-width: 750px) {
@@ -182,7 +191,7 @@ header {
     }
 
     .schBtn {
-        width: 93%;
+        width: 90%;
         margin-top: 5px;
     }
 
@@ -239,7 +248,7 @@ header {
         height: 300px;
         border: 1px solid #ddd;
         border-radius: 10px;
-     
+
     }
 
     .selectTypo {
@@ -291,10 +300,6 @@ header {
         width: 250px;
     }
 
-    .drawer-avatar {
-        color: red;
-
-    }
 }
 
 
